@@ -124,8 +124,8 @@ export function Header() {
               />
             </Link>
             <div className="hidden md:flex md:gap-x-6">
-              <NavLink href="#features">Home</NavLink>
-              <NavLink href="#testimonials">About Us</NavLink>
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/about">About Us</NavLink>
               <Popover className="relative">
                 <Popover.Button className="inline-flex gap-x-1 rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                   <span>Watch Now</span>
