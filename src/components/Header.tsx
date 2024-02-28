@@ -152,12 +152,12 @@ export function Header() {
                   </Popover.Panel>
                 </Transition>
               </Popover>
-              <NavLink href="#pricing">Actors</NavLink>
+              <NavLink href="/actors">Actors</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
-            <Button href="/register" color="blue">
+            <Button href="/sign-up" color="blue">
               <span>
                 Create on Imara
               </span>

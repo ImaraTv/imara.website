@@ -19,11 +19,6 @@ import logo2 from "@/images/partners/ic.svg"
 import logo3 from "@/images/partners/iapb.svg"
 import logo4 from "@/images/partners/lf.svg"
 import logo5 from "@/images/partners/pepfar.svg"
-
-
-
-
-
 import Image from "next/image"
 
 const values = [
