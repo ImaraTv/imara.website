@@ -153,7 +153,7 @@ export function Header() {
                 </Transition>
               </Popover>
               <NavLink href="#pricing">Actors</NavLink>
-              <NavLink href="#pricing">Contact</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
