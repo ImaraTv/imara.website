@@ -103,7 +103,7 @@ export default function Contact() {
 
                 {/* Form */}
                 <Container>
-                    <div className="isolate mt-[110px] bg-[#F3F3F3] px-6 py-24 sm:py-32 lg:px-8">
+                    <div className="isolate mt-[110px] bg-[#F3F3F3] px-6 py-12 lg:px-8">
                         <div
                             className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
                             aria-hidden="true"
