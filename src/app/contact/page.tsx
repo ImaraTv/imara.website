@@ -158,10 +158,10 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-10">
+                            <div className="mt-10 flex justify-end">
                                 <button
                                     type="submit"
-                                    className="block w-full rounded-md bg-[#007BFF] px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="rounded-md bg-[#007BFF] px-10 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     Send
                                 </button>
