@@ -155,7 +155,7 @@ export function Header() {
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+            <div className="hidden md:flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
               <div className="w-full max-w-lg lg:max-w-xs">
                 <label htmlFor="search" className="sr-only">
                   Search
