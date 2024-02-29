@@ -35,7 +35,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("flowbite/plugin")],
+  plugins: [require("tailwindcss-animate"), require("flowbite/plugin"), require("@tailwindcss/aspect-ratio")],
 } satisfies Config
 
 export default config
