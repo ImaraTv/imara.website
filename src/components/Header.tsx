@@ -127,7 +127,7 @@ export function Header() {
               <NavLink href="/">Home</NavLink>
               <NavLink href="/about">About Us</NavLink>
               <Popover className="relative">
-                <Popover.Button className="inline-flex gap-x-1 rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+                <Popover.Button className="inline-flex gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
                   <span>Watch Now</span>
                   <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
                 </Popover.Button>
@@ -162,10 +162,13 @@ export function Header() {
                 Create on Imara
               </span>
             </Button>
-            {/* <div className="hidden md:block ring-1 rounded-full">
-              <NavLink href="/login">Login</NavLink>
-            </div> */}
-            <button type="button" className="rounded bg-white px-4 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Login</button>
+            <Link
+              href="/sign-in"
+              className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-sm focus:outline-none"
+            >
+              Login
+            </Link>
+
             <div className="-mr-1 md:hidden">
               <MobileNavigation />
             </div>
