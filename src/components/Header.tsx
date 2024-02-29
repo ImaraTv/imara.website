@@ -12,6 +12,7 @@ import { NavLink } from '@/components/NavLink'
 import Image from 'next/image'
 import Logo2 from '@/images/logos/logo.png'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 function MobileNavLink({
   href,
@@ -28,12 +29,9 @@ function MobileNavLink({
 }
 
 const solutions = [
-  { name: 'Analytics', href: '#' },
-  { name: 'Engagement', href: '#' },
-  { name: 'Security', href: '#' },
-  { name: 'Integrations', href: '#' },
-  { name: 'Automations', href: '#' },
-  { name: 'Reports', href: '#' },
+  { name: 'All videos', href: '/videos' },
+  { name: 'Pg 18+', href: '#' },
+  { name: 'Teens Corner', href: '#' },
 ]
 
 function MobileNavIcon({ open }: { open: boolean }) {
@@ -127,9 +125,9 @@ export function Header() {
               <NavLink href="/">Home</NavLink>
               <NavLink href="/about">About Us</NavLink>
               <Popover className="relative">
-                <Popover.Button className="inline-flex gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
+                <Popover.Button className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
                   <span>Watch Now</span>
-                  <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+                  <ChevronDownIcon className="h-5 w-5 font-bold" aria-hidden="true" />
                 </Popover.Button>
 
                 <Transition
@@ -142,7 +140,7 @@ export function Header() {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-                    <div className="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
+                    <div className="w-56 shrink rounded-xl bg-white p-4 text-[17px] leading-6 text-[#474747] shadow-lg ring-1 ring-gray-900/5">
                       {solutions.map((item) => (
                         <a key={item.name} href={item.href} className="block p-2 hover:text-indigo-600">
                           {item.name}
@@ -157,6 +155,25 @@ export function Header() {
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
+            <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+              <div className="w-full max-w-lg lg:max-w-xs">
+                <label htmlFor="search" className="sr-only">
+                  Search
+                </label>
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <MagnifyingGlassIcon className="h-5 w-5 text-[#525252] font-medium" aria-hidden="true" />
+                  </div>
+                  <input
+                    id="search"
+                    name="search"
+                    className="block w-full rounded-[15px] border-0 bg-[#E2E2E2] py-[10px] pl-[14px] text-[#525252] ring-1 ring-inset ring-gray-300 placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Search"
+                    type="search"
+                  />
+                </div>
+              </div>
+            </div>
             <Button href="/sign-up" color="blue">
               <span>
                 Create on Imara
@@ -164,7 +181,7 @@ export function Header() {
             </Button>
             <Link
               href="/sign-in"
-              className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-sm focus:outline-none"
+              className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
             >
               Login
             </Link>

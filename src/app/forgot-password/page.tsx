@@ -6,6 +6,7 @@ import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
 import Banner from "@/images/signup.png"
 import Image from "next/image"
+import Link from 'next/link'
 
 export default function ForgotPassword() {
     return (
@@ -80,7 +81,12 @@ export default function ForgotPassword() {
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xl'>Remember password?</div>
-                                <div className='font-bold text-[#F2970F] text-xl'>Go back to sign in</div>
+                                <Link
+                                    href="/sign-in"
+                                    className="inline-block font-bold text-[#F2970F] text-xl"
+                                >
+                                    Go back to sign in
+                                </Link>
                             </div>
                         </div>
                     </div>

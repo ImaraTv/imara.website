@@ -6,6 +6,7 @@ import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
 import Banner from "@/images/signup.png"
 import Image from "next/image"
+import Link from 'next/link'
 
 export default function SignIn() {
     return (
@@ -88,13 +89,23 @@ export default function SignIn() {
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xl'>Don’t have an account?</div>
-                                <div className='font-bold text-[#F2970F] text-xl'>Create account</div>
+                                <Link
+                                    href="/sign-up"
+                                    className="inline-block font-bold text-[#F2970F] text-xl"
+                                >
+                                    Create account
+                                </Link>
                             </div>
                         </div>
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xl'>Forgot password? </div>
-                                <div className='font-bold text-[#F2970F] text-xl'>Reset</div>
+                                <Link
+                                    href="/reset-password"
+                                    className="inline-block font-bold text-[#F2970F] text-xl"
+                                >
+                                    Reset
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -103,7 +114,7 @@ export default function SignIn() {
                 <Newsletter />
 
                 <div className="bg-[#89CFF1] h-[193px] py-10 text-center">
-                    <p className='text-xl leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br/> Ngong Road, Nairobi, Kenya, Africa</p>
+                    <p className='text-xl leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br /> Ngong Road, Nairobi, Kenya, Africa</p>
                 </div>
 
             </main>

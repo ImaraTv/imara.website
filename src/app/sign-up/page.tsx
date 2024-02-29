@@ -6,6 +6,7 @@ import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
 import Banner from "@/images/signup.png"
 import Image from "next/image"
+import Link from 'next/link'
 
 export default function SignUp() {
     return (
@@ -114,7 +115,12 @@ export default function SignUp() {
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xl'>Have an account?</div>
-                                <div className='font-bold text-[#F2970F] text-xl'> Login</div>
+                                <Link
+                                    href="/sign-in"
+                                    className="inline-block font-bold text-[#F2970F] text-xl"
+                                >
+                                    Login
+                                </Link>
                             </div>
                         </div>
                     </div>
