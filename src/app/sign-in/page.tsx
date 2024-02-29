@@ -101,7 +101,7 @@ export default function SignIn() {
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xl'>Forgot password? </div>
                                 <Link
-                                    href="/reset-password"
+                                    href="/forgot-password"
                                     className="inline-block font-bold text-[#F2970F] text-xl"
                                 >
                                     Reset
