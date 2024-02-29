@@ -14,8 +14,8 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <CarouselHome />
-        <Hero />
+        {/* <CarouselHome /> */}
+        {/* <Hero /> */}
         {/* 
         <PrimaryFeatures />
         <SecondaryFeatures />
@@ -24,7 +24,7 @@ export default function Home() {
         <Pricing />
         <Faqs /> */}
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
