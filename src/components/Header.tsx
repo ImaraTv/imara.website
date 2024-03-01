@@ -11,6 +11,13 @@ import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
 import Image from 'next/image'
 import Logo2 from '@/images/logos/logo.png'
+import User from '@/images/user.svg'
+import Profile from '@/images/profile.svg'
+import Watch from '@/images/watch.svg'
+import Bookmark from '@/images/bookmark.svg'
+import Settings from '@/images/settings.svg'
+import Create from '@/images/create.svg'
+import Logout from '@/images/logout.svg'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
@@ -32,6 +39,40 @@ const solutions = [
   { name: 'All videos', href: '/videos' },
   { name: 'Pg 18+', href: '#' },
   { name: 'Teens Corner', href: '#' },
+]
+
+const items = [
+  {
+    name: 'Profile details',
+    href: '##',
+    icon: IconOne,
+  },
+  {
+    name: 'Continue watching',
+    href: '##',
+    icon: IconTwo,
+  },
+  {
+    name: 'Saved films',
+    href: '##',
+    icon: IconThree,
+  },
+  {
+    name: 'All settings',
+    href: '##',
+    icon: IconFour,
+  },
+  {
+    name: 'Create on Imara',
+    href: '##',
+    icon: IconFive,
+  },
+  {
+    name: 'Log out',
+    href: '##',
+    icon: IconSix,
+  },
+  
 ]
 
 function MobileNavIcon({ open }: { open: boolean }) {
@@ -106,6 +147,10 @@ function MobileNavigation() {
     </Popover>
   )
 }
+
+const cardStyle = {
+  boxShadow: '0px 7px 18px 4px #00000021'
+};
 
 export function Header() {
   return (
@@ -186,6 +231,54 @@ export function Header() {
               Login
             </Link>
 
+            <div className=" px-4">
+              <Popover className="relative">
+                {({ open }) => (
+                  <>
+                    <Popover.Button
+                      className={`
+                ${open ? 'text-white' : 'text-white/90'}
+                group inline-flex items-center rounded-full bg-[#525252] px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
+                    >
+                      <Image src={User} alt={"user"} width={20} height={20} />
+                    </Popover.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-200"
+                      enterFrom="opacity-0 translate-y-1"
+                      enterTo="opacity-100 translate-y-0"
+                      leave="transition ease-in duration-150"
+                      leaveFrom="opacity-100 translate-y-0"
+                      leaveTo="opacity-0 translate-y-1"
+                    >
+                      <Popover.Panel className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
+                        <div className="overflow-hidden rounded-lg ring-1 ring-black/5" style={cardStyle}>
+                          <div className="relative grid gap-8 bg-white p-7">
+                            {items.map((item) => (
+                              <a
+                                key={item.name}
+                                href={item.href}
+                                className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
+                              >
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
+                                  <item.icon aria-hidden="true" />
+                                </div>
+                                <div className="ml-3">
+                                  <p className="text-[15px] font-medium text-[#616161]">
+                                    {item.name}
+                                  </p>
+                                </div>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      </Popover.Panel>
+                    </Transition>
+                  </>
+                )}
+              </Popover>
+            </div>
+
             <div className="-mr-1 md:hidden">
               <MobileNavigation />
             </div>
@@ -193,5 +286,41 @@ export function Header() {
         </nav>
       </Container>
     </header>
+  )
+}
+
+function IconOne() {
+  return (
+    <Image src={Profile} alt={"profile"} width={20} height={20} />
+  )
+}
+
+function IconTwo() {
+  return (
+    <Image src={Watch} alt={"watch"} width={20} height={20} />
+  )
+}
+
+function IconThree() {
+  return (
+    <Image src={Bookmark} alt={"bookmark"} width={20} height={20} />
+  )
+}
+
+function IconFour() {
+  return (
+    <Image src={Settings} alt={"settings"} width={20} height={20} />
+  )
+}
+
+function IconFive() {
+  return (
+    <Image src={Create} alt={"create"} width={20} height={20} />
+  )
+}
+
+function IconSix() {
+  return (
+    <Image src={Logout} alt={"logout"} width={20} height={20} />
   )
 }
