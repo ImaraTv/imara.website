@@ -227,7 +227,6 @@ export default function Videos() {
                   {category.name}
                 </button>
               ))}
-
             </div>
             <div className='flex px-6'>
               <div className="">

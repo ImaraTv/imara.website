@@ -3,22 +3,10 @@ import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
 import {Fragment, useState} from 'react'
 import {Listbox, Dialog, Transition} from '@headlessui/react'
-import {CheckIcon, ChevronDownIcon} from '@heroicons/react/20/solid'
 import {Container} from '@/components/Container'
-import {Newsletter} from '@/components/Newsletter'
-import Youtube from "@/images/youtube.png"
-import Banner from "@/images/carousel.png"
-import VideoBanner from "@/images/video.png"
 import Image from "next/image"
 import Link from 'next/link'
-import {CheckCircleIcon} from '@heroicons/react/20/solid'
-import {CloudArrowDownIcon} from "@heroicons/react/24/solid";
-import {PlusIcon} from "@heroicons/react/24/solid";
-import {ShareIcon} from "@heroicons/react/24/solid";
-import {StarIcon} from "@heroicons/react/24/solid";
 import Yt from "@/images/yt.png"
-import {MagnifyingGlassIcon} from '@heroicons/react/20/solid'
-import {Button} from '@/components/Button'
 import Address from "@/components/Address";
 
 const cardStyle = {
