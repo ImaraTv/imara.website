@@ -49,7 +49,7 @@ const items = [
   },
   {
     name: 'Continue watching',
-    href: '##',
+    href: '/continue-watching',
     icon: IconTwo,
   },
   {
