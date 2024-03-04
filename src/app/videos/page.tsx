@@ -27,23 +27,19 @@ const cardStyle = {
 const categories = [
   {
     id: 1,
-    name: "Short films",
+    name: "Continue Watching",
   },
   {
     id: 2,
-    name: "Series",
+    name: "Saved Films",
   },
   {
     id: 3,
-    name: "Educative",
+    name: "Edit profile ",
   },
   {
     id: 4,
-    name: "Trailers",
-  },
-  {
-    id: 5,
-    name: "Comedy",
+    name: "All settings",
   },
 ]
 
