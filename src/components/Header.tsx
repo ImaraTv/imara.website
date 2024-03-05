@@ -44,7 +44,7 @@ const solutions = [
 const items = [
   {
     name: 'Profile details',
-    href: '##',
+    href: '/continue-watching',
     icon: IconOne,
   },
   {
@@ -54,7 +54,7 @@ const items = [
   },
   {
     name: 'Saved films',
-    href: '##',
+    href: '/saved',
     icon: IconThree,
   },
   {
