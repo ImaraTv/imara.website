@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* <CarouselHome /> */}
+         <CarouselHome />
         {/* <Hero /> */}
         {/* 
         <PrimaryFeatures />
