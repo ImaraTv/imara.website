@@ -46,7 +46,7 @@ export function CarouselHome() {
             }}
             loop={true}
             autoplay={{delay: 5000}}
-            className="swiper w-full h-[560px]"
+            className="swiper w-full h-[560px] mb-[75px]"
             id="slider2"
         >
 

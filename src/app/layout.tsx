@@ -1,8 +1,8 @@
-import { Inter, Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import clsx from 'clsx'
-
 import '@/styles/tailwind.css'
 import { type Metadata } from 'next'
+import React from "react";
 
 export const metadata: Metadata = {
   title: {
@@ -10,15 +10,8 @@ export const metadata: Metadata = {
     default: 'ImaraTv - Changing Africa, One film at a time',
   },
   description:
-    'Most bookkeeping software is accurate, but hard to use. We make the opposite trade-off, and hope you don’t get audited.',
+    'Changing Africa, One film at a time.',
 }
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
-
 const roboto = Roboto({
   weight: ["100","300","400","500","700","900"],
   subsets: ['latin'],

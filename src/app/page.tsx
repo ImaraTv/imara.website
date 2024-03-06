@@ -1,13 +1,11 @@
-import { CallToAction } from '@/components/CallToAction'
-import { Faqs } from '@/components/Faqs'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { Hero } from '@/components/Hero'
 import { CarouselHome } from '@/components/Carousel'
-import { Pricing } from '@/components/Pricing'
-import { PrimaryFeatures } from '@/components/PrimaryFeatures'
-import { SecondaryFeatures } from '@/components/SecondaryFeatures'
-import { Testimonials } from '@/components/Testimonials'
+import { Trending } from '@/components/Trending'
+import {Recommended} from "@/components/Recommended";
+import {ActorsHero} from "@/components/ActorsHero";
+import {Newsletter} from "@/components/Newsletter";
+
 
 export default function Home() {
   return (
@@ -15,16 +13,17 @@ export default function Home() {
       <Header />
       <main>
          <CarouselHome />
-        {/* <Hero /> */}
-        {/* 
-        <PrimaryFeatures />
-        <SecondaryFeatures />
-        <CallToAction />
-        <Testimonials />
-        <Pricing />
-        <Faqs /> */}
+          <Trending />
+          <Recommended />
+
+          <ActorsHero />
+
+          <Newsletter />
+
+
+
       </main>
-      <Footer />
+        <Footer/>
     </>
   )
 }
