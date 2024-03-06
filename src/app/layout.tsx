@@ -1,4 +1,4 @@
-import { Inter, Lexend } from 'next/font/google'
+import { Inter, Roboto } from 'next/font/google'
 import clsx from 'clsx'
 
 import '@/styles/tailwind.css'
@@ -7,7 +7,7 @@ import { type Metadata } from 'next'
 export const metadata: Metadata = {
   title: {
     template: '%s - ImaraTv',
-    default: 'ImaraTv - Accounting made simple for small businesses',
+    default: 'ImaraTv - Changing Africa, One film at a time',
   },
   description:
     'Most bookkeeping software is accurate, but hard to use. We make the opposite trade-off, and hope you don’t get audited.',
@@ -19,10 +19,10 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const lexend = Lexend({
+const roboto = Roboto({
+  weight: ["100","300","400","500","700","900"],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-lexend',
 })
 
 export default function RootLayout({
@@ -35,8 +35,7 @@ export default function RootLayout({
       lang="en"
       className={clsx(
         'h-full scroll-smooth bg-white antialiased',
-        inter.variable,
-        lexend.variable,
+        roboto.className,
       )}
     >
       <body className="flex h-full flex-col">{children}</body>
