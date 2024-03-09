@@ -157,7 +157,10 @@ export function Header() {
     <header className="py-10">
       <Container>
         <nav className="relative z-50 flex justify-between">
-          <div className="flex items-center md:gap-x-12">
+          <div className="-mr-1 md:hidden">
+            <MobileNavigation />
+          </div>
+          <div className="hidden md:flex items-center md:gap-x-12">
             <Link href="#" aria-label="Home">
               <Image
                 src={Logo2}
@@ -170,7 +173,8 @@ export function Header() {
               <NavLink href="/">Home</NavLink>
               <NavLink href="/about">About Us</NavLink>
               <Popover className="relative">
-                <Popover.Button className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
+                <Popover.Button
+                  className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
                   <span>Watch Now</span>
                   <ChevronDownIcon className="h-5 w-5 font-bold" aria-hidden="true" />
                 </Popover.Button>
@@ -185,7 +189,8 @@ export function Header() {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-                    <div className="w-56 shrink rounded-xl bg-white p-4 text-[17px] leading-6 text-[#474747] shadow-lg ring-1 ring-gray-900/5">
+                    <div
+                      className="w-56 shrink rounded-xl bg-white p-4 text-[17px] leading-6 text-[#474747] shadow-lg ring-1 ring-gray-900/5">
                       {solutions.map((item) => (
                         <a key={item.name} href={item.href} className="block p-2 hover:text-indigo-600">
                           {item.name}
@@ -200,7 +205,7 @@ export function Header() {
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="hidden md:flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+            <div className="flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
               <div className="w-full max-w-lg lg:max-w-xs">
                 <label htmlFor="search" className="sr-only">
                   Search
@@ -219,19 +224,19 @@ export function Header() {
                 </div>
               </div>
             </div>
-            <Button href="/sign-up" color="blue">
+            <Button href="/sign-up" color="blue" className="hidden md:flex">
               <span>
                 Create on Imara
               </span>
             </Button>
             <Link
               href="/sign-in"
-              className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
+              className="group hidden md:inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
             >
               Login
             </Link>
 
-            <div className=" px-4">
+            <div className="hidden md:flex px-4">
               <Popover className="relative">
                 {({ open }) => (
                   <>
@@ -240,7 +245,7 @@ export function Header() {
                 ${open ? 'text-white' : 'text-white/90'}
                 group inline-flex items-center rounded-full bg-[#525252] px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
                     >
-                      <Image src={User} alt={"user"} width={20} height={20} />
+                      <Image src={User} alt={'user'} width={20} height={20} />
                     </Popover.Button>
                     <Transition
                       as={Fragment}
@@ -251,7 +256,8 @@ export function Header() {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
+                      <Popover.Panel
+                        className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
                         <div className="overflow-hidden rounded-lg ring-1 ring-black/5" style={cardStyle}>
                           <div className="relative grid gap-8 bg-white p-7">
                             {items.map((item) => (
@@ -279,9 +285,7 @@ export function Header() {
               </Popover>
             </div>
 
-            <div className="-mr-1 md:hidden">
-              <MobileNavigation />
-            </div>
+
           </div>
         </nav>
       </Container>

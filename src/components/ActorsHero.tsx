@@ -46,7 +46,7 @@ const actors = [
 export function ActorsHero() {
     return (
         <>
-            <div className="grid grid-cols-2 gap-[150px] py-[56px] px-[46px] bg-[#F3F3F3]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[150px] py-[56px] md:px-[46px] bg-[#F3F3F3]">
                 <div className="flex flex-col gap-10">
                     <div className="text-[40px] text-[#2B2B2B] font-bold">Actors</div>
                     <p className="text-[18px] text-[#525252]">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -70,8 +70,8 @@ export function ActorsHero() {
                     </div>
                 </div>
                 <div>
-                    <div className="grid grid-rows-2 grid-flow-col gap-4">
-                        <div className="row-end-3 row-span-2">
+                    <div className="grid grid-rows-1 sm:grid-rows-2 grid-flow-col gap-1">
+                        <div className="md:row-end-3 md:row-span-2">
                             <div
                                 className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"
@@ -83,7 +83,7 @@ export function ActorsHero() {
                             <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">Issac
                                 Jin</p>
                         </div>
-                        <div className="row-start-2 row-span-12">
+                        <div className="md:row-start-2 md:row-span-12">
                             <div
                                 className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"
@@ -97,8 +97,8 @@ export function ActorsHero() {
                         </div>
                     </div>
 
-                    <div className="grid grid-rows-2 grid-flow-col gap-4">
-                        <div className="row-end-3 row-span-2">
+                    <div className="grid grid-rows-1 sm:grid-rows-2 grid-flow-col gap-1">
+                        <div className="md:row-end-3 md:row-span-2">
                             <div
                                 className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"
@@ -110,7 +110,7 @@ export function ActorsHero() {
                             <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">Issac
                                 Jin</p>
                         </div>
-                        <div className="row-start-2 row-span-12">
+                        <div className="md:row-start-2 md:row-span-12">
                             <div
                                 className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"

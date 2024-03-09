@@ -185,8 +185,8 @@ export function Recommended() {
     return (
         <>
             <Container>
-                <div className='flex justify-between mt-[53px]'>
-                    <div className='flex'>
+                <div className='md:flex justify-between mt-[53px]'>
+                    <div className='md:flex'>
                         <div className="text-[40px] text-[#2B2B2B] font-bold mr-[43px]">Recommended</div>
                         {categories.map((category, index) => (
                             <button
@@ -202,7 +202,7 @@ export function Recommended() {
                             </button>
                         ))}
                     </div>
-                    <div className='flex px-6'>
+                    <div className='md:flex px-6'>
                         <div className="">
                             <Listbox value={selected} onChange={setSelected}>
                                 <div className="relative mt-1">
@@ -321,8 +321,8 @@ export function Recommended() {
 
                 </div>
 
-                <div className='flex justify-between mt-[90px] gap-32'>
-                    <div className="w-3/4">
+                <div className='md:flex justify-between mt-[90px] gap-32'>
+                    <div className="md:w-3/4">
                         <ul role="list"
                             className="grid grid-cols-1 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-2 xl:gap-x-8">
                             {files.map((file) => (
@@ -422,7 +422,7 @@ export function Recommended() {
                         </Transition>
                     </div>
 
-                    <div className="w-1/4">
+                    <div className="md:w-1/4">
                         <div className="text-[40px] text-[#2B2B2B] font-bold mb-[53px]">Recently updated</div>
                         <ul role="list" className="-mt-12 space-y-12 xl:col-span-3">
                             {suggestions.map((suggestion) => (

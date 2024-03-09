@@ -5,8 +5,6 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-// import required modules
-import {Pagination, Navigation, Autoplay} from 'swiper/modules';
 
 
 const posts = [
@@ -95,10 +93,28 @@ export function Trending() {
 
             </div>
             <Swiper
-                slidesPerView={3}
+                slidesPerView={1}
                 spaceBetween={0}
                 loop={true}
                 className="mb-[105px]"
+                breakpoints={{
+                    481: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    769: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    1025: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    },
+                    1441: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    },
+                }}
             >
                 {posts.map((post) => (
                     <SwiperSlide key={post.id}>
