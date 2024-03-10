@@ -77,28 +77,13 @@ const items = [
 
 function MobileNavIcon({ open }: { open: boolean }) {
   return (
-    <svg
-      aria-hidden="true"
-      className="h-3.5 w-3.5 overflow-visible stroke-slate-700"
-      fill="none"
-      strokeWidth={2}
-      strokeLinecap="round"
-    >
+
+    <svg width="30" height="28" viewBox="0 0 30 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        d="M0 1H14M0 7H14M0 13H14"
-        className={clsx(
-          'origin-center transition',
-          open && 'scale-90 opacity-0',
-        )}
-      />
-      <path
-        d="M2 2L12 12M12 2L2 12"
-        className={clsx(
-          'origin-center transition',
-          !open && 'scale-90 opacity-0',
-        )}
-      />
+        d="M23.3333 24C24.2538 24 25 24.7462 25 25.6666C25 26.5871 24.2538 27.3333 23.3333 27.3333H6.66667C5.74619 27.3333 5 26.5871 5 25.6666C5 24.7462 5.74619 24 6.66667 24H23.3333ZM28.3333 12.3333C29.2538 12.3333 30 13.0795 30 14C30 14.9204 29.2538 15.6666 28.3333 15.6666H1.66667C0.746193 15.6666 0 14.9204 0 14C0 13.0795 0.746192 12.3333 1.66667 12.3333H28.3333ZM23.3333 0.666626C24.2538 0.666626 25 1.41282 25 2.33329C25 3.25377 24.2538 3.99996 23.3333 3.99996H6.66667C5.74619 3.99996 5 3.25377 5 2.33329C5 1.41282 5.74619 0.666626 6.66667 0.666626H23.3333Z"
+        fill="white" />
     </svg>
+
   )
 }
 
@@ -154,10 +139,10 @@ const cardStyle = {
 
 export function Header() {
   return (
-    <header className="py-10">
+    <header className="py-10 bg-[#007BFF] md:bg-white">
       <Container>
         <nav className="relative z-50 flex justify-between">
-          <div className="-mr-1 md:hidden">
+          <div className="md:hidden">
             <MobileNavigation />
           </div>
           <div className="hidden md:flex items-center md:gap-x-12">
@@ -212,12 +197,12 @@ export function Header() {
                 </label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <MagnifyingGlassIcon className="h-5 w-5 text-[#525252] font-medium" aria-hidden="true" />
+                    <MagnifyingGlassIcon className="h-5 w-5 text-white md:text-[#525252] font-medium" aria-hidden="true" />
                   </div>
                   <input
                     id="search"
                     name="search"
-                    className="block w-full rounded-[15px] border-0 bg-[#E2E2E2] py-[10px] pl-[14px] text-[#525252] ring-1 ring-inset ring-gray-300 placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-[15px] border-0 bg-[#C4C4C433] md:bg-[#E2E2E2] py-[10px] pl-[14px] text-white md:text-[#525252] ring-1 ring-inset ring-[#C4C4C433] ring-gray-300 placeholder:text-white md:placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="Search"
                     type="search"
                   />
