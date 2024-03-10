@@ -79,18 +79,21 @@ export function Footer() {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto max-w-7xl px-6 pb-16 pt-16 sm:pt-24 lg:px-8 lg:pt-10">
-        <div className="mt-12 pt-8 sm:mt-16 lg:mt-20 lg:flex lg:items-center lg:justify-between">
-          <div className='flex items-center gap-12'>
-            <h3 className="text-lg font-semibold leading-6 text-white">About us</h3>
-            <h3 className="text-lg font-semibold leading-6 text-white">Read our hot topics</h3>
+      <div className="mx-auto max-w-7xl px-6 pb-16 pt-0 sm:pt-24 lg:px-8 lg:pt-10">
+        <div className="mt-[35px] sm:mt-16 lg:mt-20 lg:flex lg:items-center lg:justify-between">
+          <div className='flex flex-col md:flex-row items-center gap-[35px]'>
+            <div className="flex gap-[35px] flex-row-reverse sm:flex-row lg:flex-row">
+              <div className="text-lg font-semibold leading-6 text-white">About us</div>
+              <div className="text-lg font-semibold leading-6 text-white">Read our hot topics</div>
+            </div>
+
             <div className="flex items-center text-lg leading-6 text-gray-300 gap-5">
-              <Image src={Youtube} width={35} height={35} alt={"youtube"} />
+              <Image src={Youtube} width={35} height={35} alt={'youtube'} />
               <h3 className="text-lg font-semibold leading-6 text-white">Subscribe to our channel</h3>
             </div>
           </div>
-          <div className="flex space-x-6 md:order-2">
-          <h3 className="text-lg font-semibold leading-6 text-white">Follow Us</h3>
+          <div className="flex space-x-6 mt-[35px] md:mt-0 md:order-2">
+            <h3 className="text-lg font-semibold leading-6 text-white">Follow Us</h3>
             {navigation.social.map((item) => (
               <a key={item.name} href={item.href} className="text-white hover:text-gray-400">
                 <span className="sr-only">{item.name}</span>
@@ -100,13 +103,13 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t border-white/10 pt-8 flex gap-12 items-center justify-center">
-          <p className="mt-8 text-[17px] text-white md:order-1 md:mt-0">
+          <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
             Copyright © 2024 ImaraTv
           </p>
-          <p className="mt-8 text-[17px] text-white md:order-1 md:mt-0">
+          <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
             Privacy policy
           </p>
-          <p className="mt-8 text-[17px] text-white md:order-1 md:mt-0">
+          <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
             Terms and conditions
           </p>
         </div>
