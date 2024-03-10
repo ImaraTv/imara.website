@@ -10,7 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 // import required modules
 import {Pagination, Navigation, Autoplay} from 'swiper/modules';
-
+import { css } from '@emotion/react';
 import Slide1 from "@/images/carousel.png"
 import Link from "next/link";
 
@@ -35,6 +35,16 @@ const items = [
     },
 ]
 
+const carouselStyle = {
+    imageStyles: css`
+        @media (max-width: 767px) {
+            width: 430px;
+            height: 280px;
+        }
+    `,
+};
+
+
 export function CarouselHome() {
     return (
         <Swiper
@@ -46,21 +56,27 @@ export function CarouselHome() {
             }}
             loop={true}
             autoplay={{delay: 5000}}
-            className="swiper w-full h-[560px] mb-[75px]"
+            className="swiper w-full h-[280px] md:h-[560px] mb-[75px]"
             id="slider2"
         >
 
             {items.map((item) => (
                 <SwiperSlide key={item.id}>
-                    <Image src={item.source} width={1440} height={560} className="w-full object-cover" alt="itemImage"/>
+                    <Image
+                      src={item.source}
+                      width={1440}
+                      height={560}
+                      className={`w-full h-full object-cover ${carouselStyle.imageStyles}`}
+                      alt="itemImage"
+                      />
                     <div className="absolute z-[999] text-white bottom-[64px] ltr:left-12 rtl:right-12 px-12">
-                        <div className="text-[35px] font-bold mb-[26px]">{item.title}</div>
+                        <div className="text-[20px] md:text-[35px] font-bold mb-[26px]">{item.title}</div>
                         <div className='flex gap-7 items-center text-white'>
-                            <button className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px'>HD
+                            <button className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[14px] md:text-[18px]'>HD
                             </button>
-                            <div className='font-medium text-[18px]'>2023</div>
-                            <div className='font-medium text-[18px]'>43 min</div>
-                            <div className='font-medium text-[18px]'>Ranked : 4.7</div>
+                            <div className='font-medium text-[14px] md:text-[18px]'>2023</div>
+                            <div className='font-medium text-[14px] md:text-[18px]'>43 min</div>
+                            <div className='font-medium text-[14px] md:text-[18px]'>Ranked : 4.7</div>
                         </div>
                         <div className="sm:mt-5 mt-1 w-4/5 text-[18px] text-[#B0B0B0] sm:block hidden">
                             {item.description}
