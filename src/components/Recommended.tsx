@@ -338,7 +338,7 @@ export function Recommended() {
                                     <div className='flex gap-3 mt-[18px] md:mt-5'>
                                         <button
                                             type="button"
-                                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
+                                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 md:px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
                                         >
                                             {file.time}
                                         </button>
