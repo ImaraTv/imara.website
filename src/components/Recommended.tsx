@@ -187,7 +187,7 @@ export function Recommended() {
     let [isOpen, setIsOpen] = useState(false)
 
     const [selectedItem, setSelectedItem] = useState(null);
-    const openModal = (file) => {
+    const openModal = (file: any) => {
         setSelectedItem(file);
         setIsOpen(true);
     };
