@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import Trend1 from '@/images/trend1.png';
 import Trend2 from '@/images/trend2.png';
+import Yt from "@/images/yt.png";
 import Image from "next/image";
 // Import Swiper styles
 import 'swiper/css';
@@ -122,6 +123,8 @@ export function Trending() {
                             <Image src={post.imageUrl} width={524} height={273} alt="trend1" className="absolute inset-0 -z-10 h-full w-full object-cover" />
                             <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-gray-900/40"/>
                             <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10"/>
+                            <Image className='absolute inset-0 m-auto' width={50} height={43} src={Yt}
+                                   alt={"ÿt"}/>
 
                             <h3 className="mt-3 text-[18px] md:text-[26px] font-semibold text-white">
                                 <a href={post.href}>

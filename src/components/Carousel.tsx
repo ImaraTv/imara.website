@@ -87,7 +87,7 @@ export function CarouselHome() {
                       <div className="flex gap-10 mt-[43px]">
                           <Link
                             href="/sign-in"
-                            className="group inline-flex bg-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-[12px] md:text-[17px] font-medium text-white focus:outline-none"
+                            className="group inline-flex bg-[#007BFF] items-center justify-center rounded-lg py-2 px-2 md:px-10 text-[12px] md:text-[17px] font-medium text-white focus:outline-none"
                           >
                               Watch Now
                           </Link>

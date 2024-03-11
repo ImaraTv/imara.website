@@ -332,12 +332,8 @@ export function Recommended() {
                                          className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                         <img src={file.source} alt=""
                                              className="pointer-events-none object-cover group-hover:opacity-75"/>
-
-                                        <button type="button" className="absolute inset-0 focus:outline-none">
-                                            <span className="sr-only">View details for {file.title}</span>
-                                        </button>
                                     </div>
-                                    <Image className='absolute inset-0 top-1/4 left-1/2' width={50} height={43} src={Yt}
+                                    <Image className='absolute inset-0 m-auto' width={50} height={43} src={Yt}
                                            alt={"ÿt"}/>
                                     <div className='flex gap-3 mt-[18px] md:mt-5'>
                                         <button
