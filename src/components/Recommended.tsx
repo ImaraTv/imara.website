@@ -2,7 +2,7 @@
 
 import {CheckIcon, ChevronDownIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {Dialog, Listbox, Transition} from "@headlessui/react";
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Button} from "@/components/Button";
 import Image from "next/image";
 import Yt from "@/images/yt.png";
@@ -65,6 +65,7 @@ const qualities = [
     {id: 4, name: 'Standard', unavailable: true},
     {id: 5, name: 'Low', unavailable: false},
 ]
+
 const suggestions = [
     {
         id: 1,
@@ -103,11 +104,13 @@ const suggestions = [
     },
 
 ]
+
 const files = [
     {
         title: 'Chills for Who',
         category: 'Mental health',
         time: '1hr 23 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -115,6 +118,7 @@ const files = [
         title: 'The Circle',
         category: 'Politics',
         time: '45 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -122,6 +126,7 @@ const files = [
         title: 'Hapa nje kwetu',
         category: 'Mental health',
         time: '45 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -129,6 +134,7 @@ const files = [
         title: 'Against my will short film',
         category: 'GBV',
         time: '22 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -136,6 +142,7 @@ const files = [
         title: 'Making the right decisions',
         category: 'GBV',
         time: '22 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -143,6 +150,7 @@ const files = [
         title: 'Cut across my will',
         category: 'GBV',
         time: '22 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -150,6 +158,7 @@ const files = [
         title: 'Covid - Comic cartoons',
         category: 'GBV',
         time: '22 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -157,6 +166,7 @@ const files = [
         title: 'Chills for Who',
         category: 'Mental health',
         time: '1hr 23 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -164,6 +174,7 @@ const files = [
         title: 'Life of Wambo',
         category: 'FGM',
         time: '45 min',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
         source:
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
@@ -173,15 +184,25 @@ export function Recommended() {
     const [selected, setSelected] = useState(qualities[0])
     const [active, setActive] = useState(dates[0])
 
-    let [isOpen, setIsOpen] = useState(true)
+    let [isOpen, setIsOpen] = useState(false)
 
-    function closeModal() {
-        setIsOpen(false)
-    }
+    const [selectedItem, setSelectedItem] = useState(null);
+    const openModal = (file) => {
+        setSelectedItem(file);
+        setIsOpen(true);
+    };
 
-    function openModal() {
-        setIsOpen(true)
-    }
+    const closeModal = () => {
+        setIsOpen(false);
+        setSelectedItem(null);
+    };
+
+    useEffect(() => {
+        // Reset isOpen state when the component unmounts
+        return () => {
+            setIsOpen(false);
+        };
+    }, []);
 
     return (
         <>
@@ -328,7 +349,7 @@ export function Recommended() {
                             className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-2 xl:gap-x-8">
                             {files.map((file) => (
                                 <li key={file.title} className="relative">
-                                    <div onClick={openModal}
+                                    <div onClick={() => openModal(file)}
                                          className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                         <img src={file.source} alt=""
                                              className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"/>
@@ -350,7 +371,7 @@ export function Recommended() {
                             ))}
                         </ul>
                         <Transition appear show={isOpen} as={Fragment}>
-                            <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                            <Dialog as="div" className="relative z-10" onClose={closeModal} selectedItem={selectedItem}>
                                 <Transition.Child
                                     as={Fragment}
                                     enter="ease-out duration-300"
@@ -380,27 +401,22 @@ export function Recommended() {
                                                     as="h3"
                                                     className="text-[19px] font-bold text-[#525252]"
                                                 >
-                                                    Making the right decision
+                                                    {selectedItem?.title}
                                                 </Dialog.Title>
                                                 <div className='flex gap-7 items-center mt-5'>
                                                     <button
                                                         className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px] text-white'>HD
                                                     </button>
-                                                    <div className='font-medium text-[15px] text-[#525252]'>2023</div>
-                                                    <div className='font-medium text-[15px] text-[#525252]'>1 hr</div>
+                                                    <div className='font-medium text-[15px] text-[#525252]'>{selectedItem?.time}</div>
                                                 </div>
                                                 <div className='flex gap-1 items-center mt-[55px] mb-[27px]'>
                                                     <div className='font-bold text-[20px] text-[#525252]'>Category:
                                                     </div>
-                                                    <div className='font-medium text-[17px] text-[#525252]'>GBV
-                                                        awareness
-                                                    </div>
+                                                    <div className='font-medium text-[17px] text-[#525252]'>{selectedItem?.category}</div>
                                                 </div>
                                                 <div className="mt-2">
                                                     <p className="text-[15px] text-[#525252]">
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                                        eiusmod
-                                                        tempor incididunt.
+                                                        {selectedItem?.description}
                                                     </p>
                                                 </div>
 
