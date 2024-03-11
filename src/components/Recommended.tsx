@@ -329,10 +329,10 @@ export function Recommended() {
                             {files.map((file) => (
                                 <li key={file.title} className="relative">
                                     <div onClick={openModal}
-                                         className="relative group h-[138px] md:h-[258px] w-[196px] md:w-[366px] block overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                         className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                         <img src={file.source} alt=""
                                              className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"/>
-                                        <Image className='absolute inset-0 m-auto' width={50} height={43} src={Yt}
+                                        <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-[43px] absolute inset-0 m-auto' width={50} height={43} src={Yt}
                                                alt={"ÿt"}/>
                                     </div>
                                     <div className='flex gap-3 mt-[18px] md:mt-5'>
