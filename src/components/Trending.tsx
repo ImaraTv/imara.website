@@ -1,76 +1,73 @@
 "use client"
 import React, { useRef, useState } from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
+import Trend1 from '@/images/trend1.png';
+import Trend2 from '@/images/trend2.png';
+import Image from "next/image";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { Container } from '@/components/Container';
 
 
 const posts = [
     {
         id: 1,
-        title: 'Boost your conversion rate',
+        title: 'No Means No',
         href: '#',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        author: {
-            name: 'Michael Foster',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
+        imageUrl: Trend1,
+        categories: [
+            {
+                id: 1,
+                name: 'Sexual Health'
+            },
+            {
+                id: 2,
+                name: 'Educative'
+            },
+        ],
     },
     {
         id: 2,
-        title: 'Boost your conversion rate',
+        title: 'The sweet ride',
         href: '#',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        author: {
-            name: 'Michael Foster',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
+        imageUrl: Trend2,
+        categories: [
+            {
+                id: 1,
+                name: 'Comedy'
+            },
+            {
+                id: 2,
+                name: 'Educative'
+            },
+        ],
     },
     {
         id: 3,
         title: 'Boost your conversion rate',
         href: '#',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        author: {
-            name: 'Michael Foster',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
+        imageUrl: Trend1,
+        categories: [
+            {
+                id: 1,
+                name: 'Awareness'
+            },
+        ],
     },
     {
         id: 4,
         title: 'Boost your conversion rate',
         href: '#',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
-        author: {
-            name: 'Michael Foster',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
+        imageUrl: Trend1,
+        categories: [
+            {
+                id: 1,
+                name: 'Educative'
+            },
+        ],
     },
 
 ]
@@ -82,7 +79,7 @@ export function Trending() {
     return (
         <>
             <div className="flex items-center justify-center gap-3 mb-[47px]">
-                <span className="text-[40px] text-[#2B2B2B] font-bold">Trending</span>
+                <span className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold">Trending</span>
 
                 <svg className="" width="30" height="30" viewBox="0 0 20 28" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +97,7 @@ export function Trending() {
                 breakpoints={{
                     481: {
                         slidesPerView: 2,
-                        spaceBetween: 20,
+                        spaceBetween: 10,
                     },
                     769: {
                         slidesPerView: 2,
@@ -119,36 +116,24 @@ export function Trending() {
                 {posts.map((post) => (
                     <SwiperSlide key={post.id}>
                         <article
-                            className="relative isolate flex flex-col justify-end overflow-hidden ml-[47px] rounded-[5px] bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
+                            className="relative isolate flex flex-col justify-end overflow-hidden ml-[16px] md:ml-[47px] rounded-[5px] bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
                             style={cardStyle}
                         >
-                            <img src={post.imageUrl} alt=""
-                                 className="absolute inset-0 -z-10 h-full w-full object-cover"/>
-                            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"/>
+                            <Image src={post.imageUrl} width={524} height={273} alt="trend1" className="absolute inset-0 -z-10 h-full w-full object-cover" />
+                            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-gray-900/40"/>
                             <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10"/>
 
-                            <div
-                                className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-                                <time dateTime={post.datetime} className="mr-8">
-                                    {post.date}
-                                </time>
-                                <div className="-ml-4 flex items-center gap-x-4">
-                                    <svg viewBox="0 0 2 2" className="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50">
-                                        <circle cx={1} cy={1} r={1}/>
-                                    </svg>
-                                    <div className="flex gap-x-2.5">
-                                        <img src={post.author.imageUrl} alt=""
-                                             className="h-6 w-6 flex-none rounded-full bg-white/10"/>
-                                        {post.author.name}
-                                    </div>
-                                </div>
-                            </div>
-                            <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
+                            <h3 className="mt-3 text-[18px] md:text-[26px] font-semibold text-white">
                                 <a href={post.href}>
                                     <span className="absolute inset-0"/>
                                     {post.title}
                                 </a>
                             </h3>
+                            <div className="flex gap-2 font-medium text-sm md:text-[16px] text-white">
+                                {post.categories.map((category) => (
+                                  <div key={category.id}>{category.name}</div>
+                                ))}
+                            </div>
                         </article>
                     </SwiperSlide>
                 ))}

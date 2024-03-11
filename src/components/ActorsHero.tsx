@@ -46,10 +46,10 @@ const actors = [
 export function ActorsHero() {
     return (
         <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[150px] py-[56px] md:px-[46px] bg-[#F3F3F3]">
-                <div className="flex flex-col gap-10">
-                    <div className="text-[40px] text-[#2B2B2B] font-bold">Actors</div>
-                    <p className="text-[18px] text-[#525252]">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[150px] py-[56px] px-5 md:px-[46px] bg-[#F3F3F3] mt-[47px] md:mt-0">
+                <div className="flex flex-col items-center md:items-start justify-center md:justify-start gap-8 md:gap-10">
+                    <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold">Actors</div>
+                    <p className="text-[18px] text-[#525252] text-center md:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -63,14 +63,14 @@ export function ActorsHero() {
                         </Button>
                         <Link
                             href="#"
-                            className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
+                            className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-[12px] md:text-lg font-medium text-[#525252] focus:outline-none"
                         >
                             Become an actor
                         </Link>
                     </div>
                 </div>
                 <div>
-                    <div className="grid grid-rows-1 sm:grid-rows-2 grid-flow-col gap-1">
+                    <div className="grid grid-cols-2 md:grid-cols-0 md:grid-rows-1 sm:grid-rows-2 md:grid-flow-col gap-1">
                         <div className="md:row-end-3 md:row-span-2">
                             <div
                                 className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
@@ -85,7 +85,7 @@ export function ActorsHero() {
                         </div>
                         <div className="md:row-start-2 md:row-span-12">
                             <div
-                                className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                className="group w-full md:w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"
                                        className="pointer-events-none object-cover group-hover:opacity-75"/>
                                 <button type="button" className="absolute inset-0 focus:outline-none">
@@ -97,10 +97,10 @@ export function ActorsHero() {
                         </div>
                     </div>
 
-                    <div className="grid grid-rows-1 sm:grid-rows-2 grid-flow-col gap-1">
+                    <div className="grid grid-cols-2 md:grid-cols-0 md:grid-rows-1 sm:grid-rows-2 md:grid-flow-col gap-1">
                         <div className="md:row-end-3 md:row-span-2">
                             <div
-                                className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                className="group w-full md:w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"
                                        className="pointer-events-none object-cover group-hover:opacity-75"/>
                                 <button type="button" className="absolute inset-0 focus:outline-none">
@@ -112,7 +112,7 @@ export function ActorsHero() {
                         </div>
                         <div className="md:row-start-2 md:row-span-12">
                             <div
-                                className="group w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                className="group w-full md:w-[194px] h-[120px] overflow-hidden rounded-[3px] focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                                 <Image width={194} height={120} src={Actor} alt="avatar"
                                        className="pointer-events-none object-cover group-hover:opacity-75"/>
                                 <button type="button" className="absolute inset-0 focus:outline-none">

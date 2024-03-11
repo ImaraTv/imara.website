@@ -4,10 +4,10 @@ export function Newsletter() {
         <div className="bg-white py-16 sm:py-24">
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-4">
                 <div className="relative isolate overflow-hidden px-6 py-10 sm:px-10 xl:py-20">
-                    <h2 className="mx-auto max-w-2xl text-center text-4xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">
+                    <h2 className="mx-auto max-w-2xl text-center text-[20px] md:text-4xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">
                         Don’t miss out on any of our content
                     </h2>
-                    <p className="mx-auto mt-2 text-center text-lg leading-8 text-[#2B2B2B]">
+                    <p className="mx-auto mt-2 text-center text-sm md:text-lg leading-8 text-[#2B2B2B]">
                         Subscribe to our newsletter and get personalised upskilling material today.
                     </p>
                     <form className="mx-auto mt-10 flex max-w-md gap-x-4">
@@ -25,7 +25,7 @@ export function Newsletter() {
                         />
                         <button
                             type="submit"
-                            className="flex-none rounded-md bg-[#007BFF] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                            className="flex-none rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs md:text-sm font-semibold text-white shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                         >
                             Subscribe Now
                         </button>

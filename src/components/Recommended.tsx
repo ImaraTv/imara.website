@@ -2,13 +2,14 @@
 
 import {CheckIcon, ChevronDownIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {Dialog, Listbox, Transition} from "@headlessui/react";
-import {Fragment, useState} from "react";
+import React, {Fragment, useState} from "react";
 import {Button} from "@/components/Button";
 import Image from "next/image";
 import Yt from "@/images/yt.png";
 import Link from "next/link";
 import {Container} from "@/components/Container";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ArrowDownIcon } from "@heroicons/react/24/outline";
 
 
 const categories = [
@@ -186,13 +187,13 @@ export function Recommended() {
         <>
             <Container>
                 <div className='md:flex justify-between mt-[53px]'>
-                    <div className='md:flex'>
-                        <div className="text-[40px] text-[#2B2B2B] font-bold mr-[43px]">Recommended</div>
+                    <div className='md:flex space-y-4'>
+                        <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold mr-[43px] text-center md:text-left">Recommended</div>
                         {categories.map((category, index) => (
                             <button
                                 type="button"
                                 key={category.id}
-                                className={`inline-flex mr-[24px] items-center gap-x-2 rounded-md bg-white px-[13px] py-2 text-[17px] font-medium text-[#525252] shadow-sm ${
+                                className={`inline-flex mr-[24px] items-center gap-x-2 rounded-md bg-white px-[13px] py-2 text-12px] md:text-[17px] font-medium text-[#525252] shadow-sm ${
                                     index === 0
                                         ? 'ring-1 ring-inset ring-[#525252]'
                                         : 'hover:bg-gray-50'
@@ -202,7 +203,7 @@ export function Recommended() {
                             </button>
                         ))}
                     </div>
-                    <div className='md:flex px-6'>
+                    <div className='hidden md:flex px-6'>
                         <div className="">
                             <Listbox value={selected} onChange={setSelected}>
                                 <div className="relative mt-1">
@@ -324,7 +325,7 @@ export function Recommended() {
                 <div className='md:flex justify-between mt-[90px] gap-32'>
                     <div className="md:w-3/4">
                         <ul role="list"
-                            className="grid grid-cols-1 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-2 xl:gap-x-8">
+                            className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-2 xl:gap-x-8">
                             {files.map((file) => (
                                 <li key={file.title} className="relative">
                                     <div onClick={openModal}
@@ -338,17 +339,17 @@ export function Recommended() {
                                     </div>
                                     <Image className='absolute inset-0 top-1/4 left-1/2' width={50} height={43} src={Yt}
                                            alt={"ÿt"}/>
-                                    <div className='flex gap-3 mt-5'>
+                                    <div className='flex gap-3 mt-[18px] md:mt-5'>
                                         <button
                                             type="button"
-                                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-1.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
+                                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
                                         >
                                             {file.time}
                                         </button>
-                                        <p className="pointer-events-none mt-2 block truncate text-[16px] font-medium text-[#525252]">{file.category}</p>
+                                        <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{file.category}</p>
                                     </div>
 
-                                    <p className="pointer-events-none block text-[19px] mt-9 font-bold text-[#525252]">{file.title}</p>
+                                    <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{file.title}</p>
                                 </li>
                             ))}
                         </ul>
@@ -420,14 +421,21 @@ export function Recommended() {
                                 </div>
                             </Dialog>
                         </Transition>
+
+                        <Container>
+                            <div className="md:hidden flex items-center justify-end text-[#F2970F] space-x-2 mb-[60px]">
+                                <span className="text-[18px] font-bold">Load more </span>
+                                <ArrowDownIcon className="h-[18px] w-[18px]"/>
+                            </div>
+                        </Container>
                     </div>
 
                     <div className="md:w-1/4">
-                        <div className="text-[40px] text-[#2B2B2B] font-bold mb-[53px]">Recently updated</div>
-                        <ul role="list" className="-mt-12 space-y-12 xl:col-span-3">
+                        <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold mb-[48px] md:mb-[53px] mt-[54px]">Recently updated</div>
+                        <ul role="list" className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3">
                             {suggestions.map((suggestion) => (
                                 <li key={suggestion.name}
-                                    className="flex flex-col gap-10 pt-12 sm:flex-row items-center justify-center">
+                                    className="flex flex-row lg:flex-col gap-10 pt-12 sm:flex-row items-center justify-center">
                                     <img className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover"
                                          src={suggestion.imageUrl} alt=""/>
                                     <div className="max-w-xl flex-auto space-y-[26px]">
@@ -440,10 +448,10 @@ export function Recommended() {
                     </div>
                 </div>
             </Container>
-            <div className="w-full border-t-[1px] mb-[44px] mt-[44px] border-[#D9D9D9]"/>
+            <div className="hidden md:block w-full border-t-[1px] mb-[44px] mt-[44px] border-[#D9D9D9]"/>
 
             <Container>
-                <div className="flex items-center justify-end text-[#F2970F] space-x-[34px] mb-[60px]">
+                <div className="hidden md:flex items-center justify-end text-[#F2970F] space-x-[34px] mb-[60px]">
                     <span className="text-[26px] font-bold">Watch more </span>
                     <ArrowRightIcon className="h-[36px] w-[36px]"/>
                 </div>
