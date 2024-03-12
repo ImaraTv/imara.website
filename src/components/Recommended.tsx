@@ -100,8 +100,15 @@ const suggestions = [
     },
 
 ]
-
-const files = [
+interface File {
+    title: string;
+    category: string;
+    time: string;
+    description: string;
+    source: string;
+    // Add other properties as needed
+}
+const files: File[] = [
     {
         title: 'Chills for Who',
         category: 'Mental health',
@@ -183,14 +190,15 @@ export function Recommended() {
     let [isOpen, setIsOpen] = useState(false)
 
     const [selectedItem, setSelectedItem] = useState(null);
-    const openModal = (file: any) => {
-        setSelectedItem(file);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const openModal = (file: File) => {
+        setSelectedFile(file);
         setIsOpen(true);
     };
 
     const closeModal = () => {
         setIsOpen(false);
-        setSelectedItem(null);
+        setSelectedFile(null);
     };
 
     useEffect(() => {
@@ -397,22 +405,22 @@ export function Recommended() {
                                                     as="h3"
                                                     className="text-[19px] font-bold text-[#525252]"
                                                 >
-                                                    {selectedItem?.title}
+                                                    {selectedFile && selectedFile.title}
                                                 </Dialog.Title>
                                                 <div className='flex gap-7 items-center mt-5'>
                                                     <button
                                                         className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px] text-white'>HD
                                                     </button>
-                                                    <div className='font-medium text-[15px] text-[#525252]'>{selectedItem?.time}</div>
+                                                    <div className='font-medium text-[15px] text-[#525252]'>{selectedFile && selectedFile.time}</div>
                                                 </div>
                                                 <div className='flex gap-1 items-center mt-[55px] mb-[27px]'>
                                                     <div className='font-bold text-[20px] text-[#525252]'>Category:
                                                     </div>
-                                                    <div className='font-medium text-[17px] text-[#525252]'>{selectedItem?.category}</div>
+                                                    <div className='font-medium text-[17px] text-[#525252]'>{selectedFile && selectedFile.category}</div>
                                                 </div>
                                                 <div className="mt-2">
                                                     <p className="text-[15px] text-[#525252]">
-                                                        {selectedItem?.description}
+                                                        {selectedFile && selectedFile.description}
                                                     </p>
                                                 </div>
 
