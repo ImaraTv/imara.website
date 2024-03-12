@@ -59,10 +59,10 @@ export default function Watch() {
 
         {/* Hero card */}
         <div className="">
-          <div className="relative sm:overflow-hidden h-[546px]">
+          <div className="relative sm:overflow-hidden h-[240px] md:h-[546px]">
             <div className="absolute inset-0">
               <Image
-                className="h-full w-full object-cover"
+                className="h-[240px] md:h-full w-full object-cover"
                 src={Banner}
                 alt={"contact"}
                 width={1440}
@@ -70,13 +70,13 @@ export default function Watch() {
               />
 
             </div>
-            <div className="absolute inset-y-[200px] w-full h-96 bg-gradient-to-t from-gray-900 mix-blend-multiply" />
+            <div className="absolute inset-y-[20px] w-full h-[240px] md:h-96 bg-gradient-to-t from-gray-900 mix-blend-multiply" />
 
-            <div className="relative px-6 pt-[250px]">
-              <div className='flex items-center justify-center'>
+
+              <div className='absolute inset-0 m-auto'>
                 <Image src={Youtube} width={52.5} height={52.5} alt={"youtube icon"} />
               </div>
-            </div>
+
           </div>
         </div>
 
@@ -114,7 +114,7 @@ export default function Watch() {
         <Container>
           {/* Video details */}
           <div className='flex justify-between my-[148px]'>
-            <div className="flex w-3/4 gap-12">
+            <div className="flex relative flex-col md:flex-row w-3/4 gap-12">
               <div className="mr-4 flex-shrink-0">
                 <Image src={VideoBanner} alt={"video image"} className="h-[391px] w-[316px]" />
               </div>
@@ -154,7 +154,7 @@ export default function Watch() {
               </div>
             </div>
 
-            <div className="flex w-1/4 gap-12">
+            <div className="flex w-1/4 gap-12 absolute md:relative">
               <div className="flex items-center justify-center px-4 gap-2 bg-white rounded h-12" style={cardStyle}>
                 <StarIcon className="h-5 w-5 text-[#F2970F]" aria-hidden="true" />
                 <StarIcon className="h-5 w-5 text-[#F2970F]" aria-hidden="true" />

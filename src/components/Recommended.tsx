@@ -6,6 +6,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import {Button} from "@/components/Button";
 import Image from "next/image";
 import Yt from "@/images/yt.png";
+import Recent from "@/images/recent.png";
 import Link from "next/link";
 import {Container} from "@/components/Container";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -71,36 +72,31 @@ const suggestions = [
         id: 1,
         name: 'The bad choice',
         series: 'series/ ss2 / Eps 3',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: Recent,
     },
     {
         id: 2,
         name: 'The bad choice',
         series: 'series/ ss2 / Eps 3',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: Recent,
     },
     {
         id: 3,
         name: 'The bad choice',
         series: 'series/ ss2 / Eps 3',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: Recent,
     },
     {
         id: 4,
         name: 'The bad choice',
         series: 'series/ ss2 / Eps 3',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: Recent,
     },
     {
         id: 5,
         name: 'The bad choice',
         series: 'series/ ss2 / Eps 3',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: Recent,
     },
 
 ]
@@ -443,12 +439,12 @@ export function Recommended() {
                     </div>
 
                     <div className="md:w-1/4">
-                        <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold mb-[48px] md:mb-[53px] mt-[54px]">Recently updated</div>
+                        <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold mb-[48px] md:mb-[53px]">Recently updated</div>
                         <ul role="list" className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3">
                             {suggestions.map((suggestion) => (
                                 <li key={suggestion.name}
-                                    className="flex flex-row lg:flex-col gap-10 pt-12 sm:flex-row items-center justify-center">
-                                    <img className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover"
+                                    className="flex gap-[26px] md:gap-10 sm:flex-row items-center justify-center">
+                                    <Image width={131} height={118} className="w-[131px] rounded-l-2xl object-cover"
                                          src={suggestion.imageUrl} alt=""/>
                                     <div className="max-w-xl flex-auto space-y-[26px]">
                                         <p className="text-[17px] font-medium text-[#525252]">{suggestion.series}</p>
