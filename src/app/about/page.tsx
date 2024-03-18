@@ -1,7 +1,7 @@
 import { CallToAction } from '@/components/CallToAction'
 import { Faqs } from '@/components/Faqs'
 import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
+import { Header2 } from '@/components/Header2'
 import { Hero } from '@/components/Hero'
 import { CarouselHome } from '@/components/Carousel'
 import { Pricing } from '@/components/Pricing'
@@ -68,14 +68,14 @@ const cardStyle = {
 export default function About() {
     return (
         <>
-            <Header />
+            <Header2 />
             <main>
 
-                <div className="relative isolate overflow-hidden bg-[#FCFCFC] pt-10 md:pt-[93px]">
-                    <Image src={Image3} alt={"chane"} className="absolute top-0 right-1/4 -z-10 origin-top-right sm:-mr-80 lg:-mr-96 w-[704px] h-[593px]" />
+                <div className="relative isolate overflow-hidden bg-[#FCFCFC]">
+                    <Image src={Image3} alt={"chane"} className="hidden md:block absolute top-0 right-1/4 -z-10 origin-top-right sm:-mr-80 lg:-mr-96 w-[704px] h-auto" />
                     <div className="mx-[16px] md:mx-[47px] max-w-[1440px]">
-                        <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
-                            <h1 className="max-w-2xl text-[40px] font-bold text-gray-900 sm:text-6xl lg:col-span-2 xl:col-auto">
+                        <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8 pt-40">
+                            <h1 className="max-w-2xl text-[20px] md:text-[40px] font-bold text-gray-900 sm:text-6xl lg:col-span-2 xl:col-auto">
                                 Imara TV: Bridging Youth & Health
                                 through Innovation
                             </h1>
@@ -96,7 +96,7 @@ export default function About() {
                                     </a>
                                 </div>
                             </div>
-                            <Image src={Image5} width={616} height={409} alt={"image"} className="aspect-[6/5] w-full object-cover lg:max-w-none xl:row-span-2 xl:row-end-2" />
+                            <Image src={Image5} width={616} height={409} alt={"image"} className="w-full object-cover xl:row-span-2 xl:row-end-2" />
                         </div>
                     </div>
                 </div>
@@ -181,14 +181,16 @@ export default function About() {
                     </div>
                 </Container>
 
+
                 <div className="bg-[#F3F3F3] py-24 sm:py-32">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto max-w-2xl lg:mx-0">
+                <Container>
+                    <div className="mx-auto">
+                        <div className="mx-auto">
                             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Imara Tv core members</h2>
                         </div>
                         <ul
                             role="list"
-                            className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+                            className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-40 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
                         >
                             {people.map((person) => (
                                 <li key={person.name}>
@@ -199,11 +201,14 @@ export default function About() {
                             ))}
                         </ul>
                     </div>
+                    </Container>
                 </div>
 
+
+                <Container>
                 <div className="bg-white py-24 sm:py-32">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto max-w-2xl lg:max-w-none">
+                    <div className="mx-auto">
+                        <div className="mx-auto">
                             <div className='flex gap-4 items-center'>
                                 <h2 className="text-[20px] md:text-[40px] font-bold text-[#2B2B2B]">
                                     Our partners and clients
@@ -217,7 +222,7 @@ export default function About() {
                                 <div>Clients</div>
                             </div>
 
-                            <div className="mx-auto mt-10 grid grid-cols-2 items-start gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
+                            <div className="mx-auto mt-10 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
                                 <div className='w-[239px] h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
@@ -301,6 +306,7 @@ export default function About() {
                         </div>
                     </div>
                 </div>
+                </Container>
 
             </main>
             <Footer />

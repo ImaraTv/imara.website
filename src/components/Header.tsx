@@ -145,98 +145,31 @@ const cardStyle = {
 
 export function Header() {
   return (
-    <header className="absolute inset-x-0 top-0 z-50 bg-[#007BFF] md:bg-transparent py-6">
-      <nav className="mx-[16px] md:mx-[47px] max-w-[1440px] flex items-center justify-between">
-      <div className="md:hidden">
-        <MobileNavigation />
-      </div>
-      <div className="hidden md:flex items-center md:gap-x-12">
-        <Link href="#" aria-label="Home">
-          <Image
-            src={Logo2}
-            width={103}
-            height={48}
-            alt="logo"
-          />
-        </Link>
-        <div className="hidden md:flex md:gap-x-6">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/about">About Us</NavLink>
-          <Popover className="relative">
-            <Popover.Button
-              className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
-              <span>Watch Now</span>
-              <ChevronDownIcon className="h-5 w-5 font-bold" aria-hidden="true" />
-            </Popover.Button>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-                <div
-                  className="w-56 shrink rounded-xl bg-white p-4 text-[17px] leading-6 text-[#474747] shadow-lg ring-1 ring-gray-900/5">
-                  {solutions.map((item) => (
-                    <a key={item.name} href={item.href} className="block p-2 hover:text-indigo-600">
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </Popover.Panel>
-            </Transition>
-          </Popover>
-          <NavLink href="/actors">Actors</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
-        </div>
-      </div>
-      <div className="flex items-center gap-x-5 md:gap-x-8">
-        <div className="flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-          <div className="w-full max-w-lg lg:max-w-xs">
-            <label htmlFor="search" className="sr-only">
-              Search
-            </label>
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                <MagnifyingGlassIcon className="h-5 w-5 text-white md:text-[#525252] font-medium" aria-hidden="true" />
-              </div>
-              <input
-                id="search"
-                name="search"
-                className="block w-full rounded-[15px] border-0 bg-[#C4C4C433] md:bg-[#E2E2E2] py-[10px] pl-[14px] text-white md:text-[#525252] ring-1 ring-inset ring-[#C4C4C433] ring-gray-300 placeholder:text-white md:placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Search"
-                type="search"
-              />
-            </div>
+    <header className="py-10 bg-[#007BFF] md:bg-white">
+      <Container>
+        <nav className="relative z-50 flex justify-between">
+          <div className="md:hidden">
+            <MobileNavigation />
           </div>
-        </div>
-        <Button href="/sign-up" color="blue" className="hidden md:flex">
-          <span>
-            Create on Imara
-          </span>
-        </Button>
-        <Link
-          href="/sign-in"
-          className="group hidden md:inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
-        >
-          Login
-        </Link>
-
-        <div className="hidden md:flex px-4">
-          <Popover className="relative">
-            {({ open }) => (
-              <>
+          <div className="hidden md:flex items-center md:gap-x-12">
+            <Link href="#" aria-label="Home">
+              <Image
+                src={Logo2}
+                width={103}
+                height={48}
+                alt="logo"
+              />
+            </Link>
+            <div className="hidden md:flex md:gap-x-6">
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/about">About Us</NavLink>
+              <Popover className="relative">
                 <Popover.Button
-                  className={`
-            ${open ? 'text-white' : 'text-white/90'}
-            group inline-flex items-center rounded-full bg-[#525252] px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
-                >
-                  <Image src={User} alt={'user'} width={20} height={20} />
+                  className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
+                  <span>Watch Now</span>
+                  <ChevronDownIcon className="h-5 w-5 font-bold" aria-hidden="true" />
                 </Popover.Button>
+
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-200"
@@ -246,38 +179,107 @@ export function Header() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <Popover.Panel
-                    className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
-                    <div className="overflow-hidden rounded-lg ring-1 ring-black/5" style={cardStyle}>
-                      <div className="relative grid gap-8 bg-white p-7">
-                        {items.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
-                          >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
-                              <item.icon aria-hidden="true" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-[15px] font-medium text-[#616161]">
-                                {item.name}
-                              </p>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
+                  <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
+                    <div
+                      className="w-56 shrink rounded-xl bg-white p-4 text-[17px] leading-6 text-[#474747] shadow-lg ring-1 ring-gray-900/5">
+                      {solutions.map((item) => (
+                        <a key={item.name} href={item.href} className="block p-2 hover:text-indigo-600">
+                          {item.name}
+                        </a>
+                      ))}
                     </div>
                   </Popover.Panel>
                 </Transition>
-              </>
-            )}
-          </Popover>
-        </div>
+              </Popover>
+              <NavLink href="/actors">Actors</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
+            </div>
+          </div>
+          <div className="flex items-center gap-x-5 md:gap-x-8">
+            <div className="flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
+              <div className="w-full max-w-lg lg:max-w-xs">
+                <label htmlFor="search" className="sr-only">
+                  Search
+                </label>
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <MagnifyingGlassIcon className="h-5 w-5 text-white md:text-[#525252] font-medium" aria-hidden="true" />
+                  </div>
+                  <input
+                    id="search"
+                    name="search"
+                    className="block w-full rounded-[15px] border-0 bg-[#C4C4C433] md:bg-[#E2E2E2] py-[10px] pl-[14px] text-white md:text-[#525252] ring-1 ring-inset ring-[#C4C4C433] ring-gray-300 placeholder:text-white md:placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Search"
+                    type="search"
+                  />
+                </div>
+              </div>
+            </div>
+            <Button href="/sign-up" color="blue" className="hidden md:flex">
+              <span>
+                Create on Imara
+              </span>
+            </Button>
+            <Link
+              href="/sign-in"
+              className="group hidden md:inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
+            >
+              Login
+            </Link>
+
+            <div className="hidden md:flex px-4">
+              <Popover className="relative">
+                {({ open }) => (
+                  <>
+                    <Popover.Button
+                      className={`
+                ${open ? 'text-white' : 'text-white/90'}
+                group inline-flex items-center rounded-full bg-[#525252] px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
+                    >
+                      <Image src={User} alt={'user'} width={20} height={20} />
+                    </Popover.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-200"
+                      enterFrom="opacity-0 translate-y-1"
+                      enterTo="opacity-100 translate-y-0"
+                      leave="transition ease-in duration-150"
+                      leaveFrom="opacity-100 translate-y-0"
+                      leaveTo="opacity-0 translate-y-1"
+                    >
+                      <Popover.Panel
+                        className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
+                        <div className="overflow-hidden rounded-lg ring-1 ring-black/5" style={cardStyle}>
+                          <div className="relative grid gap-8 bg-white p-7">
+                            {items.map((item) => (
+                              <a
+                                key={item.name}
+                                href={item.href}
+                                className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
+                              >
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
+                                  <item.icon aria-hidden="true" />
+                                </div>
+                                <div className="ml-3">
+                                  <p className="text-[15px] font-medium text-[#616161]">
+                                    {item.name}
+                                  </p>
+                                </div>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      </Popover.Panel>
+                    </Transition>
+                  </>
+                )}
+              </Popover>
+            </div>
 
 
-      </div>
-    </nav>
+          </div>
+        </nav>
+      </Container>
     </header>
   )
 }
