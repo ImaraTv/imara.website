@@ -223,7 +223,7 @@ export default function About() {
                             </div>
 
                             <div className="mx-auto mt-10 grid grid-cols-2 gap-x-4 md:gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
-                                <div className='w-[115px] md:w-[239px] h-[63px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
+                                <div className='w-[180px] md:w-[239px] h-[90px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
                                         src={logo1}
@@ -232,7 +232,7 @@ export default function About() {
                                         height={48}
                                     />
                                 </div>
-                                <div className='w-[115px] md:w-[239px] h-[63px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
+                                <div className='w-[180px] md:w-[239px] h-[90px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
                                         src={logo2}
@@ -241,7 +241,7 @@ export default function About() {
                                         height={48}
                                     />
                                 </div>
-                                <div className='w-[115px] md:w-[239px] h-[63px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
+                                <div className='w-[180px] md:w-[239px] h-[90px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
                                         src={logo3}
@@ -250,7 +250,7 @@ export default function About() {
                                         height={48}
                                     />
                                 </div>
-                                <div className='w-[115px] md:w-[239px] h-[63px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
+                                <div className='w-[180px] md:w-[239px] h-[90px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
                                         src={logo4}
@@ -259,7 +259,7 @@ export default function About() {
                                         height={48}
                                     />
                                 </div>
-                                <div className='w-[115px] md:w-[239px] h-[63px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
+                                <div className='w-[180px] md:w-[239px] h-[90px] md:h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[14px] md:px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
                                         src={logo5}
