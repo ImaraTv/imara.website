@@ -151,7 +151,7 @@ export default function Watch() {
             <div className="flex relative flex-col md:flex-row w-full md:w-3/4 gap-12 rounded-md md:rounded-none h-[580px] md:h-auto shadow-10xl md:shadow-none">
               <Image width={405} height={352} src={VideoBanner} alt={"video image"} className="absolute md:relative rounded-md inset-0 -z-10 md:mr-4 flex-shrink-0 h-[352px] md:h-[391px] w-full md:w-[316px] object-cover" />
               <div className='absolute bottom-0 md:relative flex flex-col gap-[30px] px-[25px] md:px-0 pb-4'>
-                <h4 className="text-[40px] md:text-[#2B2B2B] text-white font-bold">Friend Zone short film</h4>
+                <h4 className="text-[20px] md:text-[40px] md:text-[#2B2B2B] text-white font-bold">Friend Zone short film</h4>
                 <div className='flex gap-7 items-center'>
                   <button className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px] text-white'>HD</button>
                   <div className='font-medium text-[18px] md:text-[#525252] text-white'>2023</div>
@@ -159,7 +159,7 @@ export default function Watch() {
                   <div className='font-medium text-[18px] md:text-[#525252] text-white'>Ranked : 4.7</div>
                 </div>
                 <p className="mt-1 text-[18px] md:text-[#525252] text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
                 <div className='flex flex-col'>
                   <div className='flex gap-2'>
@@ -315,8 +315,8 @@ export default function Watch() {
         </Container>
 
         <div className="bg-[#F3F3F3] h-[372px] mb-[142px] mt-20 py-10 text-center">
-          <h1 className='text-[40px] text-[#2B2B2B] font-bold'>How did you find this film?</h1>
-          <p className='text-[18px] text-[#525252] leading-[34px] py-8'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br /> tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h1 className='text-[20px] md:text-[40px] text-[#2B2B2B] font-bold'>How did you find this film?</h1>
+          <p className='text-[14px] md:text-[18px] text-[#525252] leading-[34px] py-8'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br /> tempor incididunt ut labore et dolore magna aliqua.</p>
           <div className='flex items-center justify-center gap-3'>
             <span>
               <svg className='h-6 w-6 text-[#F2970F]' data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
