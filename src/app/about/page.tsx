@@ -19,6 +19,10 @@ import logo2 from "@/images/partners/ic.svg"
 import logo3 from "@/images/partners/iapb.svg"
 import logo4 from "@/images/partners/lf.svg"
 import logo5 from "@/images/partners/pepfar.svg"
+
+import CEO from "@/images/members/maina.png"
+import CTO from "@/images/members/fred.png"
+import Duncan from "@/images/members/Duncan.png"
 import Image from "next/image"
 
 const values = [
@@ -43,22 +47,23 @@ const people = [
     {
         name: 'Stephen Maina',
         role: 'CEO',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: CEO
     },
     {
         name: 'Fred Onyango',
         role: 'CTO',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: CTO
     },
     {
         name: 'Duncan M',
         role: 'Content Lead',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: Duncan
     },
 ]
+
+const cardStyle = {
+  boxShadow: '0px 4px 11px 1px #00000040'
+};
 
 export default function About() {
     return (
@@ -66,11 +71,11 @@ export default function About() {
             <Header />
             <main>
 
-                <div className="relative isolate overflow-hidden bg-[#FCFCFC]">
+                <div className="relative isolate overflow-hidden bg-[#FCFCFC] pt-10 md:pt-[93px]">
                     <Image src={Image3} alt={"chane"} className="absolute top-0 right-1/4 -z-10 origin-top-right sm:-mr-80 lg:-mr-96 w-[704px] h-[593px]" />
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mx-[16px] md:mx-[47px] max-w-[1440px]">
                         <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
-                            <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:col-span-2 xl:col-auto">
+                            <h1 className="max-w-2xl text-[40px] font-bold text-gray-900 sm:text-6xl lg:col-span-2 xl:col-auto">
                                 Imara TV: Bridging Youth & Health
                                 through Innovation
                             </h1>
@@ -96,10 +101,10 @@ export default function About() {
                     </div>
                 </div>
 
-
+                <Container>
                 <div className="overflow-hidden bg-white pt-24 sm:pt-32">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                    <div className="mx-auto">
+                        <div className="mx-auto grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                             <div className="lg:pr-8 lg:pt-4">
                                 <div className="lg:max-w-lg">
                                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Imara Tv</p>
@@ -114,7 +119,7 @@ export default function About() {
                                 alt={"about"}
                                 className="w-[48rem] max-w-none ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
                                 width={667}
-                                height={443}
+                                height={409}
                             />
                         </div>
                     </div>
@@ -122,7 +127,7 @@ export default function About() {
 
                 <div className="overflow-hidden bg-white">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                        <div className="mx-auto grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                             <div className="lg:ml-auto lg:pl-2 lg:pt-4">
                                 <div className="lg:max-w-lg">
                                     <p className="mt-10 text-lg leading-8 text-gray-600">
@@ -151,6 +156,8 @@ export default function About() {
                         </div>
                     </div>
                 </div>
+                </Container>
+
                 <Container>
                     <div className="bg-white py-24 sm:py-32">
                         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -162,10 +169,10 @@ export default function About() {
                                 className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-20 gap-y-20 sm:grid-cols-2 lg:max-w-4xl lg:gap-x-20 xl:max-w-none"
                             >
                                 {values.map((value) => (
-                                    <li key={value.name} className="flex flex-col gap-6 xl:flex-row bg-white shadow-md px-6 py-10">
+                                    <li key={value.name} className="flex flex-col gap-6 xl:flex-row bg-white px-6 py-10" style={cardStyle}>
                                         <div className="flex-auto">
-                                            <h3 className="text-xl font-bold leading-8 tracking-tight text-[#474747]">{value.name}</h3>
-                                            <p className="mt-6 text-base leading-7 text-[#525252]">{value.bio}</p>
+                                            <h3 className="text-[20px] font-bold text-[#474747]">{value.name}</h3>
+                                            <p className="mt-[25px] text-[18px] text-[#525252]">{value.bio}</p>
                                         </div>
                                     </li>
                                 ))}
@@ -173,6 +180,7 @@ export default function About() {
                         </div>
                     </div>
                 </Container>
+
                 <div className="bg-[#F3F3F3] py-24 sm:py-32">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl lg:mx-0">
@@ -184,7 +192,7 @@ export default function About() {
                         >
                             {people.map((person) => (
                                 <li key={person.name}>
-                                    <img className="aspect-[3/2] w-full rounded-2xl object-cover" src={person.imageUrl} alt="" />
+                                    <Image width={286} height={192} className="aspect-[3/2] w-full rounded-2xl object-cover" src={person.imageUrl} alt="" />
                                     <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{person.name}</h3>
                                     <p className="text-base leading-7 text-gray-600">{person.role}</p>
                                 </li>
@@ -197,7 +205,7 @@ export default function About() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl lg:max-w-none">
                             <div className='flex gap-4 items-center'>
-                                <h2 className="text-4xl font-bold text-[#2B2B2B]">
+                                <h2 className="text-[20px] md:text-[40px] font-bold text-[#2B2B2B]">
                                     Our partners and clients
                                 </h2>
                                 <button
@@ -209,7 +217,7 @@ export default function About() {
                                 <div>Clients</div>
                             </div>
 
-                            <div className="mx-auto mt-10 grid grid-cols-5 items-start gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
+                            <div className="mx-auto mt-10 grid grid-cols-2 items-start gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
                                 <div className='w-[239px] h-[126px] bg-white shadow-lg flex text-center items-center justify-center px-[28px]'>
                                     <Image
                                         className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
