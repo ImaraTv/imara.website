@@ -100,8 +100,8 @@ export default function Actors() {
                     <div className="mt-6 py-24 sm:py-32">
                         <div className="mx-auto max-w-7xl px-6 text-left lg:px-8">
                             <div className="max-w-2xl">
-                                <h2 className="text-3xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">All Actors</h2>
-                                <p className="mt-4 text-lg leading-8 text-gray-400">
+                                <h2 className="text-[20px] md:text-3xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">All Actors</h2>
+                                <p className="mt-4 text-sm md:text-lg leading-8 text-gray-400">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 </p>
                             </div>
@@ -112,11 +112,11 @@ export default function Actors() {
                                 {people.map((person) => (
                                     <li key={person.name} className="rounded-[5px] pb-10" style={cardStyle}>
                                         <img className="h-48 w-full rounded-t-[5px] object-cover md:h-56 shadow-xl" src={person.imageUrl} alt="" />
-                                        <h3 className="mt-6 px-8 text-2xl font-bold tracking-tight text-[#474747]">{person.name}</h3>
-                                        <p className="text-lg mb-7 px-8 font-medium text-[#474747]">{person.role}</p>
+                                        <h3 className="mt-6 px-8 text-xl md:text-2xl font-bold tracking-tight text-[#474747]">{person.name}</h3>
+                                        <p className="text-sm md:text-lg mb-7 px-8 font-medium text-[#474747]">{person.role}</p>
                                         <a
                                             href="#"
-                                            className="mx-8 rounded-md bg-[#007BFF] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            className="mx-8 rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs md:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                         >
                                             View profile
                                         </a>
@@ -126,10 +126,10 @@ export default function Actors() {
                             </ul>
                         </div>
 
-                        <div className='mt-20 flex items-center justify-end text-[#F2970F] text-[24px] font-bold'>
+                        <div className='mt-10 md:mt-20 flex items-center justify-end text-[#F2970F] text-sm md:text-[24px] font-bold'>
                             <div className='flex gap-2 items-center'>
                                 <h2>Load full list</h2>
-                                <svg className='w-[24px h-[24px]' data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <svg className='w-6 md:w-[24px] h-6 md:h-[24px]' data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"></path>
                                 </svg>
                             </div>
@@ -137,10 +137,10 @@ export default function Actors() {
                     </div>
                 </Container>
 
-                <div className="isolate mt-[110px] bg-[#F3F3F3] px-6 py-12 lg:px-8">
+                <div className="isolate mt-20 md:mt-[110px] bg-[#F3F3F3] px-6 py-12 lg:px-8">
                     <Container>
                     <div className="flex justify-center">
-                        <h2 className="text-[40px] font-semibold text-gray-900 sm:text-4xl">Become an actor</h2>
+                        <h2 className="text-xl md:text-[40px] font-semibold text-gray-900 sm:text-4xl">Become an actor</h2>
                     </div>
                     <form action="#" method="POST" className="mt-16 sm:mt-20">
                         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
