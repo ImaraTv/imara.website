@@ -85,13 +85,13 @@ export default function About() {
                                     Health Rights Education.
                                 </p>
                                 <div className="mt-10 flex items-center gap-x-6">
-                                    <a
+                                <a
                                         href="#"
-                                        className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                        className="rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs md:text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     >
                                         Watch our videos
                                     </a>
-                                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                                    <a href="#" className="text-xs md:text-sm font-semibold leading-6 text-gray-900 ring-[#007BFF] rounded-md ring-2 px-3.5 py-1">
                                         Become a creator
                                     </a>
                                 </div>

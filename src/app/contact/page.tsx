@@ -74,7 +74,7 @@ export default function Contact() {
                     <div className="relative sm:overflow-hidden h-[546px]">
                         <div className="absolute inset-0">
                             <Image
-                                className="h-full w-full object-cover"
+                                className="h-full w-[full] object-cover"
                                 src={Banner}
                                 alt={"contact"}
                                 width={1440}
@@ -87,11 +87,11 @@ export default function Contact() {
                             <div className='flex justify-between'>
                                 <div className=''></div>
                                 <div className='px-6 lg:px-8'>
-                                    <h1 className="text-[60px] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+                                    <h1 className="text-2xl md:text-[60px] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
                                         <span className="block text-white">Contact us</span>
                                         <span className="block text-white">today</span>
                                     </h1>
-                                    <p className="mx-auto mt-8 max-w-lg text-3xl text-white sm:max-w-3xl">
+                                    <p className="mx-auto mt-8 max-w-lg text-xl md:text-3xl text-white sm:max-w-3xl">
                                         Call : +254780674252
                                     </p>
                                 </div>
@@ -117,7 +117,7 @@ export default function Contact() {
                             />
                         </div>
                         <div className="max-w-2xl">
-                            <h2 className="text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Talk to us now</h2>
+                            <h2 className="text-xl md:text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Talk to us now</h2>
                         </div>
                         <form action="#" method="POST" className="mt-16 sm:mt-20">
                             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -172,8 +172,8 @@ export default function Contact() {
 
                 <Newsletter />
 
-                <div className="bg-[#89CFF1] h-[193px] py-10 text-center">
-                    <p className='text-xl leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br/> Ngong Road, Nairobi, Kenya, Africa</p>
+                <div className="bg-[#89CFF1] h-[193px] py-4 md:py-10 px-4 text-center flex items-center justify-center">
+                    <p className='text-sm md:text-xl leading-[36px] md:leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br/> Ngong Road, Nairobi, Kenya, Africa</p>
                 </div>
 
             </main>

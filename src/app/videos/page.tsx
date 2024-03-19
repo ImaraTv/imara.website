@@ -370,7 +370,7 @@ export default function Videos() {
           <div className='flex flex-col md:flex-row justify-between mt-[90px]'>
             <div>
               <ul role="list"
-                className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-2 xl:gap-x-8">
+                className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
                 {files.map((file) => (
                   <li key={file.title} className="relative">
                     <div onClick={() => openModal(file)}

@@ -32,10 +32,10 @@ export default function SignIn() {
                         <div className="relative px-6 pt-[300px]">
                             <div className='flex content-end'>
                                 <div className='px-6 lg:px-8'>
-                                    <h1 className="text-[40px] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+                                    <h1 className="text-xl md:text-[40px] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
                                         <span className="block text-white">Welcome back, pick right from where you left!!</span>
                                     </h1>
-                                    <p className="mt-8 text-lg text-white">
+                                    <p className="mt-8 text-sm md:text-lg text-white">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
                                     </p>
                                 </div>
@@ -48,12 +48,12 @@ export default function SignIn() {
                 <Container>
                     <div className="isolate mt-[110px] bg-[#F3F3F3] px-6 py-12 lg:px-8">
                         <div className="max-w-2xl">
-                            <h2 className="text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Welcome back</h2>
+                            <h2 className="text-xl md:text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Welcome back</h2>
                         </div>
-                        <form action="#" method="POST" className="mt-16 sm:mt-20">
+                        <form action="#" method="POST" className="mt-4 md:mt-16 sm:mt-20">
                             <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
                                 <div>
-                                    <div className="mt-10">
+                                    <div className="mt-4 md:mt-10">
                                         <input
                                             type="text"
                                             name="first-name"
@@ -65,7 +65,7 @@ export default function SignIn() {
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="mt-10">
+                                    <div className="mt-4 md:mt-10">
                                         <input
                                             type="password"
                                             name="last-name"
@@ -77,10 +77,10 @@ export default function SignIn() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-10 flex justify-end">
+                            <div className="mt-4 md:mt-10 flex justify-end">
                                 <button
                                     type="submit"
-                                    className="rounded-md w-1/2 bg-[#007BFF] px-10 py-5 text-center text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="rounded-md w-1/2 bg-[#007BFF] px-4 md:px-10 py-2 md:py-5 text-center text-xs md:text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     Login
                                 </button>
@@ -88,10 +88,10 @@ export default function SignIn() {
                         </form>
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
-                                <div className='font-medium text-[#767676] text-xl'>Don’t have an account?</div>
+                                <div className='font-medium text-[#767676] text-xs md:text-xl'>Don’t have an account?</div>
                                 <Link
                                     href="/sign-up"
-                                    className="inline-block font-bold text-[#F2970F] text-xl"
+                                    className="inline-block font-bold text-[#F2970F] text-xs md:text-xl"
                                 >
                                     Create account
                                 </Link>
@@ -99,10 +99,10 @@ export default function SignIn() {
                         </div>
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
-                                <div className='font-medium text-[#767676] text-xl'>Forgot password? </div>
+                                <div className='font-medium text-[#767676] text-xs md:text-xl'>Forgot password? </div>
                                 <Link
                                     href="/forgot-password"
-                                    className="inline-block font-bold text-[#F2970F] text-xl"
+                                    className="inline-block font-bold text-[#F2970F] text-xs md:text-xl"
                                 >
                                     Reset
                                 </Link>
@@ -113,8 +113,8 @@ export default function SignIn() {
 
                 <Newsletter />
 
-                <div className="bg-[#89CFF1] h-[193px] py-10 text-center">
-                    <p className='text-xl leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br /> Ngong Road, Nairobi, Kenya, Africa</p>
+                <div className="bg-[#89CFF1] h-[193px] py-4 md:py-10 px-4 text-center flex items-center justify-center">
+                    <p className='text-sm md:text-xl leading-[36px] md:leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br/> Ngong Road, Nairobi, Kenya, Africa</p>
                 </div>
 
             </main>
