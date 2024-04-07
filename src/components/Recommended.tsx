@@ -447,7 +447,7 @@ export function Recommended() {
                     </div>
 
                     <div className="md:w-1/4">
-                        <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold mb-[48px] md:mb-[53px]">Recently updated</div>
+                        <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold mb-[48px] md:mb-[53px]">Latest</div>
                         <ul role="list" className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3">
                             {suggestions.map((suggestion) => (
                                 <li key={suggestion.name}

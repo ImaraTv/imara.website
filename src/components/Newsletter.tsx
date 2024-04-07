@@ -5,10 +5,10 @@ export function Newsletter() {
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-4">
                 <div className="relative isolate overflow-hidden px-6 py-10 sm:px-10 xl:py-20">
                     <h2 className="mx-auto max-w-2xl text-center text-[20px] md:text-4xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">
-                        Don’t miss out on any of our content
+                    Get the latest films in your inbox
                     </h2>
                     <p className="mx-auto mt-2 text-center text-sm md:text-lg leading-8 text-[#2B2B2B]">
-                        Subscribe to our newsletter and get personalised upskilling material today.
+                    Subscribe to get notified when new films premiere
                     </p>
                     <form className="mx-auto mt-10 flex max-w-md gap-x-4">
                         <label htmlFor="email-address" className="sr-only">

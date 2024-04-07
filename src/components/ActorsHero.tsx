@@ -49,11 +49,10 @@ export function ActorsHero() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-[150px] py-8 md:py-[56px] px-5 md:px-[46px] bg-[#F3F3F3] mt-[47px] md:mt-0">
                 <div className="flex flex-col items-center md:items-start justify-center md:justify-start gap-8 md:gap-10">
                     <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold">Actors</div>
-                    <p className="text-[18px] text-[#525252] text-center md:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat.
+                    <p className="text-[18px] text-[#525252] text-center md:text-left">Do you want to earn an income from your creative talents? Join other creators on Imara Tv and
+collaborate to create films that edutain the public and earn you royalties forever. Express yourself and
+grow your craft. Let your star shine for the world to see you. Become part of a community and grow
+your network. Sign up today as a creator and start your career journey in the film industry
                     </p>
                     <div className="hidden md:flex gap-[33px]">
                         <Button href="#" color="blue">

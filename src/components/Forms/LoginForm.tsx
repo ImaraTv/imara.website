@@ -18,6 +18,10 @@ const LoginForm = () => {
       // Handle successful login
       console.log(response.data);
 
+      // Store user information in localStorage
+      localStorage.setItem('accessToken', response.data.access_token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+
       // Show a success message using SweetAlert
       Swal.fire({
         title: 'Login Successful',

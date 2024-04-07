@@ -8,6 +8,9 @@ import Image from "next/image"
 import Link from 'next/link'
 import Yt from "@/images/yt.png"
 import Address from "@/components/Address";
+import { getLoggedInUser } from '../../../utils/authUtils';
+
+
 
 const cardStyle = {
     boxShadow: '0px 4px 28px 3px #0000001A'
@@ -88,6 +91,7 @@ const files = [
     },
 ]
 export default function ContinueWatching() {
+    const user = getLoggedInUser();
 
     let [isOpen, setIsOpen] = useState(true)
 
@@ -104,7 +108,11 @@ export default function ContinueWatching() {
             <Header/>
             <main>
                 <Container>
-                    <div className='font-bold text-[40px] text-[#2B2B2B] mt-14'>Welcome back Joy !</div>
+                    <div className='font-bold text-[40px] text-[#2B2B2B] mt-14'>{user ? (
+        <h1>Welcome, {user.name}!</h1>
+      ) : (
+        <h1>Welcome, Guest!</h1>
+      )}</div>
 
                     <div className='flex px-6 mb-[70px] mt-[33px] -ml-4'>
                         {categories.map((category) => (
