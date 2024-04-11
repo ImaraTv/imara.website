@@ -123,8 +123,8 @@ function MobileNavigation() {
           >
             <MobileNavLink href="/">Home</MobileNavLink>
             <MobileNavLink href="/about">About Us</MobileNavLink>
-            <MobileNavLink href="/videos">Watch Now</MobileNavLink>
-            <MobileNavLink href="/actors">Actors</MobileNavLink>
+            <MobileNavLink href="/videos">Watch More</MobileNavLink>
+            <MobileNavLink href="/actors">Our Actors</MobileNavLink>
             <MobileNavLink href="/contact">Contact</MobileNavLink>
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
@@ -145,7 +145,7 @@ const cardStyle = {
 
 export function Header2() {
   return (
-    <header className="absolute inset-x-0 top-0 z-50 bg-[#007BFF] md:bg-transparent py-6">
+    <header className="absolute inset-x-0 top-0 z-50 bg-[#0033AB] md:bg-transparent py-6">
       <nav className="mx-[16px] md:mx-[47px] max-w-[1440px] flex items-center justify-between">
       <div className="md:hidden">
         <MobileNavigation />

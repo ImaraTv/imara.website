@@ -128,7 +128,7 @@ export function Footer() {
             <Link href={'/privacy-policy'}>Privacy policy</Link>
           </p>
           <p className="mt-8 text-[12px] text-white md:order-1 md:mt-0 md:text-[17px]">
-            <Link href={'/privacy-policy'}>Terms and conditions</Link>
+            <Link href={'/terms-of-use'}>Terms and conditions</Link>
           </p>
         </div>
       </div>
