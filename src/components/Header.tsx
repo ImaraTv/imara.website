@@ -160,7 +160,7 @@ export function Header() {
                 alt="logo"
               />
             </Link>
-            <div className="hidden md:flex md:gap-x-6">
+            <div className="hidden md:flex md:gap-x-2">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/about">About Us</NavLink>
               <Popover className="relative">
