@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
-import Image from "next/image"
-import Youtube from "@/images/youtube.svg"
+import Image from 'next/image'
+import Youtube from '@/images/youtube.svg'
 import { JSX, SVGProps } from 'react'
 
 const navigation = {
@@ -69,49 +69,66 @@ export function Footer() {
       </h2>
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-0 sm:pt-24 lg:px-8 lg:pt-10">
         <div className="mt-[35px] sm:mt-16 lg:mt-20 lg:flex lg:items-center lg:justify-between">
-          <div className='flex flex-col md:flex-row items-center gap-[35px]'>
-            <div className="flex gap-[35px] flex-row-reverse sm:flex-row lg:flex-row">
+          <div className="flex flex-col items-center gap-[35px] md:flex-row">
+            <div className="flex flex-row-reverse gap-[35px] sm:flex-row lg:flex-row">
               <div className="text-lg font-semibold leading-6 text-white">
                 <Link href={''}>Home</Link>
               </div>
               <div className="text-lg font-semibold leading-6 text-white">
-              <Link href={'/about'}>About Us</Link></div>
-              <div className="text-lg font-semibold leading-6 text-white"><Link href={'/videos'}>Watch More</Link></div>
-              <div className="text-lg font-semibold leading-6 text-white"><Link href={'/actors'}>Our Creators</Link></div>
-              <div className="text-lg font-semibold leading-6 text-white"><Link href={'/contact'}>Contact Us</Link></div>
+                <Link href={'/about'}>About Us</Link>
+              </div>
+              <div className="text-lg font-semibold leading-6 text-white">
+                <Link href={'/videos'}>Watch More</Link>
+              </div>
+              <div className="text-lg font-semibold leading-6 text-white">
+                <Link href={'/actors'}>Our Creators</Link>
+              </div>
+              <div className="text-lg font-semibold leading-6 text-white">
+                <Link href={'/contact'}>Contact Us</Link>
+              </div>
             </div>
 
-            <div className="flex items-center text-lg leading-6 text-gray-300 gap-5">
-            <Link href="https://www.youtube.com/c/ImaraTV"><Image src={Youtube} width={35} height={35} alt={'youtube'} /></Link>
-              
+            <div className="flex items-center gap-5 text-lg leading-6 text-gray-300">
+              <Link href="https://www.youtube.com/c/ImaraTV">
+                <Image src={Youtube} width={35} height={35} alt={'youtube'} />
+              </Link>
+
               <h3 className="text-lg font-semibold leading-6 text-white">
-                <Link href="https://www.youtube.com/c/ImaraTV">Subscribe to our channel</Link>
+                <Link href="https://www.youtube.com/c/ImaraTV">
+                  Subscribe to our channel
+                </Link>
               </h3>
             </div>
           </div>
-          <div className="flex space-x-6 mt-[35px] md:mt-0 md:order-2">
-            <h3 className="text-lg font-semibold leading-6 text-white">Follow Us</h3>
+          <div className="mt-[35px] flex space-x-6 md:order-2 md:mt-0">
+            <h3 className="text-lg font-semibold leading-6 text-white">
+              Follow Us
+            </h3>
             {navigation.social.map((item) => (
-              <a key={item.name} href={item.href} className="text-white hover:text-gray-400">
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-white hover:text-gray-400"
+              >
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />
               </a>
             ))}
           </div>
         </div>
-          <p className="mt-8 pt-8 text-center text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
-          Visit us at the Nailab, Kidato Campus - Kabarsiran,
-Musa Gitau Rd, Nairobi Kenya, Africa.
-          </p>
-        <div className="mt-8 border-t border-white/10 pt-8 flex gap[23px] md:gap-12 items-center justify-between md:justify-center">
-          <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
+        <p className="mt-8 pt-8 text-center text-[12px] text-white md:order-1 md:mt-0 md:text-[17px]">
+          Visit us at the Nailab, Kidato Campus - Kabarsiran, Musa Gitau Rd,
+          Nairobi Kenya, Africa.
+        </p>
+        <div className="gap[23px] mt-8 flex items-center justify-between border-t border-white/10 pt-8 md:justify-center md:gap-12">
+          <p className="mt-8 text-[12px] text-white md:order-1 md:mt-0 md:text-[17px]">
             Copyright © 2024 Imara Digital Media Foundation Limited
           </p>
-          <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
-          <Link href={'/privacy-policy'}>Privacy policy</Link>
+          <p className="mt-8 text-[12px] text-white md:order-1 md:mt-0 md:text-[17px]">
+            <Link href={'/privacy-policy'}>Privacy policy</Link>
           </p>
-          <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
-          <Link href={'/privacy-policy'}>Terms and conditions</Link>
+          <p className="mt-8 text-[12px] text-white md:order-1 md:mt-0 md:text-[17px]">
+            <Link href={'/privacy-policy'}>Terms and conditions</Link>
           </p>
         </div>
       </div>

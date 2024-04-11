@@ -165,7 +165,7 @@ export function Header2() {
           <Popover className="relative">
             <Popover.Button
               className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
-              <span>Watch Now</span>
+              <span>Watch More</span>
               <ChevronDownIcon className="h-5 w-5 font-bold" aria-hidden="true" />
             </Popover.Button>
 
@@ -190,7 +190,7 @@ export function Header2() {
               </Popover.Panel>
             </Transition>
           </Popover>
-          <NavLink href="/actors">Actors</NavLink>
+          <NavLink href="/actors">Our Actors</NavLink>
           <NavLink href="/contact">Contact</NavLink>
         </div>
       </div>

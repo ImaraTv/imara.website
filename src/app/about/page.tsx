@@ -10,11 +10,14 @@ import About2 from '@/images/about2.png'
 import About3 from '@/images/about.jpg'
 import Image3 from '@/images/vector2.svg'
 
-import logo1 from '@/images/partners/hnn.svg'
-import logo2 from '@/images/partners/ic.svg'
-import logo3 from '@/images/partners/iapb.svg'
-import logo4 from '@/images/partners/lf.svg'
-import logo5 from '@/images/partners/pepfar.svg'
+import logo1 from '@/images/partners/gov.svg'
+import logo2 from '@/images/partners/icrh.png'
+import logo3 from '@/images/partners/nailab.webp'
+import logo4 from '@/images/partners/ukaid.png'
+import logo5 from '@/images/partners/unfpa.png'
+import logo6 from '@/images/partners/unhabitat.png'
+import logo7 from '@/images/partners/actionaid.png'
+import logo8 from '@/images/partners/crowdsourseafrica.jpg'
 import logo from '@/images/logos/logo.png'
 
 
@@ -84,6 +87,41 @@ const files: File[] = [
     description: '',
     imageUrl: logo,
   },
+]
+
+const partners = [
+    {
+        id: 1,
+        image: logo1,
+    },
+    {
+        id: 2,
+        image: logo2,
+    },
+    {
+        id: 3,
+        image: logo3,
+    },
+    {
+        id: 4,
+        image: logo4,
+    },
+    {
+        id: 5,
+        image: logo5,
+    },
+    {
+        id: 6,
+        image: logo6,
+    },
+    {
+        id: 7,
+        image: logo7,
+    },
+    {
+        id: 8,
+        image: logo8,
+    },
 ]
 
 const cardStyle = {
@@ -393,51 +431,19 @@ export default function About() {
                 </div>
 
                 <div className="mx-auto mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-6 sm:gap-x-10 md:gap-x-8 lg:mx-0 lg:grid-cols-5">
-                  <div className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
+                    {partners.map((partner) => (
+
+                  <div key={partner.id} className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
                     <Image
-                      className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
-                      src={logo1}
+                      className="col-span-2 max-h-20 w-full object-contain lg:col-span-1"
+                      src={partner.image}
                       alt={'Transistor'}
                       width={158}
                       height={48}
                     />
                   </div>
-                  <div className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
-                    <Image
-                      className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-                      src={logo2}
-                      alt={'Transistor'}
-                      width={158}
-                      height={48}
-                    />
-                  </div>
-                  <div className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
-                    <Image
-                      className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
-                      src={logo3}
-                      alt={'Transistor'}
-                      width={158}
-                      height={48}
-                    />
-                  </div>
-                  <div className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
-                    <Image
-                      className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-                      src={logo4}
-                      alt={'Transistor'}
-                      width={158}
-                      height={48}
-                    />
-                  </div>
-                  <div className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
-                    <Image
-                      className="col-span-2 max-h-12 w-full object-cover lg:col-span-1"
-                      src={logo5}
-                      alt={'Transistor'}
-                      width={158}
-                      height={48}
-                    />
-                  </div>
+                    ))}
+              
                 </div>
 
                 <div className="bg-white py-16 sm:py-24">
