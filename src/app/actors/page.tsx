@@ -73,11 +73,11 @@ export default function Actors() {
                     <div className="mx-[16px] md:mx-[47px] max-w-[1440px]">
                         <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
                             <h1 className="max-w-2xl text-[20px] md:text-[40px] font-bold text-gray-900 sm:text-6xl lg:col-span-2 xl:col-auto pt-40">
-                                We are better together!
+                            Earn money making films
                             </h1>
                             <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
                                 <p className="text-sm md:text-lg leading-8 text-gray-600">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                                Do you want to earn an income from your creative talents? Join other creators on Imara Tv and collaborate to create films that edutain the public and earn you royalties forever. Express yourself and grow your craft. Let your star shine for the world to see you. Become part of a community and grow your network. Sign up today as a creator and start your career journey in the film industry
                                 </p>
                                 <div className="mt-10 flex items-center gap-x-6">
                                     <a
@@ -101,9 +101,9 @@ export default function Actors() {
                     <div className="overflow-hidden mt-6 py-24 sm:py-32">
                         <div className="mx-auto max-w-7xl px-6 text-left lg:px-8">
                             <div className="max-w-2xl">
-                                <h2 className="text-[20px] md:text-3xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">All Actors</h2>
+                                <h2 className="text-[20px] md:text-3xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">Our Creators</h2>
                                 <p className="mt-4 text-sm md:text-lg leading-8 text-gray-400">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Collaborate with other creators to produce films, earn an income and entertain the public
                                 </p>
                             </div>
                             <ul
@@ -141,7 +141,7 @@ export default function Actors() {
                 <div className="isolate mt-20 md:mt-[110px] bg-[#F3F3F3] px-6 py-12 lg:px-8">
                     <Container>
                     <div className="flex justify-center">
-                        <h2 className="text-xl md:text-[40px] font-semibold text-gray-900 sm:text-4xl">Become an actor</h2>
+                        <h2 className="text-xl md:text-[40px] font-semibold text-gray-900 sm:text-4xl">Join our community of creatives today</h2>
                     </div>
                     <form action="#" method="POST" className="mt-4 md:mt-20">
                         <div className="grid grid-cols-1 gap-x-8 gap-y-2 md:gap-y-6 sm:grid-cols-2">

@@ -101,7 +101,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-white/10 pt-8 flex gap[23px] md:gap-12 items-center justify-between md:justify-center">
           <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
-            Copyright © 2024 ImaraTv
+            Copyright © 2024 Imara Digital Media Foundation Limited
           </p>
           <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
           <Link href={'/privacy-policy'}>Privacy policy</Link>

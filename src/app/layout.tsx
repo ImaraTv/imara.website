@@ -1,8 +1,10 @@
 import { Roboto } from 'next/font/google'
+import { Ubuntu } from 'next/font/google'
 import clsx from 'clsx'
 import '@/styles/tailwind.css'
 import { type Metadata } from 'next'
 import React from "react";
+import CookieConsentComponent from '@/components/CookieConsent';
 
 export const metadata: Metadata = {
   title: {
@@ -12,8 +14,8 @@ export const metadata: Metadata = {
   description:
     'Changing Africa, One film at a time.',
 }
-const roboto = Roboto({
-  weight: ["100","300","400","500","700","900"],
+const ubuntu = Ubuntu({
+  weight: ["300","400","500","700"],
   subsets: ['latin'],
   display: 'swap',
 })
@@ -28,10 +30,13 @@ export default function RootLayout({
       lang="en"
       className={clsx(
         'h-full scroll-smooth bg-white antialiased',
-        roboto.className,
+        ubuntu.className,
       )}
     >
-      <body className="flex h-full flex-col">{children}</body>
+      <body className="flex h-full flex-col">
+        {children} 
+        <CookieConsentComponent />
+      </body>
     </html>
   )
 }
