@@ -17,9 +17,11 @@ import logo4 from '@/images/partners/lf.svg'
 import logo5 from '@/images/partners/pepfar.svg'
 import logo from '@/images/logos/logo.png'
 
+
+
 import CEO from '@/images/members/maina.png'
 import CTO from '@/images/members/fred.png'
-import Emmah from '@/images/members/Emmah.jpg'
+import Emmah from '@/images/members/emmah.jpg'
 import Founder from '@/images/members/founder.jpg'
 import Fred from '@/images/members/fred.jpeg'
 
