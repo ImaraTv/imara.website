@@ -150,7 +150,7 @@ export function Header2() {
       <div className="md:hidden">
         <MobileNavigation />
       </div>
-      <div className="hidden md:flex items-center md:gap-x-12">
+      <div className="hidden md:flex items-center md:gap-x-4">
         <Link href="#" aria-label="Home">
           <Image
             src={Logo2}

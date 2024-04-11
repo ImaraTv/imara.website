@@ -99,6 +99,10 @@ export function Footer() {
             ))}
           </div>
         </div>
+          <p className="mt-8 pt-8 text-center text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
+          Visit us at the Nailab, Kidato Campus - Kabarsiran,
+Musa Gitau Rd, Nairobi Kenya, Africa.
+          </p>
         <div className="mt-8 border-t border-white/10 pt-8 flex gap[23px] md:gap-12 items-center justify-between md:justify-center">
           <p className="mt-8 text-[12px] md:text-[17px] text-white md:order-1 md:mt-0">
             Copyright © 2024 Imara Digital Media Foundation Limited
