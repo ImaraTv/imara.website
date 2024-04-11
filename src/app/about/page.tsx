@@ -1,13 +1,8 @@
-import { CallToAction } from '@/components/CallToAction'
-import { Faqs } from '@/components/Faqs'
+"use client"
+import React, { Fragment, useEffect, useState } from "react";
+import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { Footer } from '@/components/Footer'
 import { Header2 } from '@/components/Header2'
-import { Hero } from '@/components/Hero'
-import { CarouselHome } from '@/components/Carousel'
-import { Pricing } from '@/components/Pricing'
-import { PrimaryFeatures } from '@/components/PrimaryFeatures'
-import { SecondaryFeatures } from '@/components/SecondaryFeatures'
-import { Testimonials } from '@/components/Testimonials'
 import { Container } from '@/components/Container'
 import Image5 from '@/images/image5.png'
 import About1 from '@/images/about1.png'
@@ -20,11 +15,16 @@ import logo2 from '@/images/partners/ic.svg'
 import logo3 from '@/images/partners/iapb.svg'
 import logo4 from '@/images/partners/lf.svg'
 import logo5 from '@/images/partners/pepfar.svg'
+import logo from '@/images/logos/logo.png'
 
 import CEO from '@/images/members/maina.png'
 import CTO from '@/images/members/fred.png'
-import Duncan from '@/images/members/Duncan.png'
+import Emmah from '@/images/members/Emmah.jpg'
+import Founder from '@/images/members/founder.jpg'
+import Fred from '@/images/members/fred.jpeg'
+
 import Image from 'next/image'
+import { StaticImageData } from 'next/image';
 
 const values = [
   {
@@ -44,21 +44,43 @@ const values = [
   // More values...
 ]
 
-const people = [
+interface File {
+  name: string
+  role: string
+  imageUrl: string | StaticImageData
+  description: string
+}
+const files: File[] = [
+  {
+    name: 'The Late Harrison Kariuki',
+    role: 'Co-founder',
+    description: 'For Harrison Kariuki Gachago (The Late) Personal Information:  Name: Harrison Kariuki Gachago  Date of Birth: 9 th September 1980  Date of Demise: December 2021 Harrison Kariuki was a dedicated professional known for his significant contributions to the digital media space and insurance industries. Harrison had a successful career in the insurance sector prior to his involvement with Imara TV. With a solid background in insurance, he transitioned into the media sector, where he co-founded Imara TV in 2016. As co-founder he played a key role in the establishment of Imara TV, contributing to its inception and early development. Throughout his tenure, he held pivotal roles within the organization, notably as a Director and Chief Operating Officer. In the role of director, he provided strategic direction and decision-making expertise to drive the company’s growth. In the capacity of Chief Operations Officer, he oversaw day to day operations, spearheading initiatives to expand Imara Tv’s market presences Kariuki demonstrated strong leadership abilities, strategic planning and operations management in guiding Imara TV as a co-founder, director, and COO Legacy: Harrison Kariuki&#39;s legacy extends beyond his professional accomplishments. He leaves behind a lasting impact on Imara TV, having played a vital role in its establishment and growth. His dedication, leadership, and contributions to the organization will be remembered and cherished by colleagues and the industry alike.',
+    imageUrl: Founder,
+  },
   {
     name: 'Stephen Maina',
-    role: 'CEO',
+    role: 'Co-founder and CEO',
+    description: 'Stephen Maina is a Computer Scientist and technology evangelist who is using IT to make the world a better place. While pursuing his BSc. Computer Science at the University of Nairobi in 2010, he co- founded the Millman Group of companies to design, develop and deploy mobile, web and cloud applications for organizations around the world. He is also a certified Agile Scrum Master (PSM 1) project management practitioner from 2015. In 2016, he co-founded Imara Tv, a media platform that entertains and educates the public to create sustainable jobs for young people in the film industry. In 2020, he co-founded JiBambe Wifi an internet service provision company delivering affordable internet connectivity to urban and rural communities in Kenya. Stephen is passionate about developing Africa’s untapped potential to build a sustainable future that benefits humanity.',
     imageUrl: CEO,
   },
   {
-    name: 'Fred Onyango',
-    role: 'CTO',
-    imageUrl: CTO,
+    name: 'Fredrick Onyango',
+    role: 'Co-founder and CTO',
+    description:
+      'Fredrick Onyango is a proficient Software Engineer and accomplished entrepreneur with over a decade of hands-on experience spanning full-stack development, software team leadership, and client relationship management. With a proven track record in both startup and established environments, he excels in guiding teams to create innovative applications that enhance operational efficiency. Fredrick is deeply passionate about building robust, reliable, and maintainable systems. During his pursuit of a BSc. in Computer Science at the University of Nairobi in 2010, Fredrick co-founded the Millman Group of companies, specializing in the design, development, and deployment of mobile, web, and cloud applications for organizations globally. In 2016, he further demonstrated his social entrepreneurial spirit by co-founding Imara Tv, a dynamic media platform aimed at entertaining and educating the public while fostering sustainable job opportunities for young talents in the film industry.',
+    imageUrl: Fred,
   },
   {
-    name: 'Duncan M',
-    role: 'Content Lead',
-    imageUrl: Duncan,
+    name: 'Emmah Kanyara',
+    role: 'Co-founder and COO',
+    description: 'Emmah Kanyara is a dynamic leader with a Bachelors degree in Counselling psychology and brings a unique blend of psychological insights, operational expertise and motivation to her role as the Chief Operations Officer at Imara TV. She aims at positioning Imara Tv as a leading destination for edutainment content, and making a positive impact on the society one viewer at a time Emmah is passionate about the power of media to inspire, educate and empower individuals, she believes in the value of partnerships and collaboration within the industry. And actively seeks out opportunities to collaborate with content creators, advertisers and other stake holders to expand Imara Tv’s reach and impact',
+    imageUrl: Emmah,
+  },
+  {
+    name: 'Mercy Ngethe',
+    role: 'Chief Finance Officer',
+    description: '',
+    imageUrl: logo,
   },
 ]
 
@@ -67,6 +89,24 @@ const cardStyle = {
 }
 
 export default function About() {
+  let [isOpen, setIsOpen] = useState(false)
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const openModal = (file: File) => {
+    setSelectedFile(file)
+    setIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsOpen(false)
+    setSelectedFile(null)
+  }
+
+  useEffect(() => {
+    return () => {
+      setIsOpen(false)
+    }
+  }, [])
   return (
     <>
       <Header2 />
@@ -189,7 +229,21 @@ export default function About() {
                 <div className="lg:pr-8 lg:pt-4">
                   <div className="lg:max-w-lg">
                     <p className="mt-[51px] text-lg leading-8 text-gray-600">
-                    Imara.Tv is the outcome of a hackathon sponsored by UNFPA, the United Nations Population Fund and the Kenya Government Ministry of Health in collaboration with Nailab, a technology driven business incubator. <br></br> <br></br> Imara.Tv is one of four winning social entreprices from the I.AM iAccelerator co-creation event in August 2016 to scale up access to youth friendly sexual reproductive health (SRH) information and services.<br></br> Read more on the <a className='text-[#F54029]' href="https://kenya.unfpa.org/en/news/unfpa-announces-winners-innovation-accelerator-focused-promoting-youth-sexual-reproductive">UNFPA-K website</a>
+                      Imara.Tv is the outcome of a hackathon sponsored by UNFPA,
+                      the United Nations Population Fund and the Kenya
+                      Government Ministry of Health in collaboration with
+                      Nailab, a technology driven business incubator. <br></br>{' '}
+                      <br></br> Imara.Tv is one of four winning social
+                      entreprices from the I.AM iAccelerator co-creation event
+                      in August 2016 to scale up access to youth friendly sexual
+                      reproductive health (SRH) information and services.
+                      <br></br> Read more on the{' '}
+                      <a
+                        className="text-[#F54029]"
+                        href="https://kenya.unfpa.org/en/news/unfpa-announces-winners-innovation-accelerator-focused-promoting-youth-sexual-reproductive"
+                      >
+                        UNFPA-K website
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -250,24 +304,71 @@ export default function About() {
                 role="list"
                 className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-40 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
               >
-                {people.map((person) => (
-                  <li key={person.name}>
-                    <Image
+                {files.map((file) => (
+                  <li key={file.name}>
+                    <Image 
+                    onClick={() => openModal(file)}
                       width={286}
                       height={192}
-                      className="aspect-[3/2] w-full rounded-2xl object-cover"
-                      src={person.imageUrl}
+                      className="aspect-[3/2] w-full rounded-2xl object-cover cursor-pointer"
+                      src={file.imageUrl}
                       alt=""
                     />
                     <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">
-                      {person.name}
+                      {file.name}
                     </h3>
                     <p className="text-base leading-7 text-gray-600">
-                      {person.role}
+                      {file.role}
                     </p>
                   </li>
                 ))}
               </ul>
+
+              <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="fixed inset-0 bg-black/25" />
+                  </Transition.Child>
+
+                  <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
+                      >
+                        <Dialog.Panel
+                          className=" h-auto max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-[19px] font-bold text-[#525252]"
+                          >
+                            {selectedFile && selectedFile.name}
+                          </Dialog.Title>
+                          <div className="mt-2">
+                            <p className="text-[15px] text-[#525252]">
+                              {selectedFile && selectedFile.description}
+                            </p>
+                          </div>
+
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
+                  </div>
+                </Dialog>
+              </Transition>
             </div>
           </Container>
         </div>
