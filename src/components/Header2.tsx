@@ -124,7 +124,7 @@ function MobileNavigation() {
             <MobileNavLink href="/">Home</MobileNavLink>
             <MobileNavLink href="/about">About Us</MobileNavLink>
             <MobileNavLink href="/videos">Watch More</MobileNavLink>
-            <MobileNavLink href="/actors">Our Actors</MobileNavLink>
+            <MobileNavLink href="/actors">Our Creators</MobileNavLink>
             <MobileNavLink href="/contact">Contact</MobileNavLink>
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">

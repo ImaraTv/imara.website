@@ -191,7 +191,7 @@ export function Header() {
                   </Popover.Panel>
                 </Transition>
               </Popover>
-              <NavLink href="/actors">Our Actors</NavLink>
+              <NavLink href="/actors">Our Creators</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </div>
           </div>
