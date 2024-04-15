@@ -165,7 +165,7 @@ export default function About() {
               <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
                 <p className="text-lg leading-8 text-gray-600">
                   Imara.Tv will make you laugh and learn. Watch positive
-                  wholesome content that makes the world a better place”
+                  wholesome content that makes the world a better place
                 </p>
                 <div className="mt-10 flex items-center gap-x-6">
                   <a

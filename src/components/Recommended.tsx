@@ -13,28 +13,28 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 
 
-const categories = [
-    {
-        id: 1,
-        name: "Short films",
-    },
-    {
-        id: 2,
-        name: "Series",
-    },
-    {
-        id: 3,
-        name: "Educative",
-    },
-    {
-        id: 4,
-        name: "Trailers",
-    },
-    {
-        id: 5,
-        name: "Comedy",
-    },
-]
+// const categories = [
+//     {
+//         id: 1,
+//         name: "Short films",
+//     },
+//     {
+//         id: 2,
+//         name: "Series",
+//     },
+//     {
+//         id: 3,
+//         name: "Educative",
+//     },
+//     {
+//         id: 4,
+//         name: "Trailers",
+//     },
+//     {
+//         id: 5,
+//         name: "Comedy",
+//     },
+// ]
 
 const dates = [
     {
@@ -186,6 +186,7 @@ const files: File[] = [
 export function Recommended() {
     const [selected, setSelected] = useState(qualities[0])
     const [active, setActive] = useState(dates[0])
+    const [categories, setCategories] = useState([]);
 
     let [isOpen, setIsOpen] = useState(false)
 
@@ -207,6 +208,20 @@ export function Recommended() {
             setIsOpen(false);
         };
     }, []);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const response = await fetch('https://dashboard.imara.tv/api/categories');
+            const data = await response.json();
+            setCategories(data.data);
+          } catch (error) {
+            console.error('Error fetching categories:', error);
+          }
+        };
+    
+        fetchCategories();
+      }, []);
 
     return (
         <>

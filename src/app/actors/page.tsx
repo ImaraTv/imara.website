@@ -7,6 +7,13 @@ import { Container } from '@/components/Container'
 import Image7 from '@/images/actors.png'
 import Image3 from '@/images/vector2.svg'
 
+import Kerubo from '@/images/actors/kerubo.png'
+import Michael from '@/images/actors/michael.png'
+import Faith from '@/images/actors/faith.png'
+import Sunnah from '@/images/actors/sunnah.png'
+import Byron from '@/images/actors/byron.png'
+import Rama from '@/images/actors/rama.png'
+
 import Image from 'next/image'
 import { Newsletter } from '@/components/Newsletter'
 
@@ -43,6 +50,7 @@ const cardStyle = {
 
 export default function Actors() {
   let [isOpen, setIsOpen] = useState(false)
+  const [creators, setCreators] = useState([]);
 
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -55,6 +63,20 @@ export default function Actors() {
     setIsOpen(false)
     setSelectedFile(null)
   }
+
+  useEffect(() => {
+    const fetchCreators = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/creators');
+        const data = await response.json();
+        setCreators(data.data);
+      } catch (error) {
+        console.error('Error fetching creators:', error);
+      }
+    };
+
+    fetchCreators();
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -131,23 +153,22 @@ export default function Actors() {
                 role="list"
                 className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8"
               >
-                {files.map((file) => (
+                {creators.map((creator) => (
                   <li
-                    key={file.name}
+                    key={creator.name}
                     className="rounded-[5px] pb-10"
                     style={cardStyle}
                   >
                     <img
-                    onClick={() => openModal(file)}
                       className="h-48 w-full rounded-t-[5px] object-cover shadow-xl md:h-56"
-                      src={file.imageUrl}
+                      src={creator.image}
                       alt=""
                     />
                     <h3 className="mt-6 px-8 text-xl font-bold tracking-tight text-[#474747] md:text-2xl">
-                      {file.name}
+                      {creator.name}
                     </h3>
                     <p className="mb-7 px-8 text-sm font-medium text-[#474747] md:text-lg">
-                      {file.role}
+                      {creator.stage_name}
                     </p>
                     <a
                       href="#"
