@@ -89,7 +89,7 @@ const files = [
 ]
 export default function ContinueWatching() {
   // const user = getLoggedInUser();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [videos, setVideos] = useState([]);
 
@@ -117,7 +117,7 @@ export default function ContinueWatching() {
     }
   };
 
-  const handleCategoryClick = (categoryName) => {
+  const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName);
   };
 

@@ -186,7 +186,7 @@ const files: File[] = [
 export function Recommended() {
     const [selected, setSelected] = useState(qualities[0])
     const [active, setActive] = useState(dates[0])
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
     let [isOpen, setIsOpen] = useState(false)
 

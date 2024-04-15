@@ -50,7 +50,7 @@ const cardStyle = {
 
 export default function Actors() {
   let [isOpen, setIsOpen] = useState(false)
-  const [creators, setCreators] = useState([]);
+  const [creators, setCreators] = useState<{ id: number; name: string; image: string; stage_name: string }[]>([]);
 
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
