@@ -196,7 +196,7 @@ export function Header() {
               <NavLink href="/contact">Contact</NavLink>
             </div>
           </div>
-          <div className="flex items-center gap-x-5 md:gap-x-4">
+          <div className="flex items-center justify-end gap-x-5 md:gap-x-4">
             <div className="flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
               <div className="w-full max-w-lg lg:max-w-xs">
                 <label htmlFor="search" className="sr-only">

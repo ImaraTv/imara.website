@@ -19,6 +19,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import Yt from "@/images/yt.png"
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Button } from '@/components/Button'
+import { url } from 'inspector';
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029'
@@ -28,18 +29,22 @@ const categories = [
   {
     id: 1,
     name: "Continue Watching",
+    url: "/continue-watching",
   },
   {
     id: 2,
     name: "Saved Films",
+    url: "/saved"
   },
   {
     id: 3,
     name: "Edit profile ",
+    url: "/profile-edit"
   },
   {
     id: 4,
     name: "All settings",
+    url: "#"
   },
 ]
 
@@ -248,13 +253,13 @@ export default function Videos() {
                 </div>
               </div>
               {categories.map((category) => (
-                <button
-                  type="button"
-                  key={category.id}
-                  className="inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
-                >
-                  {category.name}
-                </button>
+                <Link href={category.url} key={category.id}>
+                  <button
+                    className="inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
+                  >
+                    {category.name}
+                  </button>
+                </Link>
               ))}
             </div>
             <div className='flex'>
@@ -375,7 +380,7 @@ export default function Videos() {
                   <li key={file.title} className="relative">
                     <div onClick={() => openModal(file)}
                       className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                      <img src={file.source} alt=""
+                      <img src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt=""
                         className="pointer-events-none h-full w-full object-cover group-hover:opacity-75" />
                       <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-[43px] absolute inset-0 m-auto' width={50} height={43} src={Yt}
                         alt={"ÿt"} />
