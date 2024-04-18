@@ -10,6 +10,7 @@ import Link from 'next/link'
 import Yt from '@/images/yt.png'
 import Address from '@/components/Address'
 // import { getLoggedInUser } from '../../../utils/authUtils';
+import { useAuth } from '@/../hooks/useAuth';
 
 const cardStyle = {
   boxShadow: '0px 4px 28px 3px #0000001A',
@@ -89,6 +90,7 @@ const files = [
 ]
 export default function ContinueWatching() {
   // const user = getLoggedInUser();
+  const { user, isLoggedIn, logout } = useAuth();
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [videos, setVideos] = useState([]);
@@ -143,7 +145,18 @@ export default function ContinueWatching() {
       <main>
         <Container>
           <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
-            <h1>Welcome, Guest!</h1>
+          {isLoggedIn() ? (
+        <div>
+          <h1>Welcome, {user?.name}!</h1>
+          <p>This is the content for logged-in users.</p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <h1>Welcome, Guest!</h1>
+          <p>This is the content for guest users.</p>
+        </div>
+      )}
           </div>
 
           <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">

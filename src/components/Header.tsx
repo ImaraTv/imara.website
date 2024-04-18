@@ -7,6 +7,7 @@ import clsx from 'clsx'
 
 import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
+import { Container2 } from '@/components/Container2'
 import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
 import Image from 'next/image'
@@ -145,8 +146,8 @@ const cardStyle = {
 
 export function Header() {
   return (
-    <header className="py-10 bg-[#0033AB] md:bg-white">
-      <Container>
+    <header className="py-6 bg-[#0033AB] md:bg-white">
+      <Container2>
         <nav className="relative z-50 flex justify-between">
           <div className="md:hidden">
             <MobileNavigation />
@@ -155,18 +156,18 @@ export function Header() {
             <Link href="#" aria-label="Home">
               <Image
                 src={Logo2}
-                width={103}
-                height={48}
+                width={200}
+                height={100}
                 alt="logo"
               />
             </Link>
             <div className="hidden md:flex md:gap-x-2">
               <NavLink href="/">Home</NavLink>
-              <NavLink href="/about">About Us</NavLink>
+              <NavLink href="/about">About</NavLink>
               <Popover className="relative">
                 <Popover.Button
                   className="inline-flex items-center gap-x-1 rounded-lg px-2 py-1 font-bold text-lg text-[#525252] hover:bg-slate-100 hover:text-slate-900">
-                  <span>Watch More</span>
+                  <span className='flex'>Watch More</span>
                   <ChevronDownIcon className="h-5 w-5 font-bold" aria-hidden="true" />
                 </Popover.Button>
 
@@ -191,11 +192,11 @@ export function Header() {
                   </Popover.Panel>
                 </Transition>
               </Popover>
-              <NavLink href="/actors">Our Creators</NavLink>
+              <NavLink href="/actors">Creators</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </div>
           </div>
-          <div className="flex items-center gap-x-5 md:gap-x-8">
+          <div className="flex items-center gap-x-5 md:gap-x-4">
             <div className="flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
               <div className="w-full max-w-lg lg:max-w-xs">
                 <label htmlFor="search" className="sr-only">
@@ -215,7 +216,7 @@ export function Header() {
                 </div>
               </div>
             </div>
-            <Button href="/sign-up" color="blue" className="hidden md:flex">
+            <Button href="https://dashboard.imara.tv/admin/register" color="blue" className="hidden md:flex">
               <span>
                 Create on Imara
               </span>
@@ -279,7 +280,7 @@ export function Header() {
 
           </div>
         </nav>
-      </Container>
+      </Container2>
     </header>
   )
 }
