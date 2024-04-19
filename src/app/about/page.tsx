@@ -390,7 +390,7 @@ export default function About() {
                         leaveTo="opacity-0 scale-95"
                       >
                         <Dialog.Panel
-                          className=" h-auto max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                          className=" h-auto max-w-[1000px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                           <Dialog.Title
                             as="h3"
                             className="text-[19px] font-bold text-[#525252]"
