@@ -466,7 +466,7 @@ export function Recommended() {
                   />
                   <div className="max-w-xl flex-auto space-y-[26px]">
                     <p className="text-[17px] font-medium text-[#525252]">
-                    series/ ss2 / Eps 3
+                    {video.category}
                     </p>
                     <h3 className="text-[19px] font-bold text-[#525252]">
                       {video.name}

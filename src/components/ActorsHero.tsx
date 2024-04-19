@@ -52,11 +52,11 @@ export function ActorsHero() {
             creator and start your career journey in the film industry
           </p>
           <div className="hidden gap-[33px] md:flex">
-            <Button href="#" color="blue">
-              <span>All actors</span>
+            <Button href="/creators" color="blue">
+              <span>All creators</span>
             </Button>
             <Link
-              href="#"
+              href="https://dashboard.imara.tv/admin/register"
               className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-[12px] font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-lg"
             >
               Become a creator
@@ -98,7 +98,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image}
                   alt="avatar"
-                  className="w-full rounded-[3px] object-cover sm:w-full md:h-auto"
+                  className="w-[194px] rounded-[3px] object-cover md:h-auto"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}
@@ -108,14 +108,14 @@ export function ActorsHero() {
           </div>
 
           <div className="flex items-center justify-center gap-[33px] md:hidden">
-            <Button href="#" color="blue">
-              <span>All actors</span>
+            <Button href="/creators" color="blue">
+              <span>All creators</span>
             </Button>
             <Link
-              href="#"
+              href=""
               className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-[12px] font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-lg"
             >
-              Become an actor
+              Become a creator
             </Link>
           </div>
         </div>

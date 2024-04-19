@@ -1,5 +1,5 @@
-"use client"
-import React, { Fragment, useEffect, useState } from "react";
+'use client'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { Footer } from '@/components/Footer'
 import { Header2 } from '@/components/Header2'
@@ -20,8 +20,6 @@ import logo7 from '@/images/partners/actionaid.png'
 import logo8 from '@/images/partners/crowdsourseafrica.jpg'
 import logo from '@/images/logos/logo.png'
 
-
-
 import CEO from '@/images/members/maina.png'
 import CTO from '@/images/members/fred.png'
 import Emmah from '@/images/members/emmah.jpg'
@@ -29,7 +27,7 @@ import Founder from '@/images/members/founder.jpg'
 import Fred from '@/images/members/fred.jpeg'
 
 import Image from 'next/image'
-import { StaticImageData } from 'next/image';
+import { StaticImageData } from 'next/image'
 
 const values = [
   {
@@ -59,13 +57,15 @@ const files: File[] = [
   {
     name: 'The Late Harrison Kariuki',
     role: 'Co-founder',
-    description: 'For Harrison Kariuki Gachago (The Late) Personal Information:  Name: Harrison Kariuki Gachago  Date of Birth: 9 th September 1980  Date of Demise: December 2021 Harrison Kariuki was a dedicated professional known for his significant contributions to the digital media space and insurance industries. Harrison had a successful career in the insurance sector prior to his involvement with Imara TV. With a solid background in insurance, he transitioned into the media sector, where he co-founded Imara TV in 2016. As co-founder he played a key role in the establishment of Imara TV, contributing to its inception and early development. Throughout his tenure, he held pivotal roles within the organization, notably as a Director and Chief Operating Officer. In the role of director, he provided strategic direction and decision-making expertise to drive the company’s growth. In the capacity of Chief Operations Officer, he oversaw day to day operations, spearheading initiatives to expand Imara Tv’s market presences Kariuki demonstrated strong leadership abilities, strategic planning and operations management in guiding Imara TV as a co-founder, director, and COO Legacy: Harrison Kariuki&#39;s legacy extends beyond his professional accomplishments. He leaves behind a lasting impact on Imara TV, having played a vital role in its establishment and growth. His dedication, leadership, and contributions to the organization will be remembered and cherished by colleagues and the industry alike.',
+    description:
+      'For Harrison Kariuki Gachago (The Late) Personal Information:  Name: Harrison Kariuki Gachago  Date of Birth: 9 th September 1980  Date of Demise: December 2021 Harrison Kariuki was a dedicated professional known for his significant contributions to the digital media space and insurance industries. Harrison had a successful career in the insurance sector prior to his involvement with Imara TV. With a solid background in insurance, he transitioned into the media sector, where he co-founded Imara TV in 2016. As co-founder he played a key role in the establishment of Imara TV, contributing to its inception and early development. Throughout his tenure, he held pivotal roles within the organization, notably as a Director and Chief Operating Officer. In the role of director, he provided strategic direction and decision-making expertise to drive the company’s growth. In the capacity of Chief Operations Officer, he oversaw day to day operations, spearheading initiatives to expand Imara Tv’s market presences Kariuki demonstrated strong leadership abilities, strategic planning and operations management in guiding Imara TV as a co-founder, director, and COO Legacy: Harrison Kariuki&#39;s legacy extends beyond his professional accomplishments. He leaves behind a lasting impact on Imara TV, having played a vital role in its establishment and growth. His dedication, leadership, and contributions to the organization will be remembered and cherished by colleagues and the industry alike.',
     imageUrl: Founder,
   },
   {
     name: 'Stephen Maina',
     role: 'Co-founder and CEO',
-    description: 'Stephen Maina is a Computer Scientist and technology evangelist who is using IT to make the world a better place. While pursuing his BSc. Computer Science at the University of Nairobi in 2010, he co- founded the Millman Group of companies to design, develop and deploy mobile, web and cloud applications for organizations around the world. He is also a certified Agile Scrum Master (PSM 1) project management practitioner from 2015. In 2016, he co-founded Imara Tv, a media platform that entertains and educates the public to create sustainable jobs for young people in the film industry. In 2020, he co-founded JiBambe Wifi an internet service provision company delivering affordable internet connectivity to urban and rural communities in Kenya. Stephen is passionate about developing Africa’s untapped potential to build a sustainable future that benefits humanity.',
+    description:
+      'Stephen Maina is a Computer Scientist and technology evangelist who is using IT to make the world a better place. While pursuing his BSc. Computer Science at the University of Nairobi in 2010, he co- founded the Millman Group of companies to design, develop and deploy mobile, web and cloud applications for organizations around the world. He is also a certified Agile Scrum Master (PSM 1) project management practitioner from 2015. In 2016, he co-founded Imara Tv, a media platform that entertains and educates the public to create sustainable jobs for young people in the film industry. In 2020, he co-founded JiBambe Wifi an internet service provision company delivering affordable internet connectivity to urban and rural communities in Kenya. Stephen is passionate about developing Africa’s untapped potential to build a sustainable future that benefits humanity.',
     imageUrl: CEO,
   },
   {
@@ -78,7 +78,8 @@ const files: File[] = [
   {
     name: 'Emmah Kanyara',
     role: 'Co-founder and COO',
-    description: 'Emmah Kanyara is a dynamic leader with a Bachelors degree in Counselling psychology and brings a unique blend of psychological insights, operational expertise and motivation to her role as the Chief Operations Officer at Imara TV. She aims at positioning Imara Tv as a leading destination for edutainment content, and making a positive impact on the society one viewer at a time Emmah is passionate about the power of media to inspire, educate and empower individuals, she believes in the value of partnerships and collaboration within the industry. And actively seeks out opportunities to collaborate with content creators, advertisers and other stake holders to expand Imara Tv’s reach and impact',
+    description:
+      'Emmah Kanyara is a dynamic leader with a Bachelors degree in Counselling psychology and brings a unique blend of psychological insights, operational expertise and motivation to her role as the Chief Operations Officer at Imara TV. She aims at positioning Imara Tv as a leading destination for edutainment content, and making a positive impact on the society one viewer at a time Emmah is passionate about the power of media to inspire, educate and empower individuals, she believes in the value of partnerships and collaboration within the industry. And actively seeks out opportunities to collaborate with content creators, advertisers and other stake holders to expand Imara Tv’s reach and impact',
     imageUrl: Emmah,
   },
   {
@@ -90,38 +91,46 @@ const files: File[] = [
 ]
 
 const partners = [
-    {
-        id: 1,
-        image: logo1,
-    },
-    {
-        id: 2,
-        image: logo2,
-    },
-    {
-        id: 3,
-        image: logo3,
-    },
-    {
-        id: 4,
-        image: logo4,
-    },
-    {
-        id: 5,
-        image: logo5,
-    },
-    {
-        id: 6,
-        image: logo6,
-    },
-    {
-        id: 7,
-        image: logo7,
-    },
-    {
-        id: 8,
-        image: logo8,
-    },
+  {
+    id: 1,
+    image: logo1,
+    url: 'http://www.parliament.go.ke',
+  },
+  {
+    id: 2,
+    image: logo2,
+    url: 'https://www.icrhk.org/',
+  },
+  {
+    id: 3,
+    image: logo3,
+    url: 'https://nailab.co/',
+  },
+  {
+    id: 4,
+    image: logo4,
+    url: 'https://www.ukaiddirect.org/',
+  },
+  {
+    id: 5,
+    image: logo5,
+    url: 'https://www.unfpa.org/',
+  },
+  {
+    id: 6,
+    image: logo6,
+    url: 'https://unhabitat.org/',
+  },
+  {
+    id: 7,
+    image: logo7,
+    url: 'https://actionaid-kenya.org/',
+  },
+  {
+    id: 8,
+    image: logo8,
+    url: 'https://www.facebook.com/crowdsourceafrica/',
+  },
 ]
 
 const cardStyle = {
@@ -178,7 +187,7 @@ export default function About() {
                     href="/sign-up"
                     className="rounded-md px-3.5 py-1 text-xs font-semibold leading-6 text-gray-900 ring-2 ring-[#007BFF] md:text-sm"
                   >
-                    Get Started 
+                    Get Started
                   </a>
                 </div>
               </div>
@@ -337,7 +346,7 @@ export default function About() {
             <div className="mx-auto">
               <div className="mx-auto">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  Imara Tv core members
+                  Imara Tv Team
                 </h2>
               </div>
               <ul
@@ -346,11 +355,11 @@ export default function About() {
               >
                 {files.map((file) => (
                   <li key={file.name}>
-                    <Image 
-                    onClick={() => openModal(file)}
+                    <Image
+                      onClick={() => openModal(file)}
                       width={286}
                       height={192}
-                      className="aspect-[3/2] w-full rounded-2xl object-cover cursor-pointer"
+                      className="aspect-[3/2] w-full cursor-pointer rounded-2xl object-cover"
                       src={file.imageUrl}
                       alt=""
                     />
@@ -389,8 +398,7 @@ export default function About() {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                       >
-                        <Dialog.Panel
-                          className=" h-auto max-w-[1000px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                        <Dialog.Panel className=" h-auto max-w-[1000px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                           <Dialog.Title
                             as="h3"
                             className="text-[19px] font-bold text-[#525252]"
@@ -402,7 +410,6 @@ export default function About() {
                               {selectedFile && selectedFile.description}
                             </p>
                           </div>
-
                         </Dialog.Panel>
                       </Transition.Child>
                     </div>
@@ -419,31 +426,27 @@ export default function About() {
               <div className="mx-auto">
                 <div className="flex items-center gap-4">
                   <h2 className="text-[20px] font-bold text-[#2B2B2B] md:text-[40px]">
-                    Our partners and clients
+                    Our Sponsors
                   </h2>
-                  <button
-                    type="button"
-                    className="rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-gray-50"
-                  >
-                    Partners
-                  </button>
-                  <div>Clients</div>
                 </div>
 
                 <div className="mx-auto mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-6 sm:gap-x-10 md:gap-x-8 lg:mx-0 lg:grid-cols-5">
-                    {partners.map((partner) => (
-
-                  <div key={partner.id} className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]">
-                    <Image
-                      className="col-span-2 max-h-20 w-full object-contain lg:col-span-1"
-                      src={partner.image}
-                      alt={'Transistor'}
-                      width={158}
-                      height={48}
-                    />
-                  </div>
-                    ))}
-              
+                  {partners.map((partner) => (
+                    <a href={partner.url} key={partner.id}>
+                    <div
+                      
+                      className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]"
+                    >
+                        <Image
+                          className="col-span-2 max-h-20 w-full object-contain lg:col-span-1"
+                          src={partner.image}
+                          alt={'Transistor'}
+                          width={158}
+                          height={48}
+                        />
+                    </div>
+                      </a>
+                  ))}
                 </div>
 
                 <div className="bg-white py-16 sm:py-24">
