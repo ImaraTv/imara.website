@@ -20,6 +20,9 @@ import Create from '@/images/create.svg'
 import Logout from '@/images/logout.svg'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { isLoggedIn } from '@/../utils/authUtils'
+import { useRouter } from 'next/navigation'
+import { logout } from '@/../utils/authUtils'
 
 function MobileNavLink({
   href,
@@ -149,6 +152,11 @@ const cardStyle = {
 }
 
 export function Header2() {
+  const router = useRouter()
+  const handleLogout = () => {
+    logout()
+    router.push('/sign-in') // Redirect to the login page
+  }
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-[#0033AB] py-6 md:bg-transparent">
       <nav className="flex items-center justify-between">
@@ -229,63 +237,80 @@ export function Header2() {
           >
             <span>Create on Imara</span>
           </Button>
+          {!isLoggedIn() && (
           <Link
             href="/sign-in"
             className="group hidden items-center justify-center rounded-lg px-10 py-2 text-lg font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:inline-flex"
           >
             Login
           </Link>
-
-          <div className="hidden px-4 md:flex">
-            <Popover className="relative">
-              {({ open }) => (
-                <>
-                  <Popover.Button
-                    className={`
+          )}
+          {isLoggedIn() && (
+            <div className="hidden px-4 md:flex">
+              <Popover className="relative">
+                {({ open }) => (
+                  <>
+                    <Popover.Button
+                      className={`
             ${open ? 'text-white' : 'text-white/90'}
             group inline-flex items-center rounded-full bg-[#525252] px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
-                  >
-                    <Image src={User} alt={'user'} width={20} height={20} />
-                  </Popover.Button>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="opacity-0 translate-y-1"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in duration-150"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-1"
-                  >
-                    <Popover.Panel className="absolute right-0 z-10 mt-3 h-auto w-[220px] -translate-x-1/2 transform px-4 sm:px-0">
-                      <div
-                        className="overflow-hidden rounded-lg ring-1 ring-black/5"
-                        style={cardStyle}
-                      >
-                        <div className="relative grid gap-8 bg-white p-7">
-                          {items.map((item) => (
+                    >
+                      <Image src={User} alt={'user'} width={20} height={20} />
+                    </Popover.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-200"
+                      enterFrom="opacity-0 translate-y-1"
+                      enterTo="opacity-100 translate-y-0"
+                      leave="transition ease-in duration-150"
+                      leaveFrom="opacity-100 translate-y-0"
+                      leaveTo="opacity-0 translate-y-1"
+                    >
+                      <Popover.Panel className="absolute right-0 z-10 mt-3 h-auto w-[220px] -translate-x-1/2 transform px-4 sm:px-0">
+                        <div
+                          className="overflow-hidden rounded-lg ring-1 ring-black/5"
+                          style={cardStyle}
+                        >
+                          <div className="relative grid gap-8 bg-white p-7">
+                            {items.map((item) => (
+                              <a
+                                key={item.name}
+                                href={item.href}
+                                className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
+                              >
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
+                                  <item.icon aria-hidden="true" />
+                                </div>
+                                <div className="ml-3">
+                                  <p className="text-[15px] font-medium text-[#616161]">
+                                    {item.name}
+                                  </p>
+                                </div>
+                              </a>
+                            ))}
                             <a
-                              key={item.name}
-                              href={item.href}
+                              href="#"
+                              onClick={handleLogout}
                               className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
                             >
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
-                                <item.icon aria-hidden="true" />
+                                <IconSix aria-hidden="true" />
                               </div>
                               <div className="ml-3">
                                 <p className="text-[15px] font-medium text-[#616161]">
-                                  {item.name}
+                                  Logout
                                 </p>
                               </div>
                             </a>
-                          ))}
+                          </div>
                         </div>
-                      </div>
-                    </Popover.Panel>
-                  </Transition>
-                </>
-              )}
-            </Popover>
-          </div>
+                      </Popover.Panel>
+                    </Transition>
+                  </>
+                )}
+              </Popover>
+            </div>
+          )}
         </div>
       </nav>
     </header>

@@ -2,41 +2,40 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+import { setAccessToken } from '@/../utils/authUtils';
 
 const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-const router = useRouter();
+  const router = useRouter();
 
-const onSubmit = async (data: any) => {
-  try {
-    const response = await axios.post('https://dashboard.imara.tv/api/auth/login', data);
-    console.log(response.data);
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await axios.post('https://dashboard.imara.tv/api/auth/login', data);
+      const { access_token } = response.data;
 
-    // Store user information in cookies
-    Cookies.set('accessToken', response.data.access_token);
-    Cookies.set('user', JSON.stringify(response.data.user));
+      // Store the access token
+      setAccessToken(access_token);
 
-    // Show a success message using SweetAlert
-    Swal.fire({
-      title: 'Login Successful',
-      text: 'Redirecting to your profile...',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then(() => {
-      // Redirect to the profile page
-      router.push('/continue-watching');
-    });
-  } catch (error) {
-    console.error(error);
-    Swal.fire({
-      title: 'Login Failed',
-      text: 'Invalid credentials. Please try again.',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-};
+      // Show a success message using SweetAlert
+      Swal.fire({
+        title: 'Login Successful',
+        text: 'Redirecting to your profile...',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      }).then(() => {
+        // Redirect to the profile page
+        router.push('/continue-watching');
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: 'Login Failed',
+        text: 'Invalid credentials. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4 md:mt-16 sm:mt-20">

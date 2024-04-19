@@ -21,6 +21,9 @@ import Create from '@/images/create.svg'
 import Logout from '@/images/logout.svg'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { isLoggedIn } from '@/../utils/authUtils';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/../utils/authUtils';
 
 function MobileNavLink({
   href,
@@ -67,12 +70,7 @@ const items = [
     name: 'Create on Imara',
     href: '##',
     icon: IconFive,
-  },
-  {
-    name: 'Log out',
-    href: '##',
-    icon: IconSix,
-  },
+  }
 
 ]
 
@@ -145,6 +143,12 @@ const cardStyle = {
 };
 
 export function Header() {
+  const router = useRouter();
+  const handleLogout = () => {
+    logout();
+    router.push('/sign-in'); // Redirect to the login page
+  };
+
   return (
     <header className="py-6 bg-[#0033AB] md:bg-white">
       <Container2>
@@ -221,13 +225,15 @@ export function Header() {
                 Create on Imara
               </span>
             </Button>
+            {!isLoggedIn() && (
             <Link
               href="/sign-in"
               className="group hidden md:inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
             >
               Login
             </Link>
-
+            )}
+            {isLoggedIn() && (
             <div className="hidden md:flex px-4">
               <Popover className="relative">
                 {({ open }) => (
@@ -268,6 +274,20 @@ export function Header() {
                                 </div>
                               </a>
                             ))}
+                            <a
+                                href="#"
+                                onClick={handleLogout}
+                                className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
+                              >
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
+                                  <IconSix aria-hidden="true" />
+                                </div>
+                                <div className="ml-3">
+                                  <p className="text-[15px] font-medium text-[#616161]">
+                                    Logout
+                                  </p>
+                                </div>
+                              </a>
                           </div>
                         </div>
                       </Popover.Panel>
@@ -276,6 +296,7 @@ export function Header() {
                 )}
               </Popover>
             </div>
+            )}
 
 
           </div>
