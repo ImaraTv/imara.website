@@ -451,24 +451,24 @@ export function Recommended() {
               role="list"
               className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3"
             >
-              {suggestions.map((suggestion) => (
+              {videos.map((video) => (
                 <li
-                  key={suggestion.id}
+                  key={video.id}
                   className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10"
                 >
                   <Image
                     width={131}
                     height={118}
                     className="w-[131px] rounded-l-2xl object-cover"
-                    src={suggestion.imageUrl}
+                    src={video.image}
                     alt=""
                   />
                   <div className="max-w-xl flex-auto space-y-[26px]">
                     <p className="text-[17px] font-medium text-[#525252]">
-                      {suggestion.series}
+                    series/ ss2 / Eps 3
                     </p>
                     <h3 className="text-[19px] font-bold text-[#525252]">
-                      {suggestion.name}
+                      {video.name}
                     </h3>
                   </div>
                 </li>

@@ -1,5 +1,5 @@
 "use client"
-import React, {useRef, useState} from "react";
+import React, {Fragment, useEffect, useRef, useState} from "react";
 import Image from "next/image"
 import CarouselImage from "@/images/carousel.png"
 // Import Swiper React components
@@ -46,6 +46,36 @@ const carouselStyle = {
 
 
 export function CarouselHome() {
+
+    const [videos, setVideos] = useState<
+    {
+      id: number
+      name: string
+      duration: number
+      category: string
+      description: string
+      vimeo_link: string
+      call_to_action: string
+      call_to_action_link: string
+      image: string
+    }[]
+  >([])
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const data = await response.json()
+        setVideos(data.data)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    }
+
+    fetchVideos()
+  }, [])
+
+
     return (
         <Swiper
             modules={[Navigation, Autoplay, Pagination]}
@@ -60,10 +90,10 @@ export function CarouselHome() {
             id="slider2"
         >
 
-            {items.map((item) => (
+            {videos.map((item) => (
               <SwiperSlide key={item.id}>
                   <Image
-                    src={item.source}
+                    src={item.image}
                     width={1440}
                     height={560}
                     className={`absolute inset-0 -z-10 w-full h-full object-cover ${carouselStyle.imageStyles}`}
@@ -72,12 +102,12 @@ export function CarouselHome() {
                   <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-gray-900/40" />
                   <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
                   <div className="absolute z-[999] text-white bottom-[64px] ltr:left-12 rtl:right-12 px-12">
-                      <div className="text-[20px] md:text-[35px] font-bold mb-[26px]">{item.title}</div>
+                      <div className="text-[20px] md:text-[35px] font-bold mb-[26px]">{item.name}</div>
                       <div className="flex gap-7 items-center text-white">
                           <button className="px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[14px] md:text-[18px]">HD
                           </button>
                           <div className="font-medium text-[14px] md:text-[18px]">2023</div>
-                          <div className="font-medium text-[14px] md:text-[18px]">43 min</div>
+                          <div className="font-medium text-[14px] md:text-[18px]">{item.duration} min</div>
                           <div className="font-medium text-[14px] md:text-[18px]">Ranked : 4.7</div>
                       </div>
                       <div className="sm:mt-5 mt-1 w-4/5 text-[18px] text-[#B0B0B0] sm:block hidden">
@@ -86,7 +116,7 @@ export function CarouselHome() {
 
                       <div className="flex gap-10 mt-[43px]">
                           <Link
-                            href="/sign-in"
+                            href="/watch"
                             className="group inline-flex bg-[#007BFF] items-center justify-center rounded-lg py-2 px-2 md:px-10 text-[12px] md:text-[17px] font-medium text-white focus:outline-none"
                           >
                               Watch Now
