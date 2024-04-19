@@ -1,7 +1,7 @@
 "use client"
 import {Footer} from '@/components/Footer'
 import {Header} from '@/components/Header'
-import {Fragment, useState} from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import {Listbox, Dialog, Transition} from '@headlessui/react'
 import {Container} from '@/components/Container'
 import Image from "next/image"
@@ -10,6 +10,8 @@ import Yt from "@/images/yt.png"
 import Address from "@/components/Address";
 import {CheckIcon, ChevronDownIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {Button} from "@/components/Button";
+import axios from 'axios'
+import { getAccessToken } from '@/../utils/authUtils'
 
 const cardStyle = {
     boxShadow: '0px 4px 28px 3px #0000001A'
@@ -151,8 +153,14 @@ const files = [
             'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
     },
 ]
+interface UserData {
+    name: string
+    email: string
+    // Add any other properties that are part of the user data
+  }
 export default function Saved() {
-
+    const [videos, setVideos] = useState([])
+    const [userData, setUserData] = useState<UserData | null>(null)
     let [isOpen, setIsOpen] = useState(true)
     const [selected, setSelected] = useState(qualities[0])
     const [active, setActive] = useState(dates[0])
@@ -165,12 +173,59 @@ export default function Saved() {
         setIsOpen(true)
     }
 
+    useEffect(() => {
+        const fetchVideos = async () => {
+          try {
+            const response = await fetch('https://dashboard.imara.tv/api/videos')
+            const data = await response.json()
+            setVideos(data.data)
+          } catch (error) {
+            console.error('Error fetching categories:', error)
+          }
+        }
+    
+        fetchVideos()
+      }, [])
+
+      useEffect(() => {
+        const fetchUserProfile = async () => {
+          try {
+            const accessToken = getAccessToken()
+            const response = await axios.get(
+              'https://dashboard.imara.tv/api/profile',
+              {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              },
+            )
+    
+            // Handle the response data
+            const userData = response.data.data
+            setUserData(userData[0])
+          } catch (error) {
+            console.error('Error fetching user profile:', error)
+          }
+        }
+    
+        fetchUserProfile()
+      }, [])
+
     return (
         <>
             <Header/>
             <main>
                 <Container>
-                    <div className='font-bold text-[40px] text-[#2B2B2B] mt-14'>Welcome back Joy !</div>
+                    <div className='font-bold text-[40px] text-[#2B2B2B] mt-14'>
+                    {userData ? (
+              <div>
+                <p>Welcome {userData.name}</p>
+                {/* Render additional user details as needed */}
+              </div>
+            ) : (
+              <p>Loading user...</p>
+            )}
+                    </div>
 
                     <div className='flex px-6 mb-[70px] mt-[33px] -ml-4'>
                         {categories.map((category) => (

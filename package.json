@@ -39,6 +39,7 @@
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.2",
+    "react-player": "^2.16.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "styled-components": "^6.1.8",

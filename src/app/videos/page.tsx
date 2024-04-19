@@ -130,6 +130,7 @@ interface File {
 export default function Videos() {
   const [selected, setSelected] = useState(qualities[0])
   const [active, setActive] = useState(dates[0])
+  const [isLoading, setIsLoading] = useState(true)
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
   )
@@ -190,8 +191,10 @@ export default function Videos() {
         const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
         setVideos(data.data)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching categories:', error)
+        setIsLoading(false)
       }
     }
 
@@ -346,6 +349,23 @@ export default function Videos() {
           </div>
 
           <div className='flex flex-col md:flex-row justify-between mt-[90px]'>
+          {isLoading ? (
+              <div className="mx-auto w-full max-w-sm rounded-md">
+                <div className="flex animate-pulse flex-col space-x-4">
+                  <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"></div>
+                  <div className="flex-1 space-y-6 py-1">
+                    <div className="mt-[18px] h-2 rounded bg-slate-700"></div>
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="col-span-2 h-2 rounded bg-slate-700"></div>
+                        <div className="col-span-1 h-2 rounded bg-slate-700"></div>
+                      </div>
+                      <div className="h-2 rounded bg-slate-700"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
             <div>
               <ul role="list"
                 className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
@@ -436,6 +456,7 @@ export default function Videos() {
                 </Dialog>
               </Transition>
             </div>
+            )}
             <div>
               <ul role="list" className="mt-10 md:-mt-12 space-y-12 xl:col-span-3">
                 {videos.map((video) => (
