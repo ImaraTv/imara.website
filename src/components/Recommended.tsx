@@ -88,16 +88,27 @@ interface File {
   // Other properties
 }
 
-
 export function Recommended() {
   const [selected, setSelected] = useState(qualities[0])
   const [active, setActive] = useState(dates[0])
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
   )
-  const [videos, setVideos] = useState<{ id: number; name: string; duration: number; category: string; description: string; vimeo_link: string; call_to_action: string; call_to_action_link: string; image: string }[]>(
-    [],
-  )
+  const [videos, setVideos] = useState<
+    {
+      id: number
+      name: string
+      duration: number
+      category: string
+      description: string
+      vimeo_link: string
+      call_to_action: string
+      call_to_action_link: string
+      image: string
+    }[]
+  >([])
+  
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
 
   let [isOpen, setIsOpen] = useState(false)
 
@@ -139,9 +150,7 @@ export function Recommended() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(
-          'https://dashboard.imara.tv/api/videos',
-        )
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
         setVideos(data.data)
       } catch (error) {
@@ -152,6 +161,17 @@ export function Recommended() {
     fetchVideos()
   }, [])
 
+  const handleCategoryClick = (categoryId: number) => {
+    setSelectedCategory(categoryId)
+  }
+
+  const filteredVideos = selectedCategory
+  ? videos.filter(video => Number(video.category) === selectedCategory)
+  : videos;
+
+  {console.log("Selected Category:", selectedCategory)}
+    {console.log("Filtered Videos:", filteredVideos)}
+
   return (
     <>
       <Container>
@@ -160,13 +180,15 @@ export function Recommended() {
             <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
               Recommended
             </div>
+            
             {categories.map((category, index) => (
               <button
                 type="button"
                 key={category.id}
+                onClick={() => handleCategoryClick(category.id)}
                 className={`text-12px] mr-[24px] inline-flex items-center gap-x-2 rounded-md bg-white px-[13px] py-2 font-medium text-[#525252] shadow-sm md:text-[17px] ${
-                  index === 0
-                    ? 'ring-1 ring-inset ring-[#525252]'
+                  selectedCategory === category.id
+                    ? 'ring-525252 ring-1 ring-inset'
                     : 'hover:bg-gray-50'
                 }`}
               >

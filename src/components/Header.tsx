@@ -123,13 +123,13 @@ function MobileNavigation() {
             className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
             <MobileNavLink href="/">Home</MobileNavLink>
-            <MobileNavLink href="/about">About Us</MobileNavLink>
+            <MobileNavLink href="/about">About</MobileNavLink>
             <MobileNavLink href="/videos">Watch More</MobileNavLink>
-            <MobileNavLink href="/actors">Our Actors</MobileNavLink>
+            <MobileNavLink href="/creators">Creators</MobileNavLink>
             <MobileNavLink href="/contact">Contact</MobileNavLink>
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
-              <MobileNavLink href="/sign-up">Create on Imara</MobileNavLink>
+              <MobileNavLink href="https://dashboard.imara.tv/admin/register">Create on Imara</MobileNavLink>
               <MobileNavLink href="/sign-in">Login</MobileNavLink>
             </div>
 
@@ -192,7 +192,7 @@ export function Header() {
                   </Popover.Panel>
                 </Transition>
               </Popover>
-              <NavLink href="/actors">Creators</NavLink>
+              <NavLink href="/creators">Creators</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </div>
           </div>

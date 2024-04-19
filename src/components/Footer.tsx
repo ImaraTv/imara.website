@@ -81,7 +81,7 @@ export function Footer() {
                 <Link href={'/videos'}>Watch More</Link>
               </div>
               <div className="text-lg font-semibold leading-6 text-white">
-                <Link href={'/actors'}>Our Creators</Link>
+                <Link href={'/creators'}>Our Creators</Link>
               </div>
               <div className="text-lg font-semibold leading-6 text-white">
                 <Link href={'/contact'}>Contact Us</Link>

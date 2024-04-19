@@ -118,7 +118,7 @@ export default function Actors() {
                     Watch our videos
                   </a>
                   <a
-                    href="#"
+                    href="https://dashboard.imara.tv/admin/register"
                     className="rounded-md px-3.5 py-1 text-xs font-semibold leading-6 text-gray-900 ring-2 ring-[#007BFF] md:text-sm"
                   >
                     Become a creator
