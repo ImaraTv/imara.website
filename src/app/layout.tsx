@@ -9,10 +9,10 @@ import CookieConsentComponent from '@/components/CookieConsent';
 export const metadata: Metadata = {
   title: {
     template: '%s - ImaraTv',
-    default: 'ImaraTv - Changing Africa, One film at a time',
+    default: 'ImaraTv - Bridging Entertainment & Education',
   },
   description:
-    'Changing Africa, One film at a time.',
+    'Bridging Entertainment & Education.',
 }
 const ubuntu = Ubuntu({
   weight: ["300","400","500","700"],

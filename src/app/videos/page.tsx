@@ -16,7 +16,7 @@ import { CloudArrowDownIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { ShareIcon } from "@heroicons/react/24/solid";
 import { StarIcon } from "@heroicons/react/24/solid";
-import Yt from "@/images/yt.png"
+import Yt from "@/images/player.png"
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Button } from '@/components/Button'
 import { url } from 'inspector';
@@ -25,28 +25,28 @@ const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029'
 };
 
-const categories = [
-  {
-    id: 1,
-    name: "Continue Watching",
-    url: "/continue-watching",
-  },
-  {
-    id: 2,
-    name: "Saved Films",
-    url: "/saved"
-  },
-  {
-    id: 3,
-    name: "Edit profile ",
-    url: "/profile-edit"
-  },
-  {
-    id: 4,
-    name: "All settings",
-    url: "#"
-  },
-]
+// const categories = [
+//   {
+//     id: 1,
+//     name: "Continue Watching",
+//     url: "/continue-watching",
+//   },
+//   {
+//     id: 2,
+//     name: "Saved Films",
+//     url: "/saved"
+//   },
+//   {
+//     id: 3,
+//     name: "Edit profile ",
+//     url: "/profile-edit"
+//   },
+//   {
+//     id: 4,
+//     name: "All settings",
+//     url: "#"
+//   },
+// ]
 
 const dates = [
   {
@@ -72,11 +72,11 @@ const dates = [
 ]
 
 const qualities = [
-  { id: 1, name: 'Durward Reynolds', unavailable: false },
-  { id: 2, name: 'Kenton Towne', unavailable: false },
-  { id: 3, name: 'Therese Wunsch', unavailable: false },
-  { id: 4, name: 'Benedict Kessler', unavailable: true },
-  { id: 5, name: 'Katelyn Rohan', unavailable: false },
+  { id: 1, name: '4D', unavailable: false },
+  { id: 2, name: 'HD', unavailable: false },
+  { id: 3, name: 'Medium', unavailable: false },
+  { id: 4, name: 'Standard', unavailable: true },
+  { id: 5, name: 'Low', unavailable: false },
 ]
 const suggestions = [
   {
@@ -118,91 +118,34 @@ const suggestions = [
 ]
 
 interface File {
-  title: string;
-  category: string;
-  time: string;
-  description: string;
-  source: string;
-  // Add other properties as needed
+  name: string
+  category: string
+  duration: number
+  description: string
+  image: string
+  // Other properties
 }
-const files: File[] = [
-  {
-    title: 'Chills for Who',
-    category: 'Mental health',
-    time: '1hr 23 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'The Circle',
-    category: 'Politics',
-    time: '45 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Hapa nje kwetu',
-    category: 'Mental health',
-    time: '45 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Against my will short film',
-    category: 'GBV',
-    time: '22 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Making the right decisions',
-    category: 'GBV',
-    time: '22 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Cut across my will',
-    category: 'GBV',
-    time: '22 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Covid - Comic cartoons',
-    category: 'GBV',
-    time: '22 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Chills for Who2',
-    category: 'Mental health',
-    time: '1hr 23 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-  {
-    title: 'Life of Wambo',
-    category: 'FGM',
-    time: '45 min',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    source:
-      'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-  },
-]
+
 
 export default function Videos() {
   const [selected, setSelected] = useState(qualities[0])
   const [active, setActive] = useState(dates[0])
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+    [],
+  )
+  const [videos, setVideos] = useState<
+    {
+      id: number
+      name: string
+      duration: number
+      category: string
+      description: string
+      vimeo_link: string
+      call_to_action: string
+      call_to_action_link: string
+      image: string
+    }[]
+  >([])
 
   let [isOpen, setIsOpen] = useState(false)
 
@@ -224,6 +167,36 @@ export default function Videos() {
       setIsOpen(false);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          'https://dashboard.imara.tv/api/categories',
+        )
+        const data = await response.json()
+        setCategories(data.data)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    }
+
+    fetchCategories()
+  }, [])
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const data = await response.json()
+        setVideos(data.data)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    }
+
+    fetchVideos()
+  }, [])
   return (
     <>
       <Header />
@@ -253,7 +226,7 @@ export default function Videos() {
                 </div>
               </div>
               {categories.map((category) => (
-                <Link href={category.url} key={category.id}>
+                <Link href="#" key={category.id}>
                   <button
                     className="inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
                   >
@@ -376,13 +349,13 @@ export default function Videos() {
             <div>
               <ul role="list"
                 className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
-                {files.map((file) => (
-                  <li key={file.title} className="relative">
-                    <div onClick={() => openModal(file)}
+                {videos.map((video) => (
+                  <li key={video.name} className="relative">
+                    <div onClick={() => openModal(video)}
                       className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                      <img src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80" alt=""
+                      <img src={video.image} alt=""
                         className="pointer-events-none h-full w-full object-cover group-hover:opacity-75" />
-                      <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-[43px] absolute inset-0 m-auto' width={50} height={43} src={Yt}
+                      <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-auto absolute inset-0 m-auto object-cover' width={150} height={150} src={Yt}
                         alt={"ÿt"} />
                     </div>
                     <div className='flex gap-3 mt-[18px] md:mt-5'>
@@ -390,12 +363,12 @@ export default function Videos() {
                         type="button"
                         className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 md:px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
                       >
-                        {file.time}
+                        {video.duration} min
                       </button>
-                      <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{file.category}</p>
+                      <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{video.category}</p>
                     </div>
 
-                    <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{file.title}</p>
+                    <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>
                   </li>
                 ))}
               </ul>
@@ -430,13 +403,13 @@ export default function Videos() {
                             as="h3"
                             className="text-[19px] font-bold text-[#525252]"
                           >
-                            {selectedFile && selectedFile.title}
+                            {selectedFile && selectedFile.name}
                           </Dialog.Title>
                           <div className='flex gap-7 items-center mt-5'>
                             <button
                               className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px] text-white'>HD
                             </button>
-                            <div className='font-medium text-[15px] text-[#525252]'>{selectedFile && selectedFile.time}</div>
+                            <div className='font-medium text-[15px] text-[#525252]'>{selectedFile && selectedFile.duration} min</div>
                           </div>
                           <div className='flex gap-1 items-center mt-[55px] mb-[27px]'>
                             <div className='font-bold text-[20px] text-[#525252]'>Category:
@@ -465,12 +438,12 @@ export default function Videos() {
             </div>
             <div>
               <ul role="list" className="mt-10 md:-mt-12 space-y-12 xl:col-span-3">
-                {suggestions.map((suggestion) => (
-                  <li key={suggestion.id} className="flex flex-row md:flex-col gap-10 pt-12 sm:flex-row items-center justify-center">
-                    <img className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover" src={suggestion.imageUrl} alt="" />
+                {videos.map((video) => (
+                  <li key={video.id} className="flex flex-row md:flex-col gap-10 pt-12 sm:flex-row items-center justify-center">
+                    <img className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover" src={video.image} alt="" />
                     <div className="max-w-xl flex-auto space-y-[26px]">
-                      <p className="text-[17px] font-medium text-[#525252]">{suggestion.series}</p>
-                      <h3 className="text-[19px] font-bold text-[#525252]">{suggestion.name}</h3>
+                      <p className="text-[17px] font-medium text-[#525252]">series/ ss2 / Eps 3</p>
+                      <h3 className="text-[19px] font-bold text-[#525252]">{video.name}</h3>
                     </div>
                   </li>
                 ))}

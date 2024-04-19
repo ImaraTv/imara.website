@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Trend1 from '@/images/trend1.png'
 import Trend2 from '@/images/trend2.png'
-import Yt from '@/images/yt.png'
+import Yt from '@/images/player.png'
 import Image from 'next/image'
 // Import Swiper styles
 import 'swiper/css'
@@ -171,7 +171,7 @@ export function Trending() {
               />
 
               <h3 className="mt-3 text-[18px] font-semibold text-white md:text-[26px]">
-                <a href={item.vimeo_link}>
+                <a href="/watch">
                   <span className="absolute inset-0" />
                   {item.name}
                 </a>

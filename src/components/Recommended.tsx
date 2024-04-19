@@ -9,7 +9,7 @@ import { Dialog, Listbox, Transition } from '@headlessui/react'
 import React, { Fragment, useEffect, useState } from 'react'
 import { Button } from '@/components/Button'
 import Image from 'next/image'
-import Yt from '@/images/yt.png'
+import Yt from '@/images/player.png'
 import Recent from '@/images/recent.png'
 import Link from 'next/link'
 import { Container } from '@/components/Container'
@@ -130,6 +130,7 @@ export function Recommended() {
       setIsOpen(false)
     }
   }, [])
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -332,13 +333,15 @@ export function Recommended() {
                     onClick={() => openModal(video)}
                     className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
                   >
-                    <img
+                    <Image
                       src={video.image}
                       alt=""
+                      width={168}
+                      height={97}
                       className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                     />
                     <Image
-                      className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] md:h-[43px] md:w-[61px]"
+                      className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] md:h-auto md:w-[61px] object-cover"
                       width={50}
                       height={43}
                       src={Yt}

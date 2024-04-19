@@ -1,127 +1,125 @@
-"use client"
+'use client'
 
-import {CheckIcon, ChevronDownIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid";
-import {Dialog, Listbox, Transition} from "@headlessui/react";
-import {Fragment, useState} from "react";
-import {Button} from "@/components/Button";
-import Image from "next/image";
-import Yt from "@/images/yt.png";
-import Link from "next/link";
-import {Container} from "@/components/Container";
-import {ArrowRightIcon} from "@heroicons/react/24/outline";
-import Actor1 from "@/images/actors/isaac.png"
-import Actor2 from "@/images/actors/moses.png"
-import Actor3 from "@/images/actors/wambui.png"
-import Actor4 from "@/images/actors/ruth.png"
-import Actor from "@/images/actor.png"
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/20/solid'
+import { Dialog, Listbox, Transition } from '@headlessui/react'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Button } from '@/components/Button'
+import Image from 'next/image'
 
+import Link from 'next/link'
 
-const actors = [
-    {
-        id: 1,
-        name: 'Issac Jin',
-        source:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 2,
-        name: 'Moses Gabi',
-        source:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 3,
-        name: 'Wambui Kirui',
-        source:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 4,
-        name: 'Ruth Kerubo',
-        source:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-]
+import Actor1 from '@/images/actors/isaac.png'
+import Actor2 from '@/images/actors/moses.png'
+import Actor3 from '@/images/actors/wambui.png'
+import Actor4 from '@/images/actors/ruth.png'
+import Actor from '@/images/actor.png'
 
 export function ActorsHero() {
-    return (
-        <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-[150px] py-8 md:py-[56px] px-5 md:px-[46px] bg-[#F3F3F3] mt-[47px] md:mt-0">
-                <div className="flex flex-col items-center md:items-start justify-center md:justify-start gap-8 md:gap-10">
-                    <div className="text-[20px] md:text-[40px] text-[#2B2B2B] font-bold">Creators</div>
-                    <p className="text-[18px] text-[#525252] text-center md:text-left">Do you want to earn an income from your creative talents? Join other creators on Imara Tv and
-collaborate to create films that edutain the public and earn you royalties forever. Express yourself and
-grow your craft. Let your star shine for the world to see you. Become part of a community and grow
-your network. Sign up today as a creator and start your career journey in the film industry
-                    </p>
-                    <div className="hidden md:flex gap-[33px]">
-                        <Button href="#" color="blue">
-                          <span>
-                            All actors
-                          </span>
-                        </Button>
-                        <Link
-                            href="#"
-                            className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-[12px] md:text-lg font-medium text-[#525252] focus:outline-none"
-                        >
-                            Become a creator
-                        </Link>
-                    </div>
-                </div>
-                <div>
-                    <div className="flex gap-[14px] md:gap-[56px] items-stretch h-60">
-                        <div className="flex flex-col">
-                            <Image width={194} height={120} src={Actor1} alt="avatar"
-                                   className="w-full md:h-auto sm:w-full object-cover rounded-[3px]" />
-                            <p
-                              className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">Issac
-                                Jin</p>
-                        </div>
+  const [creators, setCreators] = useState<
+    { id: number; name: string; image: string; stage_name: string }[]
+  >([])
 
-                        <div className="flex flex-col md:self-end">
-                            <Image width={194} height={120} src={Actor2} alt="avatar"
-                                   className="w-full md:h-auto sm:w-full object-cover rounded-[3px]" />
-                            <p
-                              className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">Issac
-                                Jin</p>
-                        </div>
-                    </div>
-                    <div className="flex gap-[14px] md:gap-[56px] items-stretch h-60 mt-[34px] md:mt-[66px]">
-                        <div className="flex flex-col">
-                            <Image width={194} height={120} src={Actor3} alt="avatar"
-                                   className="w-full md:h-auto sm:w-full object-cover rounded-[3px]" />
-                            <p
-                              className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">Issac
-                                Jin</p>
-                        </div>
+  useEffect(() => {
+    const fetchCreators = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/creators')
+        const data = await response.json()
+        setCreators(data.data)
+      } catch (error) {
+        console.error('Error fetching creators:', error)
+      }
+    }
 
-                        <div className="flex flex-col md:self-end">
-                            <Image width={194} height={120} src={Actor4} alt="avatar"
-                                   className="w-full md:h-auto sm:w-full object-cover rounded-[3px]" />
-                            <p
-                              className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">Issac
-                                Jin</p>
-                        </div>
-                    </div>
+    fetchCreators()
+  }, [])
+  return (
+    <>
+      <div className="mt-[47px] grid grid-cols-1 gap-5 bg-[#F3F3F3] px-5 py-8 sm:grid-cols-2 md:mt-0 md:gap-[150px] md:px-[46px] md:py-[56px]">
+        <div className="flex flex-col items-center justify-center gap-8 md:items-start md:justify-start md:gap-10">
+          <div className="text-[20px] font-bold text-[#2B2B2B] md:text-[40px]">
+            Creators
+          </div>
+          <p className="text-center text-[18px] text-[#525252] md:text-left">
+            Do you want to earn an income from your creative talents? Join other
+            creators on Imara Tv and collaborate to create films that edutain
+            the public and earn you royalties forever. Express yourself and grow
+            your craft. Let your star shine for the world to see you. Become
+            part of a community and grow your network. Sign up today as a
+            creator and start your career journey in the film industry
+          </p>
+          <div className="hidden gap-[33px] md:flex">
+            <Button href="#" color="blue">
+              <span>All actors</span>
+            </Button>
+            <Link
+              href="#"
+              className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-[12px] font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-lg"
+            >
+              Become a creator
+            </Link>
+          </div>
+        </div>
+        <div>
+          <div className="flex h-60 items-stretch gap-[14px] md:gap-[56px]">
+            {creators.slice(0, 2).map((creator, index) => (
+              <div
+                key={creator.id}
+                className={`flex flex-col ${
+                  index % 2 === 1 ? 'md:self-end' : ''
+                }`}
+              >
+                <Image
+                  width={194}
+                  height={120}
+                  src={creator.image}
+                  alt="avatar"
+                  className="w-full rounded-[3px] object-cover sm:w-full md:h-auto"
+                />
+                <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
+                  {creator.name}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-[34px] flex h-60 items-stretch gap-[14px] md:mt-[66px] md:gap-[56px]">
+            {creators.slice(2).map((creator, index) => (
+              <div
+                key={creator.id}
+                className={`flex flex-col ${
+                  index % 2 === 1 ? 'md:self-end' : ''
+                }`}
+              >
+                <Image
+                  width={194}
+                  height={120}
+                  src={creator.image}
+                  alt="avatar"
+                  className="w-full rounded-[3px] object-cover sm:w-full md:h-auto"
+                />
+                <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
+                  {creator.name}
+                </p>
+              </div>
+            ))}
+          </div>
 
-                    <div className="md:hidden flex items-center justify-center gap-[33px]">
-                        <Button href="#" color="blue">
-                          <span>
-                            All actors
-                          </span>
-                        </Button>
-                        <Link
-                          href="#"
-                          className="group inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-[12px] md:text-lg font-medium text-[#525252] focus:outline-none"
-                        >
-                            Become an actor
-                        </Link>
-                    </div>
-                </div>
-            </div>
-
-
-        </>
-
-    )
+          <div className="flex items-center justify-center gap-[33px] md:hidden">
+            <Button href="#" color="blue">
+              <span>All actors</span>
+            </Button>
+            <Link
+              href="#"
+              className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-[12px] font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-lg"
+            >
+              Become an actor
+            </Link>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
