@@ -121,16 +121,17 @@ export default function Watch() {
               alt={'youtube icon'}
             /> */}
             {/* <VimeoPlayer videoUrl={vimeoUrl} /> */}
-            <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+            <div>
               <iframe
-                src="https://player.vimeo.com/video/929535298?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                src="https://player.vimeo.com/video/929535298?badge=0&amp;autopause=0&amp;title=false&amp;player_id=0&amp;app_id=58479"
+                allow="autoplay; picture-in-picture; clipboard-write"
                 style={{
                   position: 'absolute',
+                  objectFit: 'cover',
                   top: '0',
                   left: '0',
                   width: '100%',
-                  height: '100%',
+                  height: '546px',
                 }}
                 title="The Diary of a College Girl"
               ></iframe>
