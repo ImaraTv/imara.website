@@ -124,6 +124,7 @@ interface File {
   duration: number
   description: string
   image: string
+  creator: string
   // Other properties
 }
 
@@ -146,6 +147,7 @@ export default function Videos() {
       call_to_action: string
       call_to_action_link: string
       image: string
+      creator: string
     }[]
   >([])
 
@@ -391,7 +393,7 @@ export default function Videos() {
                     </div>
                     <div className="mt-2 flex items-center gap-3">
                       <Rating rating={3.5} />
-                      <div className='text-gray-500 italic text-sm'>Peter Joseph</div>
+                      <div className='text-gray-500 italic text-sm'>{video.creator}</div>
                     </div>
                     <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>
                   </li>

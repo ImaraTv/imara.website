@@ -86,6 +86,7 @@ interface File {
   duration: number
   description: string
   image: string
+  creator: string
   // Other properties
 }
 
@@ -107,6 +108,7 @@ export function Recommended() {
       call_to_action: string
       call_to_action_link: string
       image: string
+      creator: string
     }[]
   >([])
 
@@ -416,7 +418,7 @@ export function Recommended() {
                     <div className="mt-2 flex items-center gap-3">
                       <Rating rating={3.5} />
                       <div className="text-sm italic text-gray-500">
-                        Peter Joseph
+                        {video.creator}
                       </div>
                     </div>
 

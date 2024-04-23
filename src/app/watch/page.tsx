@@ -43,6 +43,7 @@ interface File {
   duration: number
   description: string
   image: string
+  creator: string
   // Other properties
 }
 
@@ -62,6 +63,7 @@ export default function Watch() {
       call_to_action: string
       call_to_action_link: string
       image: string
+      creator: string
     }[]
   >([])
 
@@ -392,7 +394,7 @@ export default function Watch() {
                     </div>
                     <div className="mt-2 flex items-center gap-3">
                       <Rating rating={3.5} />
-                      <div className='text-gray-500 italic text-sm'>Peter Joseph</div>
+                      <div className='text-gray-500 italic text-sm'>{video.creator}</div>
                     </div>
 
                     <p className="pointer-events-none mt-2 block text-[15px] font-bold text-[#525252] md:mt-4 md:text-[19px]">
