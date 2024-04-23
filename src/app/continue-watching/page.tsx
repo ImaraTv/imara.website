@@ -14,6 +14,7 @@ import { useAuth } from '@/../hooks/useAuth'
 import { isLoggedIn } from '@/../utils/authUtils'
 import axios from 'axios'
 import { getAccessToken } from '@/../utils/authUtils'
+import Rating from '@/components/Rating'
 
 const cardStyle = {
   boxShadow: '0px 4px 28px 3px #0000001A',
@@ -96,6 +97,17 @@ interface UserData {
   email: string
   // Add any other properties that are part of the user data
 }
+
+interface File {
+  name: string
+  category: string
+  duration: number
+  description: string
+  image: string
+  creator: string
+  // Other properties
+}
+
 export default function ContinueWatching() {
   // const user = getLoggedInUser();
 
@@ -103,9 +115,25 @@ export default function ContinueWatching() {
   // const [categories, setCategories] = useState<{ id: number; name: string }[]>(
   //   [],
   // )
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [videos, setVideos] = useState([])
+
   const [userData, setUserData] = useState<UserData | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [videos, setVideos] = useState<
+    {
+      id: number
+      name: string
+      duration: number
+      category: string
+      description: string
+      vimeo_link: string
+      call_to_action: string
+      call_to_action_link: string
+      image: string
+      creator: string
+    }[]
+  >([])
 
   // useEffect(() => {
   //   const fetchCategories = async () => {
@@ -147,13 +175,22 @@ export default function ContinueWatching() {
 
   let [isOpen, setIsOpen] = useState(true)
 
-  function closeModal() {
-    setIsOpen(false)
-  }
+  const openModal = (file: File) => {
+    setSelectedFile(file);
+    setIsOpen(true);
+  };
 
-  function openModal() {
-    setIsOpen(true)
-  }
+  const closeModal = () => {
+    setIsOpen(false);
+    setSelectedFile(null);
+  };
+
+  useEffect(() => {
+    // Reset isOpen state when the component unmounts
+    return () => {
+      setIsOpen(false);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -177,6 +214,22 @@ export default function ContinueWatching() {
     }
 
     fetchUserProfile()
+  }, [])
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const data = await response.json()
+        setVideos(data.data)
+        setIsLoading(false)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+        setIsLoading(false)
+      }
+    }
+
+    fetchVideos()
   }, [])
 
   return (
@@ -217,14 +270,14 @@ export default function ContinueWatching() {
             Continue watching from where you left on your favorite films
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {posts.map((post) => (
+            {videos.map((post) => (
               <article
                 key={post.id}
                 className="relative isolate flex flex-col justify-end overflow-hidden rounded-[5px] bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
                 style={cardStyle}
               >
                 <img
-                  src={post.imageUrl}
+                  src={post.image}
                   alt=""
                   className="absolute inset-0 -z-10 h-full w-full object-cover"
                 />
@@ -232,9 +285,9 @@ export default function ContinueWatching() {
                 <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
 
                 <div className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-                  <time dateTime={post.datetime} className="mr-8">
-                    {post.date}
-                  </time>
+                  <div className="mr-8">
+                    {post.duration}
+                  </div>
                   <div className="-ml-4 flex items-center gap-x-4">
                     <svg
                       viewBox="0 0 2 2"
@@ -244,18 +297,18 @@ export default function ContinueWatching() {
                     </svg>
                     <div className="flex gap-x-2.5">
                       <img
-                        src={post.author.imageUrl}
+                        src={post.image}
                         alt=""
                         className="h-6 w-6 flex-none rounded-full bg-white/10"
                       />
-                      {post.author.name}
+                      {post.name}
                     </div>
                   </div>
                 </div>
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-                  <a href={post.href}>
+                  <a href={post.name}>
                     <span className="absolute inset-0" />
-                    {post.title}
+                    {post.name}
                   </a>
                 </h3>
               </article>
@@ -273,51 +326,31 @@ export default function ContinueWatching() {
               role="list"
               className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
             >
-              {files.map((file) => (
-                <li key={file.title} className="relative">
-                  <div
-                    onClick={openModal}
-                    className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                  >
-                    <img
-                      src={file.source}
-                      alt=""
-                      className="pointer-events-none object-cover group-hover:opacity-75"
-                    />
-
-                    <button
-                      type="button"
-                      className="absolute inset-0 focus:outline-none"
-                    >
-                      <span className="sr-only">
-                        View details for {file.title}
-                      </span>
-                    </button>
-                  </div>
-                  <Image
-                    className="absolute inset-0 left-1/2 top-1/4"
-                    width={50}
-                    height={43}
-                    src={Yt}
-                    alt={'ÿt'}
-                  />
-                  <div className="mt-5 flex gap-3">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
-                    >
-                      {file.time}
-                    </button>
-                    <p className="pointer-events-none mt-2 block truncate text-[16px] font-medium text-[#525252]">
-                      {file.category}
-                    </p>
-                  </div>
-
-                  <p className="pointer-events-none mt-9 block text-[19px] font-bold text-[#525252]">
-                    {file.title}
-                  </p>
-                </li>
-              ))}
+              {videos.map((video) => (
+                  <li key={video.name} className="relative">
+                    <div onClick={() => openModal(video)}
+                      className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                      <img src={video.image} alt=""
+                        className="pointer-events-none h-full w-full object-cover group-hover:opacity-75" />
+                      <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-auto absolute inset-0 m-auto object-cover' width={150} height={150} src={Yt}
+                        alt={"ÿt"} />
+                    </div>
+                    <div className='flex gap-3 mt-[18px] md:mt-5'>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 md:px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
+                      >
+                        {video.duration} min
+                      </button>
+                      <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{video.category}</p>
+                    </div>
+                    <div className="mt-2 flex items-center gap-3">
+                      <Rating rating={3.5} />
+                      <div className='text-gray-500 italic text-sm'>{video.creator}</div>
+                    </div>
+                    <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>
+                  </li>
+                ))}
             </ul>
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog as="div" className="relative z-10" onClose={closeModal}>
