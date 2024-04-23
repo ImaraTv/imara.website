@@ -12,6 +12,7 @@ import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
 import Image from 'next/image'
 import Logo2 from '@/images/logos/logo.png'
+import MobileLogo from '@/images/logos/mobile-logo.png'
 import User from '@/images/user.svg'
 import Profile from '@/images/profile.svg'
 import Watch from '@/images/watch.svg'
@@ -88,53 +89,57 @@ function MobileNavIcon({ open }: { open: boolean }) {
 
 function MobileNavigation() {
   return (
-    <Popover>
-      <Popover.Button
-        className="relative z-10 flex h-8 w-8 items-center justify-center ui-not-focus-visible:outline-none"
-        aria-label="Toggle Navigation"
-      >
-        {({ open }) => <MobileNavIcon open={open} />}
-      </Popover.Button>
-      <Transition.Root>
-        <Transition.Child
-          as={Fragment}
-          enter="duration-150 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="duration-150 ease-in"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
-        </Transition.Child>
-        <Transition.Child
-          as={Fragment}
-          enter="duration-150 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="duration-100 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Popover.Panel
-            as="div"
-            className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
-          >
-            <MobileNavLink href="/">Home</MobileNavLink>
-            <MobileNavLink href="/about">About</MobileNavLink>
-            <MobileNavLink href="/videos">Watch More</MobileNavLink>
-            <MobileNavLink href="/creators">Creators</MobileNavLink>
-            <MobileNavLink href="/contact">Contact</MobileNavLink>
-            <hr className="m-2 border-slate-300/40" />
-            <div className="flex gap-2">
-              <MobileNavLink href="https://dashboard.imara.tv/admin/register">Create on Imara</MobileNavLink>
-              <MobileNavLink href="/sign-in">Login</MobileNavLink>
-            </div>
+    <>
 
-          </Popover.Panel>
-        </Transition.Child>
-      </Transition.Root>
-    </Popover>
+      <Popover>
+        <Popover.Button
+          className="relative z-10 flex h-8 w-8 items-center justify-center ui-not-focus-visible:outline-none"
+          aria-label="Toggle Navigation"
+        >
+          {({ open }) => <MobileNavIcon open={open} />}
+        </Popover.Button>
+        <Transition.Root>
+          <Transition.Child
+            as={Fragment}
+            enter="duration-150 ease-out"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="duration-150 ease-in"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
+          </Transition.Child>
+          <Transition.Child
+            as={Fragment}
+            enter="duration-150 ease-out"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="duration-100 ease-in"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <Popover.Panel
+              as="div"
+              className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+            >
+              <MobileNavLink href="/">Home</MobileNavLink>
+              <MobileNavLink href="/about">About</MobileNavLink>
+              <MobileNavLink href="/videos">Watch More</MobileNavLink>
+              <MobileNavLink href="/creators">Creators</MobileNavLink>
+              <MobileNavLink href="/contact">Contact</MobileNavLink>
+              <hr className="m-2 border-slate-300/40" />
+              <div className="flex gap-2">
+                <MobileNavLink href="https://dashboard.imara.tv/admin/register">Create on Imara</MobileNavLink>
+                <MobileNavLink href="/sign-in">Login</MobileNavLink>
+              </div>
+
+            </Popover.Panel>
+          </Transition.Child>
+        </Transition.Root>
+      </Popover>
+
+    </>
   )
 }
 
@@ -152,10 +157,22 @@ export function Header() {
   return (
     <header className="py-6 bg-[#0033AB] md:bg-white">
       <Container2>
-        <nav className="relative z-50 flex justify-between">
+        <nav className="relative z-50 flex items-center justify-between">
           <div className="md:hidden">
             <MobileNavigation />
           </div>
+
+          <div className="md:hidden">
+            <Link href="#" aria-label="Home">
+              <Image
+                src={MobileLogo}
+                width={150}
+                height={50}
+                alt="logo"
+              />
+            </Link>
+          </div>
+
           <div className="hidden md:flex items-center md:gap-x-12">
             <Link href="#" aria-label="Home">
               <Image
@@ -201,8 +218,8 @@ export function Header() {
             </div>
           </div>
           <div className="flex items-center justify-end gap-x-5 md:gap-x-4">
-            <div className="flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-              <div className="w-full max-w-lg lg:max-w-xs">
+            <div className="flex items-center justify-end px-2 lg:ml-6 lg:justify-end">
+              <div className="w-3/4 max-w-lg lg:max-w-xs">
                 <label htmlFor="search" className="sr-only">
                   Search
                 </label>
@@ -226,55 +243,55 @@ export function Header() {
               </span>
             </Button>
             {!isLoggedIn() && (
-            <Link
-              href="/sign-in"
-              className="group hidden md:inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
-            >
-              Login
-            </Link>
+              <Link
+                href="/sign-in"
+                className="group hidden md:inline-flex ring-2 ring-[#007BFF] items-center justify-center rounded-lg py-2 px-10 text-lg font-medium text-[#525252] focus:outline-none"
+              >
+                Login
+              </Link>
             )}
             {isLoggedIn() && (
-            <div className="hidden md:flex px-4">
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={`
+              <div className="hidden md:flex px-4">
+                <Popover className="relative">
+                  {({ open }) => (
+                    <>
+                      <Popover.Button
+                        className={`
                 ${open ? 'text-white' : 'text-white/90'}
                 group inline-flex items-center rounded-full bg-[#525252] px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
-                    >
-                      <Image src={User} alt={'user'} width={20} height={20} />
-                    </Popover.Button>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel
-                        className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
-                        <div className="overflow-hidden rounded-lg ring-1 ring-black/5" style={cardStyle}>
-                          <div className="relative grid gap-8 bg-white p-7">
-                            {items.map((item) => (
+                      >
+                        <Image src={User} alt={'user'} width={20} height={20} />
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
+                      >
+                        <Popover.Panel
+                          className="absolute left-1/3 z-10 mt-3 w-[220px] h-auto -translate-x-1/2 transform px-4 sm:px-0">
+                          <div className="overflow-hidden rounded-lg ring-1 ring-black/5" style={cardStyle}>
+                            <div className="relative grid gap-8 bg-white p-7">
+                              {items.map((item) => (
+                                <a
+                                  key={item.name}
+                                  href={item.href}
+                                  className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
+                                >
+                                  <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
+                                    <item.icon aria-hidden="true" />
+                                  </div>
+                                  <div className="ml-3">
+                                    <p className="text-[15px] font-medium text-[#616161]">
+                                      {item.name}
+                                    </p>
+                                  </div>
+                                </a>
+                              ))}
                               <a
-                                key={item.name}
-                                href={item.href}
-                                className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
-                              >
-                                <div className="flex h-10 w-10 shrink-0 items-center justify-center sm:h-12 sm:w-12">
-                                  <item.icon aria-hidden="true" />
-                                </div>
-                                <div className="ml-3">
-                                  <p className="text-[15px] font-medium text-[#616161]">
-                                    {item.name}
-                                  </p>
-                                </div>
-                              </a>
-                            ))}
-                            <a
                                 href="#"
                                 onClick={handleLogout}
                                 className="-m-6 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50"
@@ -288,14 +305,14 @@ export function Header() {
                                   </p>
                                 </div>
                               </a>
+                            </div>
                           </div>
-                        </div>
-                      </Popover.Panel>
-                    </Transition>
-                  </>
-                )}
-              </Popover>
-            </div>
+                        </Popover.Panel>
+                      </Transition>
+                    </>
+                  )}
+                </Popover>
+              </div>
             )}
 
 
