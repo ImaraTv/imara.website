@@ -5,7 +5,6 @@ import '@/styles/tailwind.css'
 import { type Metadata } from 'next'
 import React from "react";
 import CookieConsentComponent from '@/components/CookieConsent';
-
 export const metadata: Metadata = {
   title: {
     template: '%s - ImaraTv',

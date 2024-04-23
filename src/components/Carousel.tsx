@@ -70,10 +70,10 @@ export function CarouselHome(props: any) {
         const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
         setVideos(data.data)
-        // setIsLoading(false)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching categories:', error)
-        // setIsLoading(false)
+        setIsLoading(false)
       }
     }
 
@@ -82,95 +82,119 @@ export function CarouselHome(props: any) {
 
   return (
     <>
-      <Swiper
-        modules={[Navigation, Autoplay, Pagination]}
-        pagination={{ clickable: true }}
-        navigation={{
-          nextEl: '.swiper-button-next-ex4',
-          prevEl: '.swiper-button-prev-ex4',
-        }}
-        loop={true}
-        autoplay={{ delay: 5000 }}
-        className="swiper relative isolate mb-[75px] h-[280px] w-full md:h-[560px]"
-        id="slider2"
-      >
-        <Suspense fallback={<p className='text-4xl'>Loading sliders...</p>}>
-          {videos.map((item) => (
-            <SwiperSlide key={item.id}>
-              <Image
-                src={item.image}
-                width={1440}
-                height={560}
-                className={`absolute inset-0 -z-10 h-full w-full object-cover ${carouselStyle.imageStyles}`}
-                alt="itemImage"
-              />
-              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-gray-900/40" />
-              <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
-              <div className="absolute bottom-[64px] z-[999] px-12 text-white ltr:left-12 rtl:right-12">
-                <div className="mb-[26px] text-[20px] font-bold md:text-[35px]">
-                  {item.name}
-                </div>
-                <div className="flex items-center gap-7 text-white">
-                  <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[14px] font-bold md:text-[18px]">
-                    HD
-                  </button>
-                  <div className="text-[14px] font-medium md:text-[18px]">
-                    2023
-                  </div>
-                  <div className="text-[14px] font-medium md:text-[18px]">
-                    {item.duration} min
-                  </div>
-                  <div className="text-[14px] font-medium md:text-[18px]">
-                    Ranked : 4.7
-                  </div>
-                </div>
-                <div className="mt-1 hidden w-4/5 text-[18px] text-[#B0B0B0] sm:mt-5 sm:block">
-                  {item.description}
-                </div>
-
-                <div className="mt-[43px] flex gap-10">
-                  <Link
-                    href="/watch"
-                    className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-2 py-2 text-[12px] font-medium text-white focus:outline-none md:px-10 md:text-[17px]"
-                  >
-                    Watch Now
-                  </Link>
-                  <BookmarkButton videoId={item.id} />
-                </div>
+      {isLoading ? (
+        <div className="flex h-[280px] w-full animate-pulse flex-col bg-gray-300 md:h-[560px]">
+          <div className="flex flex-auto flex-col items-center justify-center p-4 md:p-5">
+            <div className="flex justify-center">
+              <div
+                className="inline-block size-6 animate-spin rounded-full border-[3px] border-current border-t-transparent text-blue-600"
+                role="status"
+                aria-label="loading"
+              >
+                <span className="sr-only">Loading...</span>
               </div>
-            </SwiperSlide>
-          ))}
-        </Suspense>
+            </div>
+          </div>
+          <div className="px-12 py-4 w-1/2">
+        <div className="h-4 bg-gray-600 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
+        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
+        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
+        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+    </div>
+        </div>
+      ) : (
+        <Swiper
+          modules={[Navigation, Autoplay, Pagination]}
+          pagination={{ clickable: true }}
+          navigation={{
+            nextEl: '.swiper-button-next-ex4',
+            prevEl: '.swiper-button-prev-ex4',
+          }}
+          loop={true}
+          autoplay={{ delay: 5000 }}
+          className="swiper relative isolate mb-[75px] h-[280px] w-full md:h-[560px]"
+          id="slider2"
+        >
+          <Suspense fallback={<p className="text-4xl">Loading sliders...</p>}>
+            {videos.map((item) => (
+              <SwiperSlide key={item.id}>
+                <Image
+                  src={item.image}
+                  width={1440}
+                  height={560}
+                  className={`absolute inset-0 -z-10 h-full w-full object-cover ${carouselStyle.imageStyles}`}
+                  alt="itemImage"
+                />
+                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-gray-900/40" />
+                <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
+                <div className="absolute bottom-[64px] z-[999] px-12 text-white ltr:left-12 rtl:right-12">
+                  <div className="mb-[26px] text-[20px] font-bold md:text-[35px]">
+                    {item.name}
+                  </div>
+                  <div className="flex items-center gap-7 text-white">
+                    <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[14px] font-bold md:text-[18px]">
+                      HD
+                    </button>
+                    <div className="text-[14px] font-medium md:text-[18px]">
+                      2023
+                    </div>
+                    <div className="text-[14px] font-medium md:text-[18px]">
+                      {item.duration} min
+                    </div>
+                    <div className="text-[14px] font-medium md:text-[18px]">
+                      Ranked : 4.7
+                    </div>
+                  </div>
+                  <div className="mt-1 hidden w-4/5 text-[18px] text-[#B0B0B0] sm:mt-5 sm:block">
+                    {item.description}
+                  </div>
 
-        <button className="swiper-button-prev-ex4 text-primary border-primary hover:border-primary hover:bg-primary absolute bottom-[60px] right-20 z-[999] hidden -translate-y-1/2 place-content-center  rounded-lg border p-2 transition hover:text-white md:grid ltr:left-2 rtl:right-2">
-          <svg
-            width="17"
-            height="16"
-            viewBox="0 0 17 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3.84112 7.72852L10.7533 3.12045C10.9031 3.02054 11.1056 3.06104 11.2055 3.21084C11.2412 3.26445 11.2603 3.32738 11.2603 3.39175L11.2603 12.6079C11.2603 12.788 11.1143 12.934 10.9342 12.934C10.8698 12.934 10.8068 12.915 10.7533 12.8793L3.84112 8.27119C3.69132 8.17128 3.65082 7.96878 3.75073 7.81897C3.7746 7.78317 3.80532 7.75239 3.84112 7.72852Z"
-              fill="white"
-            />
-          </svg>
-        </button>
-        <button className="swiper-button-next-ex4 text-primary border-primary hover:border-primary hover:bg-primary absolute bottom-[60px] right-10 z-[999] hidden -translate-y-1/2 place-content-center  rounded-lg border p-2 transition hover:text-white md:grid ltr:right-2 rtl:left-2">
-          <svg
-            width="17"
-            height="16"
-            viewBox="0 0 17 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13.5056 8.27104L6.59339 12.8791C6.44355 12.979 6.24109 12.9385 6.14119 12.7887C6.10548 12.7351 6.08643 12.6722 6.08643 12.6078V3.39162C6.08643 3.21153 6.23242 3.06554 6.41251 3.06554C6.47689 3.06554 6.53983 3.08459 6.59339 3.1203L13.5056 7.72837C13.6554 7.82828 13.6959 8.03078 13.596 8.18058C13.5721 8.21639 13.5414 8.24717 13.5056 8.27104Z"
-              fill="white"
-            />
-          </svg>
-        </button>
-      </Swiper>
+                  <div className="mt-[43px] flex gap-10">
+                    <Link
+                      href="/watch"
+                      className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-2 py-2 text-[12px] font-medium text-white focus:outline-none md:px-10 md:text-[17px]"
+                    >
+                      Watch Now
+                    </Link>
+                    <BookmarkButton videoId={item.id} />
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Suspense>
+
+          <button className="swiper-button-prev-ex4 text-primary border-primary hover:border-primary hover:bg-primary absolute bottom-[60px] right-20 z-[999] hidden -translate-y-1/2 place-content-center  rounded-lg border p-2 transition hover:text-white md:grid ltr:left-2 rtl:right-2">
+            <svg
+              width="17"
+              height="16"
+              viewBox="0 0 17 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3.84112 7.72852L10.7533 3.12045C10.9031 3.02054 11.1056 3.06104 11.2055 3.21084C11.2412 3.26445 11.2603 3.32738 11.2603 3.39175L11.2603 12.6079C11.2603 12.788 11.1143 12.934 10.9342 12.934C10.8698 12.934 10.8068 12.915 10.7533 12.8793L3.84112 8.27119C3.69132 8.17128 3.65082 7.96878 3.75073 7.81897C3.7746 7.78317 3.80532 7.75239 3.84112 7.72852Z"
+                fill="white"
+              />
+            </svg>
+          </button>
+          <button className="swiper-button-next-ex4 text-primary border-primary hover:border-primary hover:bg-primary absolute bottom-[60px] right-10 z-[999] hidden -translate-y-1/2 place-content-center  rounded-lg border p-2 transition hover:text-white md:grid ltr:right-2 rtl:left-2">
+            <svg
+              width="17"
+              height="16"
+              viewBox="0 0 17 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.5056 8.27104L6.59339 12.8791C6.44355 12.979 6.24109 12.9385 6.14119 12.7887C6.10548 12.7351 6.08643 12.6722 6.08643 12.6078V3.39162C6.08643 3.21153 6.23242 3.06554 6.41251 3.06554C6.47689 3.06554 6.53983 3.08459 6.59339 3.1203L13.5056 7.72837C13.6554 7.82828 13.6959 8.03078 13.596 8.18058C13.5721 8.21639 13.5414 8.24717 13.5056 8.27104Z"
+                fill="white"
+              />
+            </svg>
+          </button>
+        </Swiper>
+      )}
     </>
   )
 }

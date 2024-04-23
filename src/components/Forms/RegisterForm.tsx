@@ -23,7 +23,10 @@ const RegisterForm = () => {
         try {
             const response = await axios.post(
                 'https://dashboard.imara.tv/api/auth/register',
-                data
+                {
+                    ...data,
+                    url: 'https://dashboard.imara.tv/api/auth/verify', // Include the url field
+                }
             );
             // Handle successful registration
             console.log(response.data);
@@ -36,7 +39,7 @@ const RegisterForm = () => {
                 confirmButtonText: 'OK',
             }).then(() => {
                 // Redirect to the login page
-                router.push('/sign-in'); // Assuming you have a /login page
+                router.push('/verify-email'); // Assuming you have a /login page
             });
         } catch (error) {
             // Handle registration error

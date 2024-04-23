@@ -20,6 +20,7 @@ import Yt from "@/images/player.png"
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Button } from '@/components/Button'
 import { url } from 'inspector';
+import Rating from '@/components/Rating'
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029'
@@ -152,6 +153,7 @@ export default function Videos() {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const openModal = (file: File) => {
     setSelectedFile(file);
     setIsOpen(true);
@@ -387,7 +389,10 @@ export default function Videos() {
                       </button>
                       <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{video.category}</p>
                     </div>
-
+                    <div className="mt-2 flex items-center gap-3">
+                      <Rating rating={3.5} />
+                      <div className='text-gray-500 italic text-sm'>Peter Joseph</div>
+                    </div>
                     <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>
                   </li>
                 ))}
@@ -463,7 +468,7 @@ export default function Videos() {
                   <li key={video.id} className="flex flex-row md:flex-col gap-10 pt-12 sm:flex-row items-center justify-center">
                     <img className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover" src={video.image} alt="" />
                     <div className="max-w-xl flex-auto space-y-[26px]">
-                      <p className="text-[17px] font-medium text-[#525252]">series/ ss2 / Eps 3</p>
+                      <p className="text-[17px] font-medium text-[#525252]">{video.category}</p>
                       <h3 className="text-[19px] font-bold text-[#525252]">{video.name}</h3>
                     </div>
                   </li>
