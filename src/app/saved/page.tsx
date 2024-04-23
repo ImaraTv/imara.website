@@ -25,20 +25,25 @@ const categories = [
   {
     id: 1,
     name: 'Continue Watching',
+    url: "/continue-watching"
   },
   {
     id: 2,
     name: 'Saved Films',
+    url: "/saved"
   },
   {
     id: 3,
-    name: 'Edit profile ',
+    name: 'Edit profile',
+    url: "/profile-edit"
   },
   {
     id: 4,
     name: 'All settings',
+    url: "/profile-edit"
   },
 ]
+
 const filters = [
   {
     id: 1,
@@ -166,13 +171,13 @@ interface File {
 }
 
 interface Video {
-    name: string
-    category: string
-    duration: number
-    description: string
-    image: string
-    // Other properties
-  }
+  name: string
+  category: string
+  duration: number
+  description: string
+  image: string
+  // Other properties
+}
 interface UserData {
   name: string
   email: string
@@ -192,7 +197,7 @@ export default function Saved() {
       image: string
     }[]
   >([])
-  const [recommended, setRecommended] = useState<
+  const [recoms, setRecoms] = useState<
     {
       id: number
       name: string
@@ -205,6 +210,7 @@ export default function Saved() {
       image: string
     }[]
   >([])
+  const [bookmarks, setBookmarks] = useState([])
   const [userData, setUserData] = useState<UserData | null>(null)
   let [isOpen, setIsOpen] = useState(false)
   let [isOpen2, setIsOpen2] = useState(false)
@@ -241,6 +247,33 @@ export default function Saved() {
   }, [])
 
   useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const accessToken = getAccessToken()
+        const response = await fetch(
+          'https://dashboard.imara.tv/api/bookmarks',
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        )
+        const data = await response.json()
+        if (data.data && Array.isArray(data.data)) {
+          setBookmarks(data.data.flatMap((bookmark: any) => bookmark.videos.data));
+        } else {
+          setBookmarks([]);
+          console.error('Unexpected API response format');
+        }
+      } catch (error) {
+        console.error('Error fetching bookmarks:', error)
+      }
+    }
+
+    fetchBookmarks()
+  }, [])
+
+  useEffect(() => {
     const fetchVideos = async () => {
       try {
         const response = await fetch('https://dashboard.imara.tv/api/videos')
@@ -254,20 +287,7 @@ export default function Saved() {
     fetchVideos()
   }, [])
 
-  useEffect(() => {
-    const fetchRecommended = async () => {
-      try {
-        const response = await fetch('https://dashboard.imara.tv/api/bookmarks')
-        const data = await response.json()
-        setRecommended(data.data)
-      } catch (error) {
-        console.error('Error fetching Recommended:', error)
-      }
-    }
-
-    fetchRecommended()
-  }, [])
-
+  //profile
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -309,9 +329,9 @@ export default function Saved() {
           </div>
 
           <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
-            {categories.map((category) => (
-              <button
-                type="button"
+          {categories.map((category) => (
+              <Link
+                href={category.url}
                 key={category.id}
                 className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-gray-50 ${
                   category.name === 'Saved Films'
@@ -320,7 +340,7 @@ export default function Saved() {
                 }`}
               >
                 {category.name}
-              </button>
+              </Link>
             ))}
           </div>
         </Container>
@@ -612,7 +632,7 @@ export default function Saved() {
               role="list"
               className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
             >
-              {recommended.map((video) => (
+              {bookmarks.map((video) => (
                 <li key={video.id} className="relative">
                   <div
                     onClick={() => openModal2(video)}

@@ -19,28 +19,28 @@ const cardStyle = {
   boxShadow: '0px 4px 28px 3px #0000001A',
 }
 
-// const categories = [
-//     {
-//         id: 1,
-//         name: "Short films",
-//     },
-//     {
-//         id: 2,
-//         name: "Series",
-//     },
-//     {
-//         id: 3,
-//         name: "Educative",
-//     },
-//     {
-//         id: 4,
-//         name: "Trailers",
-//     },
-//     {
-//         id: 5,
-//         name: "Comedy",
-//     },
-// ]
+const categories = [
+  {
+    id: 1,
+    name: 'Continue Watching',
+    url: '/continue-watching',
+  },
+  {
+    id: 2,
+    name: 'Saved Films',
+    url: '/saved',
+  },
+  {
+    id: 3,
+    name: 'Edit profile ',
+    url: '/profile-edit',
+  },
+  {
+    id: 4,
+    name: 'All settings',
+    url: '/profile-edit',
+  },
+]
 
 const posts = [
   {
@@ -100,28 +100,28 @@ export default function ContinueWatching() {
   // const user = getLoggedInUser();
 
   const { user, isLoggedIn, logout } = useAuth()
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-    [],
-  )
+  // const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+  //   [],
+  // )
   const [selectedCategory, setSelectedCategory] = useState('')
   const [videos, setVideos] = useState([])
   const [userData, setUserData] = useState<UserData | null>(null)
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(
-          'https://dashboard.imara.tv/api/categories',
-        )
-        const data = await response.json()
-        setCategories(data.data)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
-    }
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         'https://dashboard.imara.tv/api/categories',
+  //       )
+  //       const data = await response.json()
+  //       setCategories(data.data)
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error)
+  //     }
+  //   }
 
-    fetchCategories()
-  }, [])
+  //   fetchCategories()
+  // }, [])
 
   const fetchVideosByCategory = async () => {
     try {
@@ -197,15 +197,17 @@ export default function ContinueWatching() {
 
           <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
             {categories.map((category) => (
-              <button
+              <Link
+                href={category.url}
                 key={category.id}
-                className={`mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ${
-                  category.name === selectedCategory ? 'ring-[#007BFF]' : ''
-                } hover:bg-gray-50`}
-                onClick={() => handleCategoryClick(category.name)}
+                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-gray-50 ${
+                  category.name === 'Continue Watching'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white'
+                }`}
               >
                 {category.name}
-              </button>
+              </Link>
             ))}
           </div>
         </Container>

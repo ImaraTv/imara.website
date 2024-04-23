@@ -6,7 +6,7 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
 import { Dialog, Listbox, Transition } from '@headlessui/react'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, Suspense } from 'react'
 import { Button } from '@/components/Button'
 import Image from 'next/image'
 import Yt from '@/images/player.png'
@@ -182,7 +182,8 @@ export function Recommended() {
             <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
               Recommended
             </div>
-            
+            <Suspense fallback={<p className='text-4xl'>Loading sliders...</p>}>
+
             {categories.map((category, index) => (
               <button
                 type="button"
@@ -197,6 +198,7 @@ export function Recommended() {
                 {category.name}
               </button>
             ))}
+            </Suspense>
           </div>
           <div className="hidden px-6 md:flex">
             <div className="">

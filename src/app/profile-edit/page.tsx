@@ -23,24 +23,25 @@ const categories = [
   {
     id: 1,
     name: 'Continue Watching',
-    url: '/continue-watching',
+    url: "/continue-watching"
   },
   {
     id: 2,
     name: 'Saved Films',
-    url: '/saved',
+    url: "/saved"
   },
   {
     id: 3,
-    name: 'Edit profile ',
-    url: '/profile-edit',
+    name: 'Edit profile',
+    url: "/profile-edit"
   },
   {
     id: 4,
     name: 'All settings',
-    url: '#',
+    url: "/profile-edit"
   },
 ]
+
 const filters = [
   {
     id: 1,
@@ -180,14 +181,18 @@ export default function ProfileEdit() {
           </div>
 
           <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
-            {categories.map((category) => (
-              <button
-                type="button"
+          {categories.map((category) => (
+              <Link
+                href={category.url}
                 key={category.id}
-                className="mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-gray-50"
+                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-gray-50 ${
+                  category.name === 'Edit profile'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white'
+                }`}
               >
                 {category.name}
-              </button>
+              </Link>
             ))}
           </div>
         </Container>
