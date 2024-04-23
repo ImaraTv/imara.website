@@ -632,7 +632,7 @@ export default function Saved() {
               role="list"
               className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
             >
-              {bookmarks.map((video) => (
+              {videos.map((video) => (
                 <li key={video.id} className="relative">
                   <div
                     onClick={() => openModal2(video)}
