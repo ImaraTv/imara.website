@@ -1,19 +1,18 @@
 'use client'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { Fragment, useState } from 'react'
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react'
 import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { Container } from '@/components/Container'
 import Image from 'next/image'
 import Link from 'next/link'
 import Yt from '@/images/yt.png'
 import Address from '@/components/Address'
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-} from '@heroicons/react/20/solid'
-import { Button } from '@/components/Button'
+
+import axios from 'axios'
+import { getAccessToken } from '../../../utils/authUtils'
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
 
 const cardStyle = {
   boxShadow: '0px 4px 28px 3px #0000001A',
@@ -23,22 +22,22 @@ const categories = [
   {
     id: 1,
     name: 'Continue Watching',
-    url: "/continue-watching"
+    url: '/continue-watching',
   },
   {
     id: 2,
     name: 'Saved Films',
-    url: "/saved"
+    url: '/saved',
   },
   {
     id: 3,
     name: 'Edit profile',
-    url: "/profile-edit"
+    url: '/profile-edit',
   },
   {
     id: 4,
     name: 'All settings',
-    url: "/profile-edit"
+    url: '/profile-edit',
   },
 ]
 
@@ -158,10 +157,26 @@ const files = [
       'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
   },
 ]
+interface UserData {
+  name: string
+  email: string
+  // Add any other properties that are part of the user data
+}
 export default function ProfileEdit() {
+  const router = useRouter()
   let [isOpen, setIsOpen] = useState(true)
   const [selected, setSelected] = useState(qualities[0])
   const [active, setActive] = useState(dates[0])
+  const [userData, setUserData] = useState<UserData | null>(null)
+  const [formData, setFormData] = useState({
+    password: '',
+    password_confirmation: '',
+  })
+
+  const [errors, setErrors] = useState({
+    password: '',
+    password_confirmation: '',
+  })
 
   function closeModal() {
     setIsOpen(false)
@@ -171,17 +186,102 @@ export default function ProfileEdit() {
     setIsOpen(true)
   }
 
+  //profile
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const accessToken = getAccessToken()
+        const response = await axios.get(
+          'https://dashboard.imara.tv/api/profile',
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        )
+
+        // Handle the response data
+        const userData = response.data.data
+        setUserData(userData[0])
+      } catch (error) {
+        console.error('Error fetching user profile:', error)
+      }
+    }
+
+    fetchUserProfile()
+  }, [])
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const accessToken = getAccessToken()
+    // send a request to the API
+    const response = await fetch(
+      'https://dashboard.imara.tv/api/change-password',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(formData),
+      },
+    )
+
+    // handle the response
+    if (response.ok) {
+      // if the request was successful, show a success message
+      // and redirect the user to the login page
+      Swal.fire({
+        title: 'Password changed successfully',
+        text: 'Redirecting to login...',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      }).then(() => {
+        // Redirect to the profile page
+        router.push('/sign-in')
+      })
+    } else {
+      // if the request was not successful, parse the error response
+      const data = await response.json()
+      setErrors(data.error)
+      Swal.fire({
+        title: 'Password change Failed',
+        text: 'Something went wrong. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    })
+    setErrors({
+      ...errors,
+      [event.target.name]: '',
+    })
+  }
+
   return (
     <>
       <Header />
       <main>
         <Container>
           <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
-            Welcome back Joy !
+            {userData ? (
+              <div>
+                <p>Welcome {userData.name}</p>
+                {/* Render additional user details as needed */}
+              </div>
+            ) : (
+              <p>Loading user...</p>
+            )}
           </div>
 
           <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
-          {categories.map((category) => (
+            {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
@@ -199,32 +299,34 @@ export default function ProfileEdit() {
 
         <div className="mb-[105px] flex flex-col space-y-[60px] bg-[#F3F3F3] p-[60px]">
           <div className="text-center text-[24px] font-medium text-[#767676]">
-            Edit and update your profile details
+            Edit and update your password
           </div>
 
-          <form action="#" method="POST" className="mt-16 sm:mt-20">
+          <form onSubmit={handleSubmit} className="mt-16 sm:mt-20">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
               <div>
                 <div className="mt-10">
                   <input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    placeholder="User name"
-                    autoComplete="given-name"
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    autoComplete="password"
                     className="block w-full rounded-md border-0 bg-transparent px-3.5 py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
               <div>
                 <div className="mt-10">
                   <input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    placeholder="Phone number or Email"
+                    type="password"
+                    name="password_confirmation"
+                    id="password_confirmation"
+                    placeholder="confirm password"
                     autoComplete="family-name"
                     className="block w-full rounded-md border-0 bg-transparent px-3.5 py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
