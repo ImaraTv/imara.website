@@ -286,7 +286,7 @@ export default function ContinueWatching() {
 
                 <div className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
                   <div className="mr-8">
-                    {post.duration}
+                    {post.duration} min
                   </div>
                   <div className="-ml-4 flex items-center gap-x-4">
                     <svg
@@ -353,77 +353,68 @@ export default function ContinueWatching() {
                 ))}
             </ul>
             <Transition appear show={isOpen} as={Fragment}>
-              <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <div className="fixed inset-0 bg-black/25" />
-                </Transition.Child>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="fixed inset-0 bg-black/25" />
+                  </Transition.Child>
 
-                <div className="fixed inset-0 overflow-y-auto">
-                  <div className="flex min-h-full items-center justify-center p-4 text-center">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="ease-out duration-300"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="ease-in duration-200"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
-                      <Dialog.Panel className="h-auto w-[342px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-[19px] font-bold text-[#525252]"
-                        >
-                          Making the right decision
-                        </Dialog.Title>
-                        <div className="mt-5 flex items-center gap-7">
-                          <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
-                            HD
-                          </button>
-                          <div className="text-[15px] font-medium text-[#525252]">
-                            2023
-                          </div>
-                          <div className="text-[15px] font-medium text-[#525252]">
-                            1 hr
-                          </div>
-                        </div>
-                        <div className="mb-[27px] mt-[55px] flex items-center gap-1">
-                          <div className="text-[20px] font-bold text-[#525252]">
-                            Category:
-                          </div>
-                          <div className="text-[17px] font-medium text-[#525252]">
-                            GBV awareness
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <p className="text-[15px] text-[#525252]">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt.
-                          </p>
-                        </div>
-
-                        <div className="mt-9">
-                          <Link
-                            href="/watch"
-                            className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
+                      >
+                        <Dialog.Panel
+                          className="w-[342px] h-auto max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-[19px] font-bold text-[#525252]"
                           >
-                            Watch Now
-                          </Link>
-                        </div>
-                      </Dialog.Panel>
-                    </Transition.Child>
+                            {selectedFile && selectedFile.name}
+                          </Dialog.Title>
+                          <div className='flex gap-7 items-center mt-5'>
+                            <button
+                              className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px] text-white'>HD
+                            </button>
+                            <div className='font-medium text-[15px] text-[#525252]'>{selectedFile && selectedFile.duration} min</div>
+                          </div>
+                          <div className='flex gap-1 items-center mt-[55px] mb-[27px]'>
+                            <div className='font-bold text-[20px] text-[#525252]'>Category:
+                            </div>
+                            <div className='font-medium text-[17px] text-[#525252]'>{selectedFile && selectedFile.category}</div>
+                          </div>
+                          <div className="mt-2">
+                            <p className="text-[15px] text-[#525252]">
+                              {selectedFile && selectedFile.description}
+                            </p>
+                          </div>
+
+                          <div className="mt-9">
+                            <Link href="/watch"
+                              className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            >
+                              Watch Now
+                            </Link>
+                          </div>
+                        </Dialog.Panel>
+                      </Transition.Child>
+                    </div>
                   </div>
-                </div>
-              </Dialog>
-            </Transition>
+                </Dialog>
+              </Transition>
           </div>
         </Container>
 
