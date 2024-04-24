@@ -16,6 +16,7 @@ import {
 import { Button } from '@/components/Button'
 import axios from 'axios'
 import { getAccessToken } from '@/../utils/authUtils'
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 
 const cardStyle = {
   boxShadow: '0px 4px 28px 3px #0000001A',
@@ -25,22 +26,22 @@ const categories = [
   {
     id: 1,
     name: 'Continue Watching',
-    url: "/continue-watching"
+    url: '/continue-watching',
   },
   {
     id: 2,
     name: 'Saved Films',
-    url: "/saved"
+    url: '/saved',
   },
   {
     id: 3,
     name: 'Edit profile',
-    url: "/profile-edit"
+    url: '/profile-edit',
   },
   {
     id: 4,
     name: 'All settings',
-    url: "/profile-edit"
+    url: '/profile-edit',
   },
 ]
 
@@ -171,13 +172,17 @@ interface File {
 }
 
 interface Video {
+  id: number
   name: string
-  category: string
   duration: number
+  category: string
   description: string
+  vimeo_link: string
+  call_to_action: string | null
+  call_to_action_link: string | null
   image: string
-  // Other properties
 }
+
 interface UserData {
   name: string
   email: string
@@ -211,6 +216,7 @@ export default function Saved() {
     }[]
   >([])
   const [bookmarks, setBookmarks] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState<UserData | null>(null)
   let [isOpen, setIsOpen] = useState(false)
   let [isOpen2, setIsOpen2] = useState(false)
@@ -260,13 +266,17 @@ export default function Saved() {
         )
         const data = await response.json()
         if (data.data && Array.isArray(data.data)) {
-          setBookmarks(data.data.flatMap((bookmark: any) => bookmark.videos.data));
+          setBookmarks(
+            data.data.flatMap((bookmark: any) => bookmark.videos.data),
+          )
         } else {
-          setBookmarks([]);
-          console.error('Unexpected API response format');
+          setBookmarks([])
+          console.error('Unexpected API response format')
         }
       } catch (error) {
         console.error('Error fetching bookmarks:', error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -329,7 +339,7 @@ export default function Saved() {
           </div>
 
           <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
-          {categories.map((category) => (
+            {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
@@ -512,44 +522,56 @@ export default function Saved() {
               role="list"
               className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8"
             >
-              {videos.map((video) => (
-                <li key={video.id} className="relative">
-                  <div
-                    onClick={() => openModal(video)}
-                    className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                  >
-                    <Image
-                      src={video.image}
-                      alt=""
-                      width={168}
-                      height={97}
-                      className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                    />
-                    <Image
-                      className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
-                      width={50}
-                      height={43}
-                      src={Yt}
-                      alt={'ÿt'}
-                    />
-                  </div>
-                  <div className="mt-[18px] flex gap-3 md:mt-5">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+              {bookmarks.length > 0 ? (
+                bookmarks.map((video: Video) => (
+                  <li key={video.id} className="relative">
+                    <div
+                      onClick={() => openModal(video)}
+                      className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
                     >
-                      {video.duration} min
-                    </button>
-                    <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                      {video.category}
-                    </p>
-                  </div>
+                      <Image
+                        src={video.image}
+                        alt=""
+                        width={168}
+                        height={97}
+                        className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
+                      />
+                      <Image
+                        className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                        width={50}
+                        height={43}
+                        src={Yt}
+                        alt={'ÿt'}
+                      />
+                    </div>
+                    <div className="mt-[18px] flex gap-3 md:mt-5">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                      >
+                        {video.duration} min
+                      </button>
+                      <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
+                        {video.category}
+                      </p>
+                    </div>
 
-                  <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                    {video.name}
-                  </p>
-                </li>
-              ))}
+                    <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                      {video.name}
+                    </p>
+                  </li>
+                ))
+              ) : (
+                <button
+                  type="button"
+                  className="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  <QuestionMarkCircleIcon className="mx-auto h-12 w-12 text-gray-500" />
+                  <span className="mt-2 block text-sm font-semibold text-gray-900">
+                    No bookmarks found
+                  </span>
+                </button>
+              )}
             </ul>
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog as="div" className="relative z-10" onClose={closeModal}>
