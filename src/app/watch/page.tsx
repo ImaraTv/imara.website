@@ -21,6 +21,7 @@ import styled from 'styled-components'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import VimeoPlayer from '@/components/VimeoPlayer'
 import Rating from '@/components/Rating'
+import ReactPlayer from 'react-player';
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
@@ -46,6 +47,18 @@ interface File {
   creator: string
   // Other properties
 }
+interface Video {
+  id: number;
+  name: string;
+  duration: number;
+  category: string;
+  description: string;
+  vimeo_link: string;
+  call_to_action: string | null;
+  call_to_action_link: string | null;
+  image: string;
+  creator: string;
+}
 
 export default function Watch() {
   let [isOpen, setIsOpen] = useState(false)
@@ -66,6 +79,21 @@ export default function Watch() {
       creator: string
     }[]
   >([])
+  const [videoUrl, setVideoUrl] = useState('')
+  const [videoDetails, setVideoDetails] = useState<Video | null>(null);
+
+  const fetchVideo = async () => {
+    const response = await fetch('https://dashboard.imara.tv/api/videos/1');
+    const data = await response.json();
+    const video = data.data[0];
+    const videoId = video.vimeo_link.split('/').pop();
+    setVideoUrl(`https://player.vimeo.com/video/${videoId}`);
+    setVideoDetails(video);
+  };
+
+  useEffect(() => {
+    fetchVideo();
+  }, []);
 
   const ratingChanged = (newRating: any) => {
     console.log(newRating)
@@ -149,6 +177,14 @@ export default function Watch() {
             </div>
           </div>
         </div>
+        <div>
+      <ReactPlayer
+        url={videoUrl}
+        width="100%"
+        height="100%"
+        controls={true}
+      />
+    </div>
 
         {/* Buttons */}
         <Container>
@@ -194,18 +230,19 @@ export default function Watch() {
 
         <Container>
           {/* Video details */}
+          {videoDetails && (
           <div className="my-[58px] flex justify-between rounded-md md:my-[148px]">
             <div className="relative flex h-[580px] w-full flex-col gap-12 rounded-md shadow-10xl md:h-auto md:w-3/4 md:flex-row md:rounded-none md:shadow-none">
               <Image
                 width={405}
                 height={352}
-                src={VideoBanner}
+                src={videoDetails.image}
                 alt={'video image'}
                 className="absolute inset-0 -z-10 h-[352px] w-full flex-shrink-0 rounded-md object-cover md:relative md:mr-4 md:h-[391px] md:w-[316px]"
               />
               <div className="absolute bottom-0 flex flex-col gap-[30px] px-[25px] pb-4 md:relative md:px-0">
                 <h4 className="text-[20px] font-bold text-white md:text-[40px] md:text-[#2B2B2B]">
-                  Friend Zone short film
+                {videoDetails.name}
                 </h4>
                 <div className="flex items-center gap-7">
                   <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
@@ -215,16 +252,14 @@ export default function Watch() {
                     2023
                   </div>
                   <div className="text-[18px] font-medium text-white md:text-[#525252]">
-                    43 min{' '}
+                  {videoDetails.duration} min{' '}
                   </div>
                   <div className="text-[18px] font-medium text-white md:text-[#525252]">
                     Ranked : 4.7
                   </div>
                 </div>
                 <p className="mt-1 text-[18px] text-white md:text-[#525252]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam.
+                {videoDetails.description}
                 </p>
                 <div className="flex flex-col">
                   <div className="flex gap-2">
@@ -256,7 +291,7 @@ export default function Watch() {
                       Director:
                     </span>
                     <span className="text-[18px] text-white md:text-[#525252]">
-                      Imara Tv crew
+                    {videoDetails.creator}
                     </span>
                   </div>
                   <div className="flex gap-2">
@@ -264,7 +299,7 @@ export default function Watch() {
                       Categories:
                     </span>
                     <span className="text-[18px] text-white md:text-[#525252]">
-                      Adovocacy, Sexual health, Decision making, SRH
+                    {videoDetails.category}
                     </span>
                   </div>
                 </div>
@@ -306,32 +341,14 @@ export default function Watch() {
                 className="flex h-12 items-center justify-center gap-2 rounded bg-white px-4"
                 style={cardStyle}
               >
-                {/* <StarIcon
-                  className="h-5 w-5 text-[#F2970F]"
-                  aria-hidden="true"
-                />
-                <StarIcon
-                  className="h-5 w-5 text-[#F2970F]"
-                  aria-hidden="true"
-                />
-                <StarIcon
-                  className="h-5 w-5 text-[#F2970F]"
-                  aria-hidden="true"
-                />
-                <StarIcon
-                  className="h-5 w-5 text-[#F2970F]"
-                  aria-hidden="true"
-                />
-                <StarIcon
-                  className="h-5 w-5 text-[#F2970F]"
-                  aria-hidden="true"
-                /> */}
+                
                 <Rating rating={3.5} />
               </div>
             </div>
           </div>
+          )}
         </Container>
-
+              
         {/* Related */}
         <Container>
           <div className="isolate mt-[58px] px-6 py-12 md:mt-[110px] lg:px-8">
