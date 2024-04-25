@@ -22,43 +22,36 @@ import ReactPlayer from 'react-player';
 import { useParams, useSearchParams } from 'next/navigation';
 
 const cardStyle = {
-  boxShadow: '0px 4px 22px 3px #00000029',
-}
+    boxShadow: '0px 4px 22px 3px #00000029',
+  }
 
-const playerWrapper = {
-  position: 'relative',
-  paddingTop: '56.25%',
-}
+  interface File {
+    id: number
+    name: string
+    category: string
+    duration: number
+    description: string
+    image: string
+    creator: string
+    // Other properties
+  }
 
-const reactPlayer = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-}
-
-interface File {
+interface Video {
+  id: number
   name: string
-  category: string
   duration: number
+  category: string
   description: string
+  vimeo_link: string
+  call_to_action: string | null
+  call_to_action_link: string | null
   image: string
   creator: string
-  // Other properties
-}
-interface Video {
-  id: number;
-  name: string;
-  duration: number;
-  category: string;
-  description: string;
-  vimeo_link: string;
-  call_to_action: string | null;
-  call_to_action_link: string | null;
-  image: string;
-  creator: string;
 }
 
-export default function Watch() {
+const VideoDetailsPage = () => {
+  const [videoDetails, setVideoDetails] = useState<Video | null>(null)
+  const { id } = useParams()
   let [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedItem, setSelectedItem] = useState(null)
@@ -77,28 +70,23 @@ export default function Watch() {
       creator: string
     }[]
   >([])
-  const [videoUrl, setVideoUrl] = useState('')
-  const [videoDetails, setVideoDetails] = useState<Video | null>(null);
-  const { id } = useParams()
-
-  const fetchVideo = async () => {
-    const response = await fetch('https://dashboard.imara.tv/api/videos/1');
-    const data = await response.json();
-    const video = data.data[0];
-    const videoId = video.vimeo_link.split('/').pop();
-    setVideoUrl(`https://player.vimeo.com/video/${videoId}`);
-    setVideoDetails(video);
-  };
 
   useEffect(() => {
-    fetchVideo();
-  }, []);
+    const fetchVideoDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://dashboard.imara.tv/api/videos/${id}`,
+        )
+        const data = await response.json()
+        const video = data.data[0]
+        setVideoDetails(video)
+      } catch (error) {
+        console.error('Error fetching video details:', error)
+      }
+    }
 
-  const ratingChanged = (newRating: any) => {
-    console.log(newRating)
-  }
-
-  const [rating, setRating] = useState(0)
+    fetchVideoDetails()
+  }, [id])
 
   const openModal = (file: File) => {
     setSelectedFile(file)
@@ -132,11 +120,9 @@ export default function Watch() {
     fetchVideos()
   }, [])
 
-  const vimeoUrl = 'https://vimeo.com/video/929535298'
-
   return (
     <>
-      <Header />
+    <Header />
       <main>
         {/* Hero card */}
         <div className="">
@@ -177,12 +163,6 @@ export default function Watch() {
           </div>
         </div>
         <div>
-      <ReactPlayer
-        url={videoUrl}
-        width="100%"
-        height="100%"
-        controls={true}
-      />
     </div>
 
         {/* Buttons */}
@@ -476,7 +456,7 @@ export default function Watch() {
 
                         <div className="mt-9">
                           <Link
-                            href="/watch"
+                            href={`/videos/${selectedFile && selectedFile.id}`}
                             className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           >
                             Watch Now
@@ -521,3 +501,5 @@ export default function Watch() {
     </>
   )
 }
+
+export default VideoDetailsPage

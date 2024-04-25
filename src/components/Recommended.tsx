@@ -81,6 +81,7 @@ const suggestions = [
   },
 ]
 interface File {
+  id: number
   name: string
   category: string
   duration: number
@@ -484,7 +485,7 @@ export function Recommended() {
 
                           <div className="mt-9">
                             <Link
-                              href="/watch"
+                              href={`/videos/${selectedFile && selectedFile.id}`}
                               className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                             >
                               Watch Now
