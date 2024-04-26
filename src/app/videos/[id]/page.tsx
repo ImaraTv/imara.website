@@ -81,7 +81,7 @@ const VideoDetailsPage = () => {
         const data = await response.json()
         const video = data.data[0]
         const vimeoVideoId = video.vimeo_link.split('/').pop();
-        setVideoUrl(`https://player.vimeo.com/video/${vimeoVideoId}`);
+        setVideoUrl(`https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`);
         setVideoDetails(video)
       } catch (error) {
         console.error('Error fetching video details:', error)
@@ -130,28 +130,7 @@ const VideoDetailsPage = () => {
         {/* Hero card */}
         <div className="">
           <div className="relative isolate h-[240px] sm:overflow-hidden md:h-[546px]">
-            {/* <Image
-              className="absolute inset-0 -z-10 h-[240px] w-full object-cover md:h-full"
-              src={Banner}
-              alt={'contact'}
-              width={1440}
-              height={546}
-            />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-gray-900/40" />
-            <div className="absolute inset-0 -z-10 rounded-md ring-1 ring-inset ring-gray-900/10" />
-
-            <Image
-              className="absolute inset-0 m-auto"
-              src={Youtube}
-              width={52.5}
-              height={52.5}
-              alt={'youtube icon'}
-            /> */}
-            {/* <VimeoPlayer videoUrl={vimeoUrl} /> 
-
-            <iframe src="{videoUrl}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Untitled"></iframe>
             
-            */}
             <div>
               <iframe
                 src={videoUrl}

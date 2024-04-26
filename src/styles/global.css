@@ -1,3 +1,7 @@
-body:not(.showfocus) .player button, body:not(.showfocus) .player li, body:not(.showfocus) .player span, body:not(.showfocus) .player svg {
+vp-sidedock{
     display: none !important;
+}
+
+like-button {
+    display: none;
 }
