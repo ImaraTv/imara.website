@@ -1,7 +1,9 @@
-vp-sidedock{
+
+.vp-sidedock{
     display: none !important;
 }
 
-like-button {
+.SideDock_module_root__98c28094, .SideDock_module_root__98c28094 .SideDock_module_sidedockInner__98c28094 {
+    transition: opacity .25s ease-out;
     display: none;
 }
