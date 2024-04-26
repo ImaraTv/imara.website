@@ -1,6 +1,9 @@
 'use client'
 
 import { Fragment } from 'react'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
@@ -148,7 +151,38 @@ const cardStyle = {
 };
 
 export function Header() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const router = useRouter();
+
+  const fetchSearchResults = async (query: string) => {
+    try {
+      const response = await fetch(`https://dashboard.imara.tv/api/videos?search=${query}`);
+      const data = await response.json();
+      setSearchResults(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchQuery.length > 2) {
+      fetchSearchResults(searchQuery);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery]);
+
+
+  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    router.push(`/search?q=${searchQuery}`);
+  };
+
   const handleLogout = () => {
     logout();
     router.push('/sign-in'); // Redirect to the login page
@@ -218,6 +252,8 @@ export function Header() {
             </div>
           </div>
           <div className="flex items-center justify-end gap-x-5 md:gap-x-4">
+
+            {/* Search */}
             <div className="flex items-center justify-end px-2 lg:ml-6 lg:justify-end">
               <div className="w-3/4 max-w-lg lg:max-w-xs">
                 <label htmlFor="search" className="sr-only">
@@ -228,12 +264,24 @@ export function Header() {
                     <MagnifyingGlassIcon className="h-5 w-5 text-white md:text-[#525252] font-medium" aria-hidden="true" />
                   </div>
                   <input
-                    id="search"
-                    name="search"
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                    }}
                     className="block w-full rounded-[15px] border-0 bg-[#C4C4C433] md:bg-[#E2E2E2] py-[10px] pl-[14px] text-white md:text-[#525252] ring-1 ring-inset ring-[#C4C4C433] ring-gray-300 placeholder:text-white md:placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="Search"
-                    type="search"
+                    placeholder="Search..."
                   />
+                  {searchResults.length > 0 && (
+                    <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
+                      {searchResults.map((result) => (
+                        <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
+                          <a href={`/videos/${result.id}`}>{result.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
                 </div>
               </div>
             </div>
