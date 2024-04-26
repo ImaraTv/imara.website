@@ -163,8 +163,6 @@ const VideoDetailsPage = () => {
                   width: '100%',
                   height: '100%',
                 }}
-                byline="false"
-                controls="false"
               ></iframe>
             </div>
           </div>
