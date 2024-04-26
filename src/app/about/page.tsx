@@ -9,7 +9,7 @@ import About1 from '@/images/about1.png'
 import About2 from '@/images/about2.png'
 import About3 from '@/images/about.jpg'
 import Image3 from '@/images/vector2.svg'
-
+import { Button } from '@/components/Button'
 import logo1 from '@/images/partners/gov.svg'
 import logo2 from '@/images/partners/icrh.png'
 import logo3 from '@/images/partners/nailab.webp'
@@ -428,6 +428,12 @@ export default function About() {
                   <h2 className="text-[20px] font-bold text-[#2B2B2B] md:text-[40px]">
                     Our Sponsors
                   </h2>
+
+                  <Button href="https://dashboard.imara.tv/admin/register?r=sponsor" color="blue" className="hidden md:flex">
+              <span>
+                Become a Sponsor
+              </span>
+            </Button>
                 </div>
 
                 <div className="mx-auto mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-6 sm:gap-x-10 md:gap-x-8 lg:mx-0 lg:grid-cols-5">

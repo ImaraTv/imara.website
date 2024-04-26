@@ -67,7 +67,7 @@ const items = [
   },
   {
     name: 'Create on Imara',
-    href: '##',
+    href: 'https://dashboard.imara.tv/admin/register?r=creator',
     icon: IconFive,
   },
   {
@@ -135,7 +135,7 @@ function MobileNavigation() {
             <MobileNavLink href="/contact">Contact</MobileNavLink>
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
-              <MobileNavLink href="https://dashboard.imara.tv/admin/register">
+              <MobileNavLink href="https://dashboard.imara.tv/admin/register?r=creator">
                 Create on Imara
               </MobileNavLink>
               <MobileNavLink href="/sign-in">Login</MobileNavLink>
@@ -231,7 +231,7 @@ export function Header2() {
             </div>
           </div>
           <Button
-            href="https://dashboard.imara.tv/admin/register"
+            href="https://dashboard.imara.tv/admin/register?r=creator"
             color="blue"
             className="hidden md:flex"
           >
