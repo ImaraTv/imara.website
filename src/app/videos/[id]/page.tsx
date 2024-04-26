@@ -52,6 +52,7 @@ interface Video {
 const VideoDetailsPage = () => {
   const [videoDetails, setVideoDetails] = useState<Video | null>(null)
   const { id } = useParams()
+  const [videoUrl, setVideoUrl] = useState('');
   let [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedItem, setSelectedItem] = useState(null)
@@ -79,6 +80,8 @@ const VideoDetailsPage = () => {
         )
         const data = await response.json()
         const video = data.data[0]
+        const vimeoVideoId = video.vimeo_link.split('/').pop();
+        setVideoUrl(`https://player.vimeo.com/video/${vimeoVideoId}`);
         setVideoDetails(video)
       } catch (error) {
         console.error('Error fetching video details:', error)
@@ -144,20 +147,24 @@ const VideoDetailsPage = () => {
               height={52.5}
               alt={'youtube icon'}
             /> */}
-            {/* <VimeoPlayer videoUrl={vimeoUrl} /> */}
+            {/* <VimeoPlayer videoUrl={vimeoUrl} /> 
+
+            <iframe src="{videoUrl}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Untitled"></iframe>
+            
+            */}
             <div>
               <iframe
-                src="https://player.vimeo.com/video/929535298?badge=0&amp;autopause=0&amp;title=false&amp;player_id=0&amp;app_id=58479"
+                src={videoUrl}
                 allow="autoplay; picture-in-picture; clipboard-write"
                 style={{
                   position: 'absolute',
-                  objectFit: 'cover',
                   top: '0',
                   left: '0',
                   width: '100%',
-                  height: '546px',
+                  height: '100%',
                 }}
-                title="The Diary of a College Girl"
+                byline="false"
+                controls="false"
               ></iframe>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { Roboto } from 'next/font/google'
 import { Ubuntu } from 'next/font/google'
 import clsx from 'clsx'
 import '@/styles/tailwind.css'
+import '@/styles/global.css'
 import { type Metadata } from 'next'
 import React from "react";
 import CookieConsentComponent from '@/components/CookieConsent';
