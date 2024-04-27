@@ -1,28 +1,14 @@
-import { CallToAction } from '@/components/CallToAction'
-import { Faqs } from '@/components/Faqs'
+"use client"
+
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { Hero } from '@/components/Hero'
-import { CarouselHome } from '@/components/Carousel'
-import { Pricing } from '@/components/Pricing'
-import { PrimaryFeatures } from '@/components/PrimaryFeatures'
-import { SecondaryFeatures } from '@/components/SecondaryFeatures'
-import { Testimonials } from '@/components/Testimonials'
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
-import Image5 from "@/images/image5.png"
-import About1 from "@/images/about1.png"
-import About2 from "@/images/about2.png"
 import Banner from "@/images/contact.png"
-
-import logo1 from "@/images/partners/hnn.svg"
-import logo2 from "@/images/partners/ic.svg"
-import logo3 from "@/images/partners/iapb.svg"
-import logo4 from "@/images/partners/lf.svg"
-import logo5 from "@/images/partners/pepfar.svg"
-
-
 import Image from "next/image"
+import { sendEmail } from "../../../utils/sendgrid"
+import { useState } from 'react';
+
 
 const values = [
     {
@@ -64,6 +50,40 @@ const people = [
 ]
 
 export default function Contact() {
+    const [formData, setFormData] = useState({
+        'name': '',
+        'email': '',
+        message: '',
+    });
+    const [formStatus, setFormStatus] = useState('');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setFormStatus('Sending...');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                body: new FormData(e.currentTarget),
+            });
+
+            if (response.ok) {
+                setFormStatus('Email sent successfully');
+                setFormData({ 'name': '', 'email': '', message: '' });
+            } else {
+                setFormStatus('Failed to send email');
+            }
+        } catch (error) {
+            console.error(error);
+            setFormStatus('Failed to send email');
+        }
+    };
+
+
     return (
         <>
             <Header />
@@ -119,29 +139,33 @@ export default function Contact() {
                         <div className="max-w-2xl">
                             <h2 className="text-xl md:text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Talk to us now</h2>
                         </div>
-                        <form action="#" method="POST" className="mt-16 sm:mt-20">
+                        <form onSubmit={handleSubmit} action="#" method="POST" className="mt-16 sm:mt-20">
                             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                                 <div>
                                     <div className="mt-2.5">
                                         <input
                                             type="text"
-                                            name="first-name"
-                                            id="first-name"
+                                            name="name"
+                                            id="name"
                                             placeholder='Full Name'
                                             autoComplete="given-name"
                                             className="block w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={formData['name']}
+                                            onChange={handleChange}
                                         />
                                     </div>
                                 </div>
                                 <div>
                                     <div className="mt-2.5">
                                         <input
-                                            type="text"
-                                            name="last-name"
-                                            id="last-name"
+                                            type="email"
+                                            name="email"
+                                            id="email"
                                             placeholder='Phone number or Email'
-                                            autoComplete="family-name"
+                                            autoComplete="email"
                                             className="block w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            value={formData['email']}
+                                            onChange={handleChange}
                                         />
                                     </div>
                                 </div>
@@ -153,7 +177,8 @@ export default function Contact() {
                                             placeholder='Write your message here.....'
                                             rows={4}
                                             className="block w-full bg-[#E2E2E2] border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            defaultValue={''}
+                                            value={formData.message}
+                                            onChange={handleChange}
                                         />
                                     </div>
                                 </div>
@@ -166,6 +191,7 @@ export default function Contact() {
                                     Send
                                 </button>
                             </div>
+                            {formStatus && <p>{formStatus}</p>}
                         </form>
                     </div>
                 </Container>
@@ -173,7 +199,7 @@ export default function Contact() {
                 <Newsletter />
 
                 <div className="bg-[#89CFF1] h-[193px] py-4 md:py-10 px-4 text-center flex items-center justify-center">
-                    <p className='text-sm md:text-xl leading-[36px] md:leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br/> Ngong Road, Nairobi, Kenya, Africa</p>
+                    <p className='text-sm md:text-xl leading-[36px] md:leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br /> Ngong Road, Nairobi, Kenya, Africa</p>
                 </div>
 
             </main>

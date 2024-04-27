@@ -153,36 +153,60 @@ export function Recommended() {
     fetchCategories()
   }, [])
 
+  // useEffect(() => {
+  //   const fetchVideos = async () => {
+  //     try {
+  //       const response = await fetch('https://dashboard.imara.tv/api/videos')
+  //       const data = await response.json()
+  //       setVideos(data.data)
+  //       setIsLoading(false)
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error)
+  //       setIsLoading(false)
+  //     }
+  //   }
+
+  //   fetchVideos()
+  // }, [])
+
   useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
-        const data = await response.json()
-        setVideos(data.data)
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-        setIsLoading(false)
-      }
-    }
+    const fetchVideos = () => {
+      setIsLoading(true);
+      fetch(`https://dashboard.imara.tv/api/videos?category=${selectedCategory}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Error fetching videos');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setVideos(data.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching videos:', error);
+          setIsLoading(false);
+        });
+    };
+  
+    fetchVideos();
+  }, [selectedCategory]);
 
-    fetchVideos()
-  }, [])
+  const handleCategoryClick = (categoryName: any) => {
+    setSelectedCategory(categoryName);
+    setIsLoading(true);
+    fetch(`https://dashboard.imara.tv/api/videos?category=${categoryName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVideos(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
+      });
+  };
 
-  const handleCategoryClick = (categoryId: number) => {
-    setSelectedCategory(categoryId)
-  }
-
-  const filteredVideos = selectedCategory
-    ? videos.filter((video) => Number(video.category) === selectedCategory)
-    : videos
-
-  {
-    console.log('Selected Category:', selectedCategory)
-  }
-  {
-    console.log('Filtered Videos:', filteredVideos)
-  }
 
   return (
     <>
@@ -192,7 +216,6 @@ export function Recommended() {
             <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
               Recommended
             </div>
-            <Suspense fallback={<p className="text-4xl">Loading sliders...</p>}>
               {categories.map((category, index) => (
                 <button
                   type="button"
@@ -207,7 +230,6 @@ export function Recommended() {
                   {category.name}
                 </button>
               ))}
-            </Suspense>
           </div>
           <div className="hidden px-6 md:flex">
             <div className="">

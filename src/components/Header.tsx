@@ -153,6 +153,7 @@ const cardStyle = {
 export function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const fetchSearchResults = async (query: string) => {
