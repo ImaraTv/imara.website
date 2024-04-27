@@ -169,27 +169,58 @@ export function Recommended() {
   //   fetchVideos()
   // }, [])
 
+  // useEffect(() => {
+  //   const fetchVideos = () => {
+  //     setIsLoading(true);
+  //     fetch(`https://dashboard.imara.tv/api/videos?category=${selectedCategory}`)
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error('Error fetching videos');
+  //         }
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         setVideos(data.data);
+  //         setIsLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error fetching videos:', error);
+  //         setIsLoading(false);
+  //       });
+  //   };
+  
+  //   fetchVideos();
+  // }, [selectedCategory]);
+
   useEffect(() => {
-    const fetchVideos = () => {
-      setIsLoading(true);
-      fetch(`https://dashboard.imara.tv/api/videos?category=${selectedCategory}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Error fetching videos');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setVideos(data.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error('Error fetching videos:', error);
-          setIsLoading(false);
-        });
+    const fetchAllVideos = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/videos');
+        const data = await response.json();
+        setVideos(data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
+      }
     };
   
-    fetchVideos();
+    const fetchFilteredVideos = async () => {
+      setIsLoading(true);
+      try {
+        const query = selectedCategory ? `?category=${selectedCategory}` : '';
+        const response = await fetch(`https://dashboard.imara.tv/api/videos${query}`);
+        const data = await response.json();
+        setVideos(data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
+      }
+    };
+  
+    fetchAllVideos();
+    fetchFilteredVideos();
   }, [selectedCategory]);
 
   const handleCategoryClick = (categoryName: any) => {
@@ -220,7 +251,7 @@ export function Recommended() {
                 <button
                   type="button"
                   key={category.id}
-                  onClick={() => handleCategoryClick(category.id)}
+                  onClick={() => handleCategoryClick(category.name)}
                   className={`text-12px] mr-[24px] inline-flex items-center gap-x-2 rounded-md bg-white px-[13px] py-2 font-medium text-[#525252] shadow-sm md:text-[17px] ${
                     selectedCategory === category.id
                       ? 'ring-525252 ring-1 ring-inset'
