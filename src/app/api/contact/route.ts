@@ -4,8 +4,8 @@ import { sendEmail } from '@/../../utils/sendgrid'; // Update this path to match
 
 export async function POST(request: Request) {
   const body = await request.formData();
-  const fullName = body.get('first-name');
-  const contactInfo = body.get('last-name');
+  const fullName = body.get('name');
+  const contactInfo = body.get('email');
   const message = body.get('message');
 
   try {
