@@ -156,6 +156,7 @@ export default function Videos() {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
 
   const openModal = (file: File) => {
     setSelectedFile(file);
@@ -191,20 +192,50 @@ export default function Videos() {
   }, [])
 
   useEffect(() => {
-    const fetchVideos = async () => {
+    const fetchAllVideos = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
-        const data = await response.json()
-        setVideos(data.data)
-        setIsLoading(false)
+        const response = await fetch('https://dashboard.imara.tv/api/videos');
+        const data = await response.json();
+        setVideos(data.data);
+        setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching categories:', error)
-        setIsLoading(false)
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
       }
-    }
+    };
+   
+    const fetchFilteredVideos = async () => {
+      setIsLoading(true);
+      try {
+        const query = selectedCategory ? `?category=${selectedCategory}` : '';
+        const response = await fetch(`https://dashboard.imara.tv/api/videos${query}`);
+        const data = await response.json();
+        setVideos(data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
+      }
+    };
+  
+    fetchAllVideos();
+    fetchFilteredVideos();
+  }, [selectedCategory]);
 
-    fetchVideos()
-  }, [])
+  const handleCategoryClick = (categoryName: any) => {
+    setSelectedCategory(categoryName);
+    setIsLoading(true);
+    fetch(`https://dashboard.imara.tv/api/videos?category=${categoryName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVideos(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
+      });
+  };
   return (
     <>
       <Header />
@@ -233,14 +264,19 @@ export default function Videos() {
                   </div>
                 </div>
               </div>
-              {categories.map((category) => (
-                <Link href="#" key={category.id}>
-                  <button
-                    className="inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
-                  >
-                    {category.name}
-                  </button>
-                </Link>
+              {categories.map((category, index) => (
+                <button
+                  type="button"
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category.name)}
+                  className={`text-12px] mr-[24px] inline-flex items-center gap-x-2 rounded-md bg-white px-[13px] py-2 font-medium text-[#525252] shadow-sm md:text-[17px] ${
+                    selectedCategory === category.id
+                      ? 'ring-525252 ring-1 ring-inset'
+                      : 'hover:bg-gray-50'
+                  }`}
+                >
+                  {category.name}
+                </button>
               ))}
             </div>
             <div className='flex'>

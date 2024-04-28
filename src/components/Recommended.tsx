@@ -153,44 +153,6 @@ export function Recommended() {
     fetchCategories()
   }, [])
 
-  // useEffect(() => {
-  //   const fetchVideos = async () => {
-  //     try {
-  //       const response = await fetch('https://dashboard.imara.tv/api/videos')
-  //       const data = await response.json()
-  //       setVideos(data.data)
-  //       setIsLoading(false)
-  //     } catch (error) {
-  //       console.error('Error fetching categories:', error)
-  //       setIsLoading(false)
-  //     }
-  //   }
-
-  //   fetchVideos()
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchVideos = () => {
-  //     setIsLoading(true);
-  //     fetch(`https://dashboard.imara.tv/api/videos?category=${selectedCategory}`)
-  //       .then((response) => {
-  //         if (!response.ok) {
-  //           throw new Error('Error fetching videos');
-  //         }
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         setVideos(data.data);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error fetching videos:', error);
-  //         setIsLoading(false);
-  //       });
-  //   };
-  
-  //   fetchVideos();
-  // }, [selectedCategory]);
 
   useEffect(() => {
     const fetchAllVideos = async () => {
@@ -204,7 +166,7 @@ export function Recommended() {
         setIsLoading(false);
       }
     };
-  
+   
     const fetchFilteredVideos = async () => {
       setIsLoading(true);
       try {
