@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
@@ -153,6 +153,27 @@ const cardStyle = {
 
 export function Header2() {
   const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+
+  const fetchSearchResults = async (query: string) => {
+    try {
+      const response = await fetch(`https://dashboard.imara.tv/api/videos?search=${query}`);
+      const data = await response.json();
+      setSearchResults(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchQuery.length > 2) {
+      fetchSearchResults(searchQuery);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery]);
+
   const handleLogout = () => {
     logout()
     router.push('/sign-in') // Redirect to the login page
@@ -221,12 +242,23 @@ export function Header2() {
                   />
                 </div>
                 <input
-                  id="search"
-                  name="search"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                  }}
                   className="block w-full rounded-[15px] border-0 bg-[#C4C4C433] py-[10px] pl-[14px] text-white ring-1 ring-inset ring-[#C4C4C433] ring-gray-300 placeholder:font-medium placeholder:text-white focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 md:bg-[#E2E2E2] md:text-[#525252] md:placeholder:text-[#525252]"
                   placeholder="Search"
-                  type="search"
+                  type="text"
                 />
+                {searchResults.length > 0 && (
+                    <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
+                      {searchResults.map((result) => (
+                        <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
+                          <a href={`/videos/${result.id}`}>{result.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
               </div>
             </div>
           </div>

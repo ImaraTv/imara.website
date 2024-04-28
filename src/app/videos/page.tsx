@@ -22,6 +22,7 @@ import { Button } from '@/components/Button'
 import { url } from 'inspector';
 import Rating from '@/components/Rating'
 
+
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029'
 };
@@ -151,7 +152,8 @@ export default function Videos() {
       creator: string
     }[]
   >([])
-
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   let [isOpen, setIsOpen] = useState(false)
 
   const [selectedItem, setSelectedItem] = useState(null);
@@ -236,6 +238,26 @@ export default function Videos() {
         setIsLoading(false);
       });
   };
+
+
+  const fetchSearchResults = async (query: string) => {
+    try {
+      const response = await fetch(`https://dashboard.imara.tv/api/videos?search=${query}`);
+      const data = await response.json();
+      setSearchResults(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchQuery.length > 2) {
+      fetchSearchResults(searchQuery);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery]);
+
   return (
     <>
       <Header />
@@ -255,12 +277,23 @@ export default function Videos() {
                       <MagnifyingGlassIcon className="h-5 w-5 text-[#525252] font-medium" aria-hidden="true" />
                     </div>
                     <input
-                      id="search"
-                      name="search"
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                      }}
                       className="block w-full rounded-[15px] border-0 bg-[#E2E2E2] py-[10px] pl-[14px] text-[#525252] ring-1 ring-inset ring-gray-300 placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Search"
-                      type="search"
+                      type="text"
                     />
+                    {searchResults.length > 0 && (
+                    <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
+                      {searchResults.map((result) => (
+                        <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
+                          <a href={`/videos/${result.id}`}>{result.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   </div>
                 </div>
               </div>
