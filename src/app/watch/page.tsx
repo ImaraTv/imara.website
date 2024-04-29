@@ -43,6 +43,7 @@ interface File {
   description: string
   image: string
   creator: string
+  rating: number | null
   // Other properties
 }
 interface Video {
@@ -56,6 +57,7 @@ interface Video {
   call_to_action_link: string | null;
   image: string;
   creator: string;
+  rating: number | null
 }
 
 export default function Watch() {
@@ -75,6 +77,7 @@ export default function Watch() {
       call_to_action_link: string
       image: string
       creator: string
+      rating: number
     }[]
   >([])
   const [videoUrl, setVideoUrl] = useState('')
@@ -341,7 +344,10 @@ export default function Watch() {
                 style={cardStyle}
               >
                 
-                <Rating rating={3.5} />
+                <Rating
+        videoId={videoDetails.id}
+        initialRating={videoDetails.rating || 0}
+      />
               </div>
             </div>
           </div>
@@ -409,7 +415,10 @@ export default function Watch() {
                       </p>
                     </div>
                     <div className="mt-2 flex items-center gap-3">
-                      <Rating rating={3.5} />
+                    <Rating
+        videoId={video.id}
+        initialRating={video.rating || 0}
+      />
                       <div className='text-gray-500 italic text-sm'>{video.creator}</div>
                     </div>
 
@@ -507,7 +516,12 @@ export default function Watch() {
           </p>
 
           <div className="flex flex-col items-center justify-center py-2">
-            <Rating rating={3.5} />
+          {videoDetails && (
+            <Rating
+              videoId={videoDetails.id}
+              initialRating={videoDetails.rating || 0}
+            />
+            )}
           </div>
           <button
             type="button"
