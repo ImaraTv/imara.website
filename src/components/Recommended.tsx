@@ -88,6 +88,7 @@ interface File {
   description: string
   image: string
   creator: string
+  rating: number | null
   // Other properties
 }
 
@@ -110,6 +111,7 @@ export function Recommended() {
       call_to_action_link: string
       image: string
       creator: string
+      rating: number
     }[]
   >([])
 
@@ -432,7 +434,10 @@ export function Recommended() {
                     </div>
 
                     <div className="mt-2 flex items-center gap-3">
-                      <Rating rating={3.5} />
+                    <Rating
+        videoId={video.id}
+        initialRating={video.rating || 0}
+      />
                       <div className="text-sm italic text-gray-500">
                         {video.creator}
                       </div>

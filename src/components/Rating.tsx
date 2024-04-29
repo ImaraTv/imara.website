@@ -1,18 +1,71 @@
-// components/Rating.tsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import Stars from 'react-stars';
+import { getAccessToken } from '@/../utils/authUtils';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 interface Props {
-  rating: number;
+  videoId: number;
+  initialRating: number;
   size?: number;
   color1?: string;
   color2?: string;
-  edit?: boolean;
-  onChange?: (newRating: number) => void;
 }
 
-const Rating: React.FC<Props> = ({ rating, size = 24, color1 = '#ddd', color2 = '#ffc107', edit = false, onChange }) => {
+const Rating: React.FC<Props> = ({
+  videoId,
+  initialRating,
+  size = 24,
+  color1 = '#ddd',
+  color2 = '#ffc107',
+}) => {
+  const [rating, setRating] = useState(initialRating);
+  const router = useRouter();
+
+  const handleRatingChange = async (newRating: number) => {
+    const accessToken = getAccessToken();
+
+    if (!accessToken) {
+      Swal.fire({
+        title: 'Login Required',
+        text: 'You need to be logged in to rate this video.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Login',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Redirect to the login page
+          router.push('/sign-in');
+        }
+      });
+    } else {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/rate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            video_id: videoId,
+            stars: newRating,
+          }),
+        });
+
+        const data = await response.json();
+        if (data.status === 'success') {
+          setRating(newRating);
+          console.log(data.message);
+        } else {
+          console.error('Error rating video:', data.message);
+        }
+      } catch (error) {
+        console.error('Error rating video:', error);
+      }
+    }
+  };
+
   return (
     <Stars
       count={5}
@@ -20,8 +73,8 @@ const Rating: React.FC<Props> = ({ rating, size = 24, color1 = '#ddd', color2 = 
       size={size}
       color1={color1}
       color2={color2}
-      edit={edit}
-      onChange={onChange}
+      edit
+      onChange={handleRatingChange}
     />
   );
 };

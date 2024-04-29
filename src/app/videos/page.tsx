@@ -127,6 +127,7 @@ interface File {
   description: string
   image: string
   creator: string
+  rating: number | null
   // Other properties
 }
 
@@ -150,6 +151,7 @@ export default function Videos() {
       call_to_action_link: string
       image: string
       creator: string
+      rating: number
     }[]
   >([])
   const [searchQuery, setSearchQuery] = useState('');
@@ -462,7 +464,10 @@ export default function Videos() {
                       <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{video.category}</p>
                     </div>
                     <div className="mt-2 flex items-center gap-3">
-                      <Rating rating={3.5} />
+                    <Rating
+        videoId={video.id}
+        initialRating={video.rating || 0}
+      />
                       <div className='text-gray-500 italic text-sm'>{video.creator}</div>
                     </div>
                     <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>

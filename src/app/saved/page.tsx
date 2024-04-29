@@ -168,6 +168,7 @@ interface File {
   duration: number
   description: string
   image: string
+  rating: number | null
   // Other properties
 }
 
@@ -181,6 +182,7 @@ interface Video {
   call_to_action: string | null
   call_to_action_link: string | null
   image: string
+  rating: number | null
 }
 
 interface UserData {
@@ -200,6 +202,7 @@ export default function Saved() {
       call_to_action: string
       call_to_action_link: string
       image: string
+      rating: number
     }[]
   >([])
   const [recoms, setRecoms] = useState<
@@ -213,6 +216,7 @@ export default function Saved() {
       call_to_action: string
       call_to_action_link: string
       image: string
+      rating: number
     }[]
   >([])
   const [bookmarks, setBookmarks] = useState([])
