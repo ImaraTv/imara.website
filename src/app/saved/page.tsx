@@ -163,12 +163,14 @@ const files = [
 ]
 
 interface File {
+  id: number
   name: string
   category: string
   duration: number
   description: string
   image: string
   rating: number | null
+  stars: number
   // Other properties
 }
 
@@ -183,6 +185,7 @@ interface Video {
   call_to_action_link: string | null
   image: string
   rating: number | null
+  stars: number
 }
 
 interface UserData {
@@ -203,6 +206,7 @@ export default function Saved() {
       call_to_action_link: string
       image: string
       rating: number
+      stars: number
     }[]
   >([])
   const [recoms, setRecoms] = useState<
@@ -217,6 +221,7 @@ export default function Saved() {
       call_to_action_link: string
       image: string
       rating: number
+      stars: number
     }[]
   >([])
   const [bookmarks, setBookmarks] = useState([])
@@ -633,7 +638,7 @@ export default function Saved() {
 
                         <div className="mt-9">
                           <Link
-                            href="/watch"
+                            href={`/videos/${selectedFile && selectedFile.id}`}
                             className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           >
                             Watch Now
@@ -753,7 +758,7 @@ export default function Saved() {
 
                         <div className="mt-9">
                           <Link
-                            href="/watch"
+                            href={`/videos/${selectedFile && selectedFile.id}`}
                             className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           >
                             Watch Now

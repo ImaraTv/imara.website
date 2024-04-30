@@ -45,8 +45,6 @@ function MobileNavLink({
 
 const solutions = [
   { name: 'All videos', href: '/videos' },
-  { name: 'Pg 18+', href: '#' },
-  { name: 'Teens Corner', href: '#' },
 ]
 
 const items = [

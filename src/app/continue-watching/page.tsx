@@ -107,6 +107,7 @@ interface File {
   image: string
   creator: string
   rating: number | null
+  stars: number
   // Other properties
 }
 
@@ -135,24 +136,9 @@ export default function ContinueWatching() {
       image: string
       creator: string
       rating: number
+      stars: number
     }[]
   >([])
-
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         'https://dashboard.imara.tv/api/categories',
-  //       )
-  //       const data = await response.json()
-  //       setCategories(data.data)
-  //     } catch (error) {
-  //       console.error('Error fetching categories:', error)
-  //     }
-  //   }
-
-  //   fetchCategories()
-  // }, [])
 
   const fetchVideosByCategory = async () => {
     try {
@@ -308,8 +294,9 @@ export default function ContinueWatching() {
                     </div>
                   </div>
                 </div>
+
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-                  <a href={post.name}>
+                  <a href={`/videos/${post.id}`}>
                     <span className="absolute inset-0" />
                     {post.name}
                   </a>
@@ -350,7 +337,7 @@ export default function ContinueWatching() {
                     <div className="mt-2 flex items-center gap-3">
                     <Rating
         videoId={video.id}
-        initialRating={video.rating || 0}
+        initialRating={video.stars || 0}
       />
                       <div className='text-gray-500 italic text-sm'>{video.creator}</div>
                     </div>
@@ -409,7 +396,7 @@ export default function ContinueWatching() {
                           </div>
 
                           <div className="mt-9">
-                            <Link href="/watch"
+                            <Link href={`/videos/${selectedFile && selectedFile.id}`}
                               className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                             >
                               Watch Now

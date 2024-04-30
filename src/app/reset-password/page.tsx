@@ -10,8 +10,10 @@ import { Newsletter } from '@/components/Newsletter'
 import Banner from '@/images/signup.png'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
+import Swal from 'sweetalert2'
 
 export default function ResetPassword() {
+    const router =  useRouter();
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const email = searchParams.get('email')
@@ -43,6 +45,15 @@ export default function ResetPassword() {
       )
 
       if (response.ok) {
+          Swal.fire({
+            title: 'Your password has been reset successfully!',
+            text: 'Contiune to login page.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+          }).then(() => {
+            // Redirect to the login page
+            router.push('/sign-in') // Assuming you have a /login page
+          })
         setIsPasswordReset(true)
       } else {
         setIsPasswordReset(false)
@@ -167,11 +178,8 @@ export default function ResetPassword() {
                 </button>
               </div>
             </form>
-            {isPasswordReset && (
-              <div className="mt-5 flex justify-center">
-                <p className="text-green-500">Password reset successful!</p>
-              </div>
-            )}
+            
+            
             <div className="mt-5 flex justify-end">
               <div className="flex gap-2">
                 <div className="text-xl font-medium text-[#767676]">

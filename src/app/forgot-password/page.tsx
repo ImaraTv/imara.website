@@ -42,7 +42,7 @@ export default function ForgotPassword() {
       // Show a success message using SweetAlert
       Swal.fire({
         title: 'Reset password link sent Successfully',
-        text: 'Contiune to reset your password.',
+        text: 'Contiune to login.',
         icon: 'success',
         confirmButtonText: 'OK',
       }).then(() => {

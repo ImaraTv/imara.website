@@ -20,6 +20,8 @@ import VimeoPlayer from '@/components/VimeoPlayer'
 import Rating from '@/components/Rating'
 import ReactPlayer from 'react-player';
 import { useParams, useSearchParams } from 'next/navigation';
+import SaveButton from '@/components/SaveButton'
+import ShareButton from '@/components/ShareButton'
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
@@ -157,42 +159,13 @@ const VideoDetailsPage = () => {
         {/* Buttons */}
         <Container>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-5">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-6 py-2.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              Auto Play
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-6 py-2.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <CloudArrowDownIcon
-                className="-ml-0.5 h-5 w-5 text-[#F2970F]"
-                aria-hidden="true"
-              />
-              Download
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-6 py-2.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <PlusIcon
-                className="-ml-0.5 h-5 w-5 text-[#F2970F]"
-                aria-hidden="true"
-              />
-              Save
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-6 py-2.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <ShareIcon
-                className="-ml-0.5 h-5 w-5 text-[#F2970F]"
-                aria-hidden="true"
-              />
-              Share
-            </button>
+          {videoDetails && (
+            <SaveButton videoId={videoDetails.id} />
+          )}
+
+          {videoDetails && (
+            <ShareButton videoId={videoDetails.id} />
+          )}
           </div>
         </Container>
 
