@@ -1,3 +1,4 @@
+// src\app\verify-email\page.tsx
 import VerifyEmail from '@/components/EmailVerification'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'

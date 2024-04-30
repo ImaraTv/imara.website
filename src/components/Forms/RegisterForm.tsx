@@ -1,3 +1,4 @@
+// \src\components\Forms\RegisterForm.tsx
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -8,6 +9,7 @@ type FormData = {
     email: string
     password: string
     password_confirmation: string
+    url: string
 }
 
 const RegisterForm = () => {
@@ -25,7 +27,10 @@ const RegisterForm = () => {
                 'https://dashboard.imara.tv/api/auth/register',
                 {
                     ...data,
-                    url: 'https://dashboard.imara.tv/api/auth/verify', // Include the url field
+                    url: 'https://test.imara.tv/email-verified',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
             // Handle successful registration
@@ -62,7 +67,7 @@ const RegisterForm = () => {
                             type="text"
                             placeholder="User name"
                             autoComplete="given-name"
-                            className="block w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block just w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             {...register('name', { required: true })}
                         />
                         {errors.name && (
