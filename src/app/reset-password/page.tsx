@@ -161,10 +161,9 @@ export default function ResetPassword() {
               <div className="mt-10 flex justify-end">
                 <button
                   type="submit"
-                  disabled={isLoading}
                   className="w-1/2 rounded-md bg-[#007BFF] px-10 py-4 text-center text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
                 >
-                  {isLoading ? 'Loading...' : 'Reset Password'}
+                  Reset Password
                 </button>
               </div>
             </form>
