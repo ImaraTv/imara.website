@@ -1,9 +1,15 @@
 // src\app\email-verified\page.tsx
+'use client'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import Link from "next/link"
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const EmailVerified = () => {
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token'); // Access the token query parameter
+  const email = searchParams.get('email'); // Access the email query parameter
+
   return (
     <>
       <Header />
