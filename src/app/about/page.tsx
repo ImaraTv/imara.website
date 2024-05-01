@@ -20,11 +20,12 @@ import logo7 from '@/images/partners/actionaid.png'
 import logo8 from '@/images/partners/crowdsourseafrica.jpg'
 import logo from '@/images/logos/logo.png'
 
-import CEO from '@/images/members/maina.png'
+import CEO from '@/images/members/steve.jpg'
 import CTO from '@/images/members/fred.png'
 import Emmah from '@/images/members/emmah.jpg'
 import Founder from '@/images/members/founder.jpg'
 import Fred from '@/images/members/fred.jpeg'
+import Mercy from '@/images/members/cfo.jpg'
 
 import Image from 'next/image'
 import { StaticImageData } from 'next/image'
@@ -86,7 +87,7 @@ const files: File[] = [
     name: 'Mercy Ngethe',
     role: 'Chief Finance Officer',
     description: '',
-    imageUrl: logo,
+    imageUrl: Mercy,
   },
 ]
 
