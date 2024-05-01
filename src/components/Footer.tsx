@@ -70,7 +70,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-0 sm:pt-24 lg:px-8 lg:pt-10">
         <div className="mt-[35px] sm:mt-16 lg:mt-20 lg:flex lg:items-center lg:justify-between">
           <div className="flex flex-col items-center gap-[35px] md:flex-row">
-            <div className="flex flex-row-reverse gap-[35px] sm:flex-row lg:flex-row">
+            <div className="flex flex-col gap-[35px] sm:flex-row lg:flex-row">
               <div className="text-lg font-semibold leading-6 text-white">
                 <Link href={''}>Home</Link>
               </div>
