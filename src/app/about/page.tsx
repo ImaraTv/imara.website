@@ -165,7 +165,7 @@ export default function About() {
           <Image
             src={Image3}
             alt={'chane'}
-            className="absolute right-1/4 top-0 -z-10 hidden h-auto w-[704px] origin-top-right sm:-mr-80 md:block lg:-mr-96"
+            className="absolute top-0 -z-10 hidden h-auto w-[704px] origin-top-right md:block right-0"
           />
           <div className="mx-[16px] max-w-[1440px] md:mx-[47px]">
             <div className="mx-auto max-w-2xl pt-40 lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
