@@ -534,8 +534,7 @@ const VideoDetailsPage = () => {
             How did you find this film?
           </h1>
           <p className="py-8 text-[14px] leading-[34px] text-[#525252] md:text-[18px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod <br /> tempor incididunt ut labore et dolore magna aliqua.
+            Rate this film to help us create better films for you.
           </p>
 
           <div className="flex flex-col items-center justify-center py-2">
