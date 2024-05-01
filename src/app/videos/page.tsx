@@ -235,6 +235,7 @@ export default function Videos() {
                   </div>
                 </div>
               </div>
+              <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'>
               {categories.map((category, index) => (
                 <button
                   type="button"
@@ -249,6 +250,8 @@ export default function Videos() {
                   {category.name}
                 </button>
               ))}
+              </div>
+
             </div>
             <div className='flex'>
               <div className="">
