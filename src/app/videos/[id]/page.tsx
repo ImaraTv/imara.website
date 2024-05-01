@@ -542,16 +542,10 @@ const VideoDetailsPage = () => {
             {videoDetails && (
               <Rating
                 videoId={videoDetails.id}
-                initialRating={videoDetails.rating || 0}
+                initialRating={videoDetails.stars || 0}
               />
             )}
           </div>
-          <button
-            type="button"
-            className="mt-5 rounded-md bg-[#007BFF] px-8 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Submit
-          </button>
         </div>
       </main>
       <Footer />
