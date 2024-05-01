@@ -112,7 +112,7 @@ export default function Actors() {
                 </p>
                 <div className="mt-10 flex items-center gap-x-6">
                   <a
-                    href="/watch"
+                    href="/videos"
                     className="rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                   >
                     Watch our videos
