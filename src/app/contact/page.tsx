@@ -4,7 +4,7 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
-import Banner from "@/images/contact.png"
+import Banner from "@/images/9.jpg"
 import Image from "next/image"
 import { sendEmail } from "../../../utils/sendgrid"
 import { useState } from 'react';
@@ -159,7 +159,7 @@ export default function Contact() {
                 <Newsletter />
 
                 <div className="bg-[#89CFF1] h-[193px] py-4 md:py-10 px-4 text-center flex items-center justify-center">
-                    <p className='text-sm md:text-xl leading-[36px] md:leading-[46px]'>Visit us at The Nailab Accelerator, 4th Floor, Bishop Magua Center, <br /> Ngong Road, Nairobi, Kenya, Africa</p>
+                    <p className='text-sm md:text-xl leading-[36px] md:leading-[46px]'>Visit us at the Nailab, Kidato Campus - Kabarsiran, <br /> Musa Gitau Rd, Nairobi Kenya, Africa</p>
                 </div>
 
             </main>
