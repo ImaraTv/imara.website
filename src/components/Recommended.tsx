@@ -118,7 +118,7 @@ export function Recommended() {
   >([])
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
-  const numCards = 3;
+  const numCards = 4;
   const numCards2 = 3;
   let [isOpen, setIsOpen] = useState(false)
 

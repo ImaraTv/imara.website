@@ -111,7 +111,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image}
                   alt="avatar"
-                  className="w-full rounded-[3px] object-cover sm:w-full md:h-auto"
+                  className="w-[194px] rounded-[3px] object-cover sm:w-full md:h-auto"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}
@@ -119,7 +119,7 @@ export function ActorsHero() {
               </div>
             ))}
           </div>
-          <div className="mt-[34px] flex h-60 items-stretch gap-[14px] md:mt-[66px] md:gap-[56px]">
+          <div className="mt-[34px] flex h-60 items-stretch gap-[14px] md:mt-[96px] md:gap-[56px]">
             {creators.slice(2).map((creator, index) => (
               <div
                 key={creator.id}
@@ -132,7 +132,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image}
                   alt="avatar"
-                  className="w-[194px] rounded-[3px] object-cover md:h-auto"
+                  className="w-[194px] rounded-[3px] object-cover sm:w-full md:h-auto"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}

@@ -67,7 +67,9 @@ export function CarouselHome(props: any) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos', { cache: 'force-cache' })
+        const response = await fetch('https://dashboard.imara.tv/api/videos', {
+          cache: 'force-cache',
+        })
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
@@ -95,14 +97,14 @@ export function CarouselHome(props: any) {
               </div>
             </div>
           </div>
-          <div className="px-12 py-4 w-1/2">
-        <div className="h-4 bg-gray-600 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
-        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 mb-2.5"></div>
-        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
-        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
-        <div className="h-2 bg-gray-600 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
-    </div>
+          <div className="w-1/2 px-12 py-4">
+            <div className="mb-4 h-4 w-48 rounded-full bg-gray-600 dark:bg-gray-700"></div>
+            <div className="mb-2.5 h-2 max-w-[480px] rounded-full bg-gray-600 dark:bg-gray-700"></div>
+            <div className="mb-2.5 h-2 rounded-full bg-gray-600 dark:bg-gray-700"></div>
+            <div className="mb-2.5 h-2 max-w-[440px] rounded-full bg-gray-600 dark:bg-gray-700"></div>
+            <div className="mb-2.5 h-2 max-w-[460px] rounded-full bg-gray-600 dark:bg-gray-700"></div>
+            <div className="h-2 max-w-[360px] rounded-full bg-gray-600 dark:bg-gray-700"></div>
+          </div>
         </div>
       ) : (
         <Swiper
