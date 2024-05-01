@@ -5,50 +5,20 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Container } from '@/components/Container'
-import { Newsletter } from '@/components/Newsletter'
-import Youtube from "@/images/youtube.png"
-import Banner from "@/images/carousel.png"
-import VideoBanner from "@/images/video.png"
+import Rating from '@/components/Rating'
 import Image from "next/image"
 import Link from 'next/link'
-import { CheckCircleIcon } from '@heroicons/react/20/solid'
-import { CloudArrowDownIcon } from "@heroicons/react/24/solid";
-import { PlusIcon } from "@heroicons/react/24/solid";
-import { ShareIcon } from "@heroicons/react/24/solid";
-import { StarIcon } from "@heroicons/react/24/solid";
+
 import Yt from "@/images/player.png"
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Button } from '@/components/Button'
 import { url } from 'inspector';
-import Rating from '@/components/Rating'
 
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029'
 };
 
-// const categories = [
-//   {
-//     id: 1,
-//     name: "Continue Watching",
-//     url: "/continue-watching",
-//   },
-//   {
-//     id: 2,
-//     name: "Saved Films",
-//     url: "/saved"
-//   },
-//   {
-//     id: 3,
-//     name: "Edit profile ",
-//     url: "/profile-edit"
-//   },
-//   {
-//     id: 4,
-//     name: "All settings",
-//     url: "#"
-//   },
-// ]
 
 const dates = [
   {
@@ -80,44 +50,7 @@ const qualities = [
   { id: 4, name: 'Standard', unavailable: true },
   { id: 5, name: 'Low', unavailable: false },
 ]
-const suggestions = [
-  {
-    id: 1,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 2,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 3,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 4,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 5,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
 
-]
 
 interface File {
   id: number
@@ -128,6 +61,7 @@ interface File {
   image: string
   creator: string
   rating: number | null
+  stars: number
   // Other properties
 }
 
@@ -152,6 +86,7 @@ export default function Videos() {
       image: string
       creator: string
       rating: number
+      stars: number
     }[]
   >([])
   const [searchQuery, setSearchQuery] = useState('');
@@ -259,6 +194,7 @@ export default function Videos() {
       setSearchResults([]);
     }
   }, [searchQuery]);
+  const numCards = 4
 
   return (
     <>
@@ -426,21 +362,48 @@ export default function Videos() {
 
           <div className='flex flex-col md:flex-row justify-between mt-[90px]'>
           {isLoading ? (
-              <div className="mx-auto w-full max-w-sm rounded-md">
-                <div className="flex animate-pulse flex-col space-x-4">
-                  <div className="aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"></div>
-                  <div className="flex-1 space-y-6 py-1">
-                    <div className="mt-[18px] h-2 rounded bg-slate-700"></div>
-                    <div className="space-y-3">
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="col-span-2 h-2 rounded bg-slate-700"></div>
-                        <div className="col-span-1 h-2 rounded bg-slate-700"></div>
-                      </div>
-                      <div className="h-2 rounded bg-slate-700"></div>
+              <div className="flex gap-4">
+              {Array.from({ length: numCards }, (_, index) => (
+                <div
+                  key={index}
+                  role="status"
+                  className="max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
+                >
+                  <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
+                    <svg
+                      className="h-10 w-10 text-gray-200 dark:text-gray-600"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 16 20"
+                    >
+                      <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
+                      <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+                    </svg>
+                  </div>
+                  <div className="mb-4 h-2.5 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mb-2.5 h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mb-2.5 h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mt-4 flex items-center">
+                    <svg
+                      className="me-3 h-10 w-10 text-gray-200 dark:text-gray-700"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+                    </svg>
+                    <div>
+                      <div className="mb-2 h-2.5 w-32 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                      <div className="h-2 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
                     </div>
                   </div>
+                  <span className="sr-only">Loading...</span>
                 </div>
-              </div>
+              ))}
+            </div>
             ) : (
             <div>
               <ul role="list"
@@ -466,7 +429,7 @@ export default function Videos() {
                     <div className="mt-2 flex items-center gap-3">
                     <Rating
         videoId={video.id}
-        initialRating={video.rating || 0}
+        initialRating={video.stars || 0}
       />
                       <div className='text-gray-500 italic text-sm'>{video.creator}</div>
                     </div>

@@ -9,46 +9,6 @@ import Image from "next/image"
 import { sendEmail } from "../../../utils/sendgrid"
 import { useState } from 'react';
 
-
-const values = [
-    {
-        name: 'Mission',
-        role: 'Senior Designer',
-        imageUrl:
-            'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-        bio: 'To enable the Kenyan youth get easy and safe access to information and resources on Health',
-    },
-    {
-        name: 'Vision',
-        role: 'Senior Designer',
-        imageUrl:
-            'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-        bio: 'To create celebrity stars who are positive social media influencers and role models to promote good behavior and attitude change towards health among the youth and general public.',
-    },
-    // More values...
-]
-
-const people = [
-    {
-        name: 'Stephen Maina',
-        role: 'CEO',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        name: 'Fred Onyango',
-        role: 'CTO',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        name: 'Duncan M',
-        role: 'Content Lead',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-]
-
 export default function Contact() {
     const [formData, setFormData] = useState({
         'name': '',
@@ -94,7 +54,7 @@ export default function Contact() {
                     <div className="relative sm:overflow-hidden h-[546px]">
                         <div className="absolute inset-0">
                             <Image
-                                className="h-full w-[full] object-cover"
+                                className="h-full w-full object-cover"
                                 src={Banner}
                                 alt={"contact"}
                                 width={1440}
