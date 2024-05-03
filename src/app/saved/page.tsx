@@ -638,7 +638,7 @@ export default function Saved() {
 
                         <div className="mt-9">
                           <Link
-                            href={`/videos/${selectedFile && selectedFile.name}`}
+                            href={`/videos/${selectedFile && encodeURIComponent(selectedFile.name.toLowerCase().replace(/\s+/g, '-'))}`}
                             className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           >
                             Watch Now
