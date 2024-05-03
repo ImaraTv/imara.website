@@ -196,7 +196,7 @@ export function Header() {
           </div>
 
           <div className="md:hidden">
-            <Link href="#" aria-label="Home">
+            <Link href="/" aria-label="Home">
               <Image
                 src={MobileLogo}
                 width={150}
@@ -207,7 +207,7 @@ export function Header() {
           </div>
 
           <div className="hidden md:flex items-center md:gap-x-12">
-            <Link href="#" aria-label="Home">
+            <Link href="/" aria-label="Home">
               <Image
                 src={Logo2}
                 width={200}

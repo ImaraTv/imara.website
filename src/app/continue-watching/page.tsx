@@ -296,7 +296,7 @@ export default function ContinueWatching() {
                 </div>
 
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-                  <a href={`/videos/${post.id}`}>
+                  <a href={`/videos/${post.name}`}>
                     <span className="absolute inset-0" />
                     {post.name}
                   </a>
@@ -396,7 +396,7 @@ export default function ContinueWatching() {
                           </div>
 
                           <div className="mt-9">
-                            <Link href={`/videos/${selectedFile && selectedFile.id}`}
+                            <Link href={`/videos/${selectedFile && selectedFile.name}`}
                               className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                             >
                               Watch Now

@@ -220,7 +220,7 @@ export function Trending() {
                 />
 
                 <h3 className="mt-3 text-[18px] font-semibold text-white md:text-[26px]">
-                  <a href={`/videos/${item.id}`}>
+                  <a href={`/videos/${item.name}`}>
                     <span className="absolute inset-0" />
                     {item.name}
                   </a>

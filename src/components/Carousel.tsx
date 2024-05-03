@@ -155,7 +155,7 @@ export function CarouselHome(props: any) {
 
                   <div className="mt-[43px] flex gap-10">
                     <Link
-                      href={`/videos/${item.id}`}
+                      href={`/videos/${item.name}`}
                       className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-2 py-2 text-[12px] font-medium text-white focus:outline-none md:px-10 md:text-[17px]"
                     >
                       Watch Now

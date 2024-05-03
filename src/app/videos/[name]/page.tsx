@@ -55,7 +55,9 @@ interface Video {
   stars: number
 }
 
-const VideoDetailsPage = () => {
+const VideoDetails = ({ params }: { params: { name: string } }) => {
+  const { name } = params;
+  const { videoName } = useParams<{ videoName: string }>(); // Get videoName from URL params
   const [videoDetails, setVideoDetails] = useState<Video | null>(null)
   const { id } = useParams()
   const [videoUrl, setVideoUrl] = useState('')
@@ -63,46 +65,72 @@ const VideoDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [videos, setVideos] = useState<
-    {
-      id: number
-      name: string
-      duration: number
-      category: string
-      description: string
-      vimeo_link: string
-      call_to_action: string
-      call_to_action_link: string
-      image: string
-      creator: string
-      rating: number
-      stars: number
-    }[]
-  >([])
+  const [videos, setVideos] = useState<Video[]>([])
   const numCards = 4
 
   useEffect(() => {
-    const fetchVideoDetails = async () => {
+    const fetchVideos = async () => {
       try {
-        const response = await fetch(
-          `https://dashboard.imara.tv/api/videos/${id}`,
-        )
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
-        const video = data.data[0]
-        const vimeoVideoId = video.vimeo_link?.split('/').pop()
-        setVideoUrl(
-          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`,
-        )
-        setVideoDetails(video)
+        setVideos(data.data)
         setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching video details:', error)
+        console.error('Error fetching videos:', error)
         setIsLoading(false)
       }
     }
 
-    fetchVideoDetails()
-  }, [id])
+    fetchVideos()
+  }, [])
+
+  // useEffect(() => {
+  //   console.log('videos:', videos);
+  //   if (videos.length > 0 && videoName) {
+  //     console.log('Searching for video with name:', videoName);
+  //     const foundVideo = videos.find((video) => video.name === videoName);
+  //     console.log('Found video:', foundVideo);
+      
+  //     if (foundVideo) {
+  //       const vimeoVideoId = foundVideo.vimeo_link?.split('/').pop();
+  //       setVideoUrl(
+  //         `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`
+  //       );
+  //       setVideoDetails(foundVideo);
+  //       setIsLoading(false);
+  //     } else {
+  //       console.error(`Video with name ${videoName} not found`);
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // }, [videos, videoName]);
+
+  useEffect(() => {
+    const fetchVideoDetails = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/videos');
+        const data = await response.json();
+        const videos = data.data;
+
+        const decodedName = decodeURIComponent(name);
+
+    const video = videos.find((v: Video) => v.name.toLowerCase().replace(/\s+/g, '-') === decodedName);
+
+        const vimeoVideoId = video.vimeo_link?.split('/').pop();
+        setVideoUrl(
+          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`,
+        )
+
+        setVideoDetails({ ...video });
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching video details:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchVideoDetails();
+  }, [name]);
 
   const openModal = (file: File) => {
     setSelectedFile(file)
@@ -122,20 +150,11 @@ const VideoDetailsPage = () => {
   }, [])
 
   useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
-        const data = await response.json()
-        setVideos(data.data)
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-        setIsLoading(false)
-      }
-    }
+    console.log('videoDetails:', videoDetails);
+    console.log('isLoading:', isLoading);
+  }, [videoDetails, isLoading]);
 
-    fetchVideos()
-  }, [])
+  
 
   return (
     <>
@@ -508,7 +527,7 @@ const VideoDetailsPage = () => {
 
                         <div className="mt-9">
                           <Link
-                            href={`/videos/${selectedFile && selectedFile.id}`}
+                            href={`/videos/${selectedFile && selectedFile.name}`}
                             className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           >
                             Watch Now
@@ -552,4 +571,4 @@ const VideoDetailsPage = () => {
   )
 }
 
-export default VideoDetailsPage
+export default VideoDetails
