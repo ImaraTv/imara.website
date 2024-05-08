@@ -404,121 +404,56 @@ export function Recommended() {
               >
                 {videos.map((video) => (
                   <li key={video.id} className="relative">
-                    <div
-                      onClick={() => openModal(video)}
-                      className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                    >
-                      <Image
-                        src={video.image}
-                        alt=""
-                        width={168}
-                        height={97}
-                        className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                      />
-                      <Image
-                        className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
-                        width={50}
-                        height={43}
-                        src={Yt}
-                        alt={'ÿt'}
-                      />
-                    </div>
-                    <div className="mt-[18px] flex gap-3 md:mt-5">
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                    <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}>
+
+                      <div
+                        onClick={() => openModal(video)}
+                        className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
                       >
-                        {video.duration} min
-                      </button>
-                      <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                        {video.category}
-                      </p>
-                    </div>
-
-                    <div className="mt-2 flex items-center gap-3">
-                    <Rating
-        videoId={video.id}
-        initialRating={video.stars || 0}
-      />
-                      <div className="text-sm italic text-gray-500">
-                        {video.creator}
+                        <Image
+                          src={video.image}
+                          alt=""
+                          width={168}
+                          height={97}
+                          className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
+                        />
+                        <Image
+                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                          width={50}
+                          height={43}
+                          src={Yt}
+                          alt={'ÿt'}
+                        />
                       </div>
-                    </div>
+                      <div className="mt-[18px] flex gap-3 md:mt-5">
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                        >
+                          {video.duration} min
+                        </button>
+                        <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
+                          {video.category}
+                        </p>
+                      </div>
 
-                    <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                      {video.name}
-                    </p>
+                      <div className="mt-2 flex items-center gap-3">
+                        <Rating
+                          videoId={video.id}
+                          initialRating={video.stars || 0}
+                        />
+                        <div className="text-sm italic text-gray-500">
+                          {video.creator}
+                        </div>
+                      </div>
+
+                      <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                        {video.name}
+                      </p>
+                    </Link>
                   </li>
                 ))}
               </ul>
-              <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="fixed inset-0 bg-black/25" />
-                  </Transition.Child>
-
-                  <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
-                      <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                      >
-                        <Dialog.Panel className="h-auto w-[342px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                          <Dialog.Title
-                            as="h3"
-                            className="text-[19px] font-bold text-[#525252]"
-                          >
-                            {selectedFile && selectedFile.name}
-                          </Dialog.Title>
-                          <div className="mt-5 flex items-center gap-7">
-                            <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
-                              HD
-                            </button>
-                            <div className="text-[15px] font-medium text-[#525252]">
-                              {selectedFile && selectedFile.duration} min
-                            </div>
-                          </div>
-                          <div className="mb-[27px] mt-[55px] flex items-center gap-1">
-                            <div className="text-[20px] font-bold text-[#525252]">
-                              Category:
-                            </div>
-                            <div className="text-[17px] font-medium text-[#525252]">
-                              {selectedFile && selectedFile.category}
-                            </div>
-                          </div>
-                          <div className="mt-2">
-                            <p className="text-[15px] text-[#525252]">
-                              {selectedFile && selectedFile.description}
-                            </p>
-                          </div>
-
-                          <div className="mt-9">
-                            <Link
-                              href={`/videos/${selectedFile && encodeURIComponent(selectedFile.name.toLowerCase().replace(/\s+/g, '-'))}`}
-                              className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            >
-                              Watch Now
-                            </Link>
-                          </div>
-                        </Dialog.Panel>
-                      </Transition.Child>
-                    </div>
-                  </div>
-                </Dialog>
-              </Transition>
 
               <Container>
                 <div className="mb-[60px] flex items-center justify-end space-x-2 text-[#F2970F] md:hidden">
@@ -562,23 +497,28 @@ export function Recommended() {
                     {videos.map((video) => (
                       <li
                         key={video.id}
-                        className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10"
+                        
                       >
-                        <Image
-                          width={131}
-                          height={118}
-                          className="w-[131px] rounded-l-2xl object-cover"
-                          src={video.image}
-                          alt=""
-                        />
-                        <div className="max-w-xl flex-auto space-y-[26px]">
-                          <p className="text-[17px] font-medium text-[#525252]">
-                            {video.category}
-                          </p>
-                          <h3 className="text-[19px] font-bold text-[#525252]">
-                            {video.name}
-                          </h3>
-                        </div>
+                        <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`} className='group'>
+<div className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10">
+
+                          <Image
+                            width={131}
+                            height={118}
+                            className="w-[131px] rounded-l-2xl object-cover"
+                            src={video.image}
+                            alt=""
+                          />
+                          <div className="max-w-xl flex-auto space-y-[26px]">
+                            <p className="text-[17px] font-medium text-[#525252]">
+                              {video.category}
+                            </p>
+                            <h3 className="text-[19px] font-bold text-[#525252]">
+                              {video.name}
+                            </h3>
+                          </div>
+</div>
+                        </Link>
                       </li>
                     ))}
                   </ul>
