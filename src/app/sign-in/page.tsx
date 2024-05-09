@@ -38,7 +38,7 @@ export default function SignIn() {
                                         <span className="block text-white">Welcome back, pick right from where you left!!</span>
                                     </h1>
                                     <p className="mt-8 text-sm md:text-lg text-white">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
+                                        Save a film to your personal playlist and share our films with your friends.
                                     </p>
                                 </div>
                             </div>
