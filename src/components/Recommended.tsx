@@ -145,7 +145,7 @@ export function Recommended() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://dashboard.imara.tv/api/categories',
+          'https://imara.tv/admin/api/categories',
         )
         const data = await response.json()
         setCategories(data.data)
@@ -161,7 +161,7 @@ export function Recommended() {
   useEffect(() => {
     const fetchAllVideos = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos');
+        const response = await fetch('https://imara.tv/admin/api/videos');
         const data = await response.json();
         setVideos(data.data);
         setIsLoading(false);
@@ -175,7 +175,7 @@ export function Recommended() {
       setIsLoading(true);
       try {
         const query = selectedCategory ? `?category=${selectedCategory}` : '';
-        const response = await fetch(`https://dashboard.imara.tv/api/videos${query}`);
+        const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
         const data = await response.json();
         setVideos(data.data);
         setIsLoading(false);
@@ -192,7 +192,7 @@ export function Recommended() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName);
     setIsLoading(true);
-    fetch(`https://dashboard.imara.tv/api/videos?category=${categoryName}`)
+    fetch(`https://imara.tv/admin/api/videos?category=${categoryName}`)
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data);

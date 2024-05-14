@@ -24,10 +24,10 @@ const RegisterForm = () => {
     const onSubmit = async (data: any) => {
         try {
             const response = await axios.post(
-                'https://dashboard.imara.tv/api/auth/register',
+                'https://imara.tv/admin/api/auth/register',
                 {
                     ...data,
-                    url: 'https://test.imara.tv/email-verified',
+                    url: 'https://imara.tv/email-verified',
                     headers: {
                         'Content-Type': 'application/json',
                     },

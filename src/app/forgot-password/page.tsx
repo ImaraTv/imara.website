@@ -30,10 +30,10 @@ export default function ForgotPassword() {
   const onSubmit = async (data: any) => {
     try {
       const response = await axios.post(
-        'https://dashboard.imara.tv/api/auth/forgot-password',
+        'https://imara.tv/admin/api/auth/forgot-password',
         {
           ...data,
-          url: 'https://test.imara.tv/reset-password',
+          url: 'https://imara.tv/reset-password',
         },
       )
       // Handle successful registration

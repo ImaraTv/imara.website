@@ -70,20 +70,20 @@ const ShareButton: React.FC<ShareButtonProps> = ({ videoId }) => {
                   </Dialog.Title>
                   <div className="mt-2 flex gap-2">
                     <FacebookShareButton
-                      url={`https://test.imara.tv/videos/${videoId}`}
+                      url={`https://imara.tv/videos/${videoId}`}
                       quote={'ImaraTV videos are fun.'}
                       hashtag={'#imaratv'}
                     >
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
                     <TwitterShareButton
-                      url={`https://test.imara.tv/videos/${videoId}`}
+                      url={`https://imara.tv/videos/${videoId}`}
                       title={'ImaraTV videos are fun.'}
                     >
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
                     <EmailShareButton
-                      url={`https://test.imara.tv/videos/${videoId}`}
+                      url={`https://imara.tv/videos/${videoId}`}
                       subject={'ImaraTV videos are fun.'}
                       body="body"
                     >

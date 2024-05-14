@@ -85,7 +85,7 @@ export default function Watch() {
   const { id } = useParams()
 
   const fetchVideo = async () => {
-    const response = await fetch('https://dashboard.imara.tv/api/videos/1');
+    const response = await fetch('https://imara.tv/admin/api/videos/1');
     const data = await response.json();
     const video = data.data[0];
     const videoId = video.vimeo_link.split('/').pop();
@@ -122,7 +122,7 @@ export default function Watch() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const response = await fetch('https://imara.tv/admin/api/videos')
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
