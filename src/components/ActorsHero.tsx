@@ -99,7 +99,7 @@ export function ActorsHero() {
       ) : (
         <div>
 
-          <div className="flex h-60 items-stretch gap-[14px] md:gap-[56px]">
+          <div className="flex h-auto items-stretch gap-[14px] md:gap-[56px]">
             {creators.slice(0, 2).map((creator, index) => (
               <div
                 key={creator.id}
@@ -112,7 +112,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image || defaultImage}
                   alt="avatar"
-                  className="w-[194px] rounded-[3px] object-cover sm:w-full md:h-auto"
+                  className="w-[194px] h-[120px] rounded-[3px] sm:w-full md:h-auto"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}
@@ -120,8 +120,8 @@ export function ActorsHero() {
               </div>
             ))}
           </div>
-          <div className="mt-[34px] flex h-60 items-stretch gap-[14px] md:mt-[96px] md:gap-[56px]">
-            {creators.slice(2).map((creator, index) => (
+          <div className="mt-[34px] flex h-auto items-stretch gap-[14px] md:mt-[96px] md:gap-[56px]">
+            {creators.slice(2, 4).map((creator, index) => (
               <div
                 key={creator.id}
                 className={`flex flex-col ${
@@ -133,7 +133,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image || defaultImage}
                   alt="avatar"
-                  className="w-[194px] rounded-[3px] object-cover sm:w-full md:h-auto"
+                  className="w-[194px] h-[120px] rounded-[3px] sm:w-full md:h-auto"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}
