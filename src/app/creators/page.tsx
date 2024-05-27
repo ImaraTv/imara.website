@@ -13,6 +13,7 @@ import Faith from '@/images/actors/faith.png'
 import Sunnah from '@/images/actors/sunnah.png'
 import Byron from '@/images/actors/byron.png'
 import Rama from '@/images/actors/rama.png'
+import defaultImage from '@/images/default.jpg'
 
 import Image from 'next/image'
 import { Newsletter } from '@/components/Newsletter'
@@ -159,10 +160,12 @@ export default function Actors() {
                     className="rounded-[5px] pb-10"
                     style={cardStyle}
                   >
-                    <img
+                    <Image
                       className="h-48 w-full rounded-t-[5px] object-cover shadow-xl md:h-56"
-                      src={creator.image}
+                      src={creator.image || defaultImage}
                       alt=""
+                      width={192}
+                      height={192}
                     />
                     <h3 className="mt-6 px-8 text-xl font-bold tracking-tight text-[#474747] md:text-2xl">
                       {creator.name}

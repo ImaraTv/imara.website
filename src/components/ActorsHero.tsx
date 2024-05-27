@@ -17,6 +17,7 @@ import Actor2 from '@/images/actors/moses.png'
 import Actor3 from '@/images/actors/wambui.png'
 import Actor4 from '@/images/actors/ruth.png'
 import Actor from '@/images/actor.png'
+import defaultImage from '@/images/default.jpg'
 
 export function ActorsHero() {
   const [creators, setCreators] = useState<
@@ -109,7 +110,7 @@ export function ActorsHero() {
                 <Image
                   width={194}
                   height={120}
-                  src={creator.image}
+                  src={creator.image || defaultImage}
                   alt="avatar"
                   className="w-[194px] rounded-[3px] object-cover sm:w-full md:h-auto"
                 />
@@ -130,7 +131,7 @@ export function ActorsHero() {
                 <Image
                   width={194}
                   height={120}
-                  src={creator.image}
+                  src={creator.image || defaultImage}
                   alt="avatar"
                   className="w-[194px] rounded-[3px] object-cover sm:w-full md:h-auto"
                 />

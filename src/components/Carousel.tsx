@@ -12,6 +12,7 @@ import 'swiper/css/navigation'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
 import { css } from '@emotion/react'
 import Slide1 from '@/images/carousel.png'
+import defaultImage from '@/images/default.jpg'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import BookmarkButton from '@/components/BookmarkButton'
@@ -124,7 +125,7 @@ export function CarouselHome(props: any) {
             {videos.map((item) => (
               <SwiperSlide key={item.id}>
                 <Image
-                  src={item.image}
+                  src={item.image || defaultImage}
                   width={1440}
                   height={560}
                   className={`absolute inset-0 -z-10 h-full w-full object-cover ${carouselStyle.imageStyles}`}
