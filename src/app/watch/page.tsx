@@ -21,6 +21,13 @@ import Rating from '@/components/Rating'
 import ReactPlayer from 'react-player';
 import { useParams, useSearchParams } from 'next/navigation';
 
+const MyComponent = () => {
+    const [isDialogOpen, setIsDialogOpen] = useState(true);
+}
+const handleWatchNow = () => {
+    setIsDialogOpen(false);
+};
+
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
 }
@@ -487,6 +494,7 @@ export default function Watch() {
                           <Link
                             href="/watch"
                             className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            onClick={handleWatchNow}
                           >
                             Watch Now
                           </Link>
