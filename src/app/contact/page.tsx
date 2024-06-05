@@ -72,7 +72,7 @@ export default function Contact() {
                                         <span className="block text-white">today</span>
                                     </h1>
                                     <p className="mx-auto mt-8 max-w-lg text-xl md:text-3xl text-white sm:max-w-3xl">
-                                        Call : +254780674252
+                                        Call : +254726489473
                                     </p>
                                 </div>
                             </div>

@@ -259,7 +259,7 @@ export function Header() {
             </div>
             <Button href="https://imara.tv/admin/register?r=creator" color="blue" className="hidden md:flex">
               <span>
-                Create on Imara
+                Create a Film
               </span>
             </Button>
             {!isLoggedIn() && (
