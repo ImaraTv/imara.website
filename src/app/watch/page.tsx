@@ -22,10 +22,11 @@ import ReactPlayer from 'react-player';
 import { useParams, useSearchParams } from 'next/navigation';
 
 const MyComponent = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(true);}
+    const [isDialogOpen, setIsDialogOpen] = useState(true);
+}
 const handleWatchNow = () => {
     setIsDialogOpen(false);
-  };
+};
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
