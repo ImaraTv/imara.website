@@ -1,7 +1,6 @@
 "use client"
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
@@ -54,6 +53,15 @@ export default function SignUp() {
                         </div>
 
                         <RegisterForm />
+                        <div className="mt-4">
+                            <input type="checkbox" id="terms" name="terms" className="mr-2" />
+                            <label htmlFor="terms" className="text-gray-700">
+                                I have read and accept the{' '}
+                                <Link href="https://imara.tv/terms-of-use" target="_blank" className="text-blue-500 underline">
+                                    terms and conditions
+                                </Link>
+                            </label>
+                        </div>
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xs md:text-xl'>Have an account?</div>
