@@ -95,7 +95,9 @@ export default function Videos() {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const openModal = (file: File) => {
     setSelectedFile(file);
@@ -106,6 +108,7 @@ export default function Videos() {
     setIsOpen(false);
     setSelectedFile(null);
   };
+  
 
   useEffect(() => {
     // Reset isOpen state when the component unmounts
@@ -131,35 +134,42 @@ export default function Videos() {
   }, [])
 
   useEffect(() => {
-    const fetchAllVideos = async () => {
-      try {
-        const response = await fetch('https://imara.tv/admin/api/videos');
-        const data = await response.json();
-        setVideos(data.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-        setIsLoading(false);
-      }
-    };
-   
-    const fetchFilteredVideos = async () => {
-      setIsLoading(true);
-      try {
-        const query = selectedCategory ? `?category=${selectedCategory}` : '';
-        const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
-        const data = await response.json();
-        setVideos(data.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-        setIsLoading(false);
-      }
-    };
+  const fetchVideos = async (pageNumber, category) => {
+  try {
+    const query = category ? `?category=${category}&page=${pageNumber}` : `?page=${pageNumber}`;
+    const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
+    const data = await response.json();
+    if (data.data.length === 0) {
+      setHasMore(false);
+    } else {
+      setVideos((prevVideos) => [...prevVideos, ...data.data]);
+    }
+  } catch (error) {
+    console.error('Error fetching videos:', error);
+  }
+};
   
-    fetchAllVideos();
-    fetchFilteredVideos();
-  }, [selectedCategory]);
+  useEffect(() => {
+  fetchVideos(page, selectedCategory);
+}, [page, selectedCategory]);
+
+useEffect(() => {
+  setPage(1);
+  setVideos([]);
+  setHasMore(true);
+  fetchVideos(1, selectedCategory);
+}, [selectedCategory]);
+
+    useEffect(() => {
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore) return;
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, [hasMore]);
+
 
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName);
@@ -469,8 +479,39 @@ export default function Videos() {
             <div className='flex items-center justify-center p-4 bg-[#0000002E] font-semibold text-[15px] text-white'>4</div>
             <div className='flex items-center justify-center p-4 bg-[#0000002E] font-semibold text-[15px] text-white'>5</div>
           </div>
-
-
+          
+          <div className='flex flex-col md:flex-row justify-between mt-[90px]'>
+          {isLoading ? (
+            <div className="flex gap-4">
+              {/* Loading skeletons */}
+            </div>
+          ) : (
+            <div>
+              <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
+                {videos.map((video) => (
+                  <li key={video.id} className="relative">
+                    <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}>
+                      <div className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                        <img src={video.image} alt="" className="pointer-events-none h-full w-full object-cover group-hover:opacity-75" />
+                        <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-auto absolute inset-0 m-auto object-cover' width={150} height={150} src={Yt} alt={"ÿt"} />
+                      </div>
+                      <div className='flex gap-3 mt-[18px] md:mt-5'>
+                        <button type="button" className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 md:px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50">{video.duration} min</button>
+                        <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{video.category}</p>
+                      </div>
+                      <div className="mt-2 flex items-center gap-3">
+                        <Rating videoId={video.id} initialRating={video.stars || 0} />
+                        <div className='text-gray-500 italic text-sm'>{video.creator}</div>
+                      </div>
+                      <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {!hasMore && <p>No more videos to load</p>}
+        </div>
 
         </Container>
 
