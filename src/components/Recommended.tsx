@@ -40,12 +40,12 @@ const dates = [
   },
 ]
 
-const qualities = [
-  { id: 1, name: 'Medium', unavailable: false },
-  { id: 2, name: '4D', unavailable: false },
-  { id: 3, name: 'HD', unavailable: false },
-  { id: 4, name: 'Standard', unavailable: true },
-  { id: 5, name: 'Low', unavailable: false },
+const genres = [
+  { id: 1, name: 'Animation' },
+  { id: 2, name: 'Comedy'  },
+  { id: 3, name: 'Vernacular'  },
+  { id: 4, name: 'Kenyan' },
+  { id: 5, name: 'East African' },
 ]
 
 const suggestions = [
@@ -203,16 +203,27 @@ export function Recommended() {
         setIsLoading(false);
       });
   };
+const filterContainerStyle = {
+  maxWidth: '100%',
+  margin: 'auto',
+  padding: '1rem',
+  boxSizing: 'border-box',
+};
 
+const filterStyle = {
+  overflow: 'auto',
+  maxHeight: '100vh',
+  position: 'relative',
+};
 
   return (
     <>
       <Container>
-        <div className="mt-[53px] justify-between md:flex">
-          <div className="space-y-4 md:flex">
-            <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
+         <div className="mr-[43px] text-center text-[16px] font-bold text-[#2B2B2B] md:text-left md:text-[30px]">
               Recommended
             </div>
+        <div className="mt-[53px] justify-between md:flex">
+          <div className="space-y-4 md:flex">
               {categories.map((category, index) => (
                 <button
                   type="button"
@@ -343,12 +354,17 @@ export function Recommended() {
                 </div>
               </Listbox>
             </div>
+            <div style={filterContainerStyle}>
+                <div style={filterStyle}>
             <Link
               href="#"
               className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-[28px] py-1.5 text-lg font-medium text-white focus:outline-none"
+              
             >
               Filter
             </Link>
+            </div>
+            </div>      
           </div>
         </div>
 
