@@ -41,11 +41,11 @@ const dates = [
 ]
 
 const qualities = [
-  { id: 1, name: 'Medium', unavailable: false },
-  { id: 2, name: '4D', unavailable: false },
-  { id: 3, name: 'HD', unavailable: false },
-  { id: 4, name: 'Standard', unavailable: true },
-  { id: 5, name: 'Low', unavailable: false },
+  { id: 1, name: 'Animation', unavailable: false },
+  { id: 2, name: 'Comedy', unavailable: false },
+  { id: 3, name: 'Podcast', unavailable: false },
+  { id: 4, name: 'Kenyan', unavailable: true },
+  { id: 5, name: 'East African', unavailable: false },
 ]
 
 const suggestions = [
