@@ -17,7 +17,7 @@ import defaultImage from '@/images/default.jpg'
 
 import Image from 'next/image'
 import { Newsletter } from '@/components/Newsletter'
-
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface File {
   name: string
@@ -53,8 +53,9 @@ export default function Actors() {
   let [isOpen, setIsOpen] = useState(false)
   const [creators, setCreators] = useState<{ id: number; name: string; image: string; stage_name: string }[]>([]);
 
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const openModal = (file: File) => {
     setSelectedFile(file)
     setIsOpen(true)
@@ -84,6 +85,29 @@ export default function Actors() {
       setIsOpen(false)
     }
   }, [])
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (!recaptchaToken) {
+    alert("Please complete the reCAPTCHA challenge.");
+    return;
+  }
+
+  const formData = new FormData(e.currentTarget);
+  formData.append('recaptchaToken', recaptchaToken);
+  fetch('https://imara.tv/admin/api/creators', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Form submission successful:', data);
+  })
+  .catch(error => {
+    console.error('Error submitting form:', error);
+  });
+};
+
   return (
     <>
       <Header2 />
@@ -333,6 +357,12 @@ export default function Actors() {
                   </div>
                 </div>
               </div>
+              <div className="mt-6">
+          <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+            onChange={(token) => setRecaptchaToken(token)}
+          />
+        </div>
               <div className="mt-10 flex justify-center md:justify-end">
                 <button
                   type="submit"
