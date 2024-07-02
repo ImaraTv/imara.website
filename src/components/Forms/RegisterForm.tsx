@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import ReCAPTCHA from 'react-google-recaptcha'; 
+import { useState } from 'react';
 
 type FormData = {
     name: string
@@ -21,12 +23,23 @@ const RegisterForm = () => {
         getValues,
     } = useForm<FormData>();
 
+     const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
     const onSubmit = async (data: any) => {
+        if (!recaptchaToken) {
+            Swal.fire({
+                title: 'reCAPTCHA not verified',
+                text: 'Please complete the reCAPTCHA challenge.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
+            return;
+        }
         try {
             const response = await axios.post(
                 'https://imara.tv/admin/api/auth/register',
                 {
-                    ...data,
+                    ...data, recaptchaToken, 
                     url: 'https://imara.tv/email-verified',
                     headers: {
                         'Content-Type': 'application/json',
@@ -139,6 +152,11 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
+            <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''} 
+                onChange={(token) => setRecaptchaToken(token)}
+                className="mt-4"
+            />
             <div className="mt-10 flex justify-end">
                 <button
                     type="submit"
