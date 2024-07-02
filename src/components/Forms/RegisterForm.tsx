@@ -74,25 +74,12 @@ const RegisterForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+               
                 <div>
                     <div className="mt-2.5">
                         <input
                             type="text"
-                            placeholder="User name"
-                            autoComplete="given-name"
-                            className="block just w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            {...register('name', { required: true })}
-                        />
-                        {errors.name && (
-                            <span className="text-red-500">Name is required</span>
-                        )}
-                    </div>
-                </div>
-                <div>
-                    <div className="mt-2.5">
-                        <input
-                            type="text"
-                            placeholder="Phone number or Email"
+                            placeholder="Email"
                             autoComplete="email"
                             className="block w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             {...register('email', {
