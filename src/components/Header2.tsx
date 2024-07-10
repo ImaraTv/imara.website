@@ -32,9 +32,11 @@ function MobileNavLink({
   children: React.ReactNode
 }) {
   return (
+   <Popover>
     <Popover.Button as={Link} href={href} className="block w-full p-2">
       {children}
     </Popover.Button>
+   </Popover>
   )
 }
 

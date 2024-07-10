@@ -18,7 +18,7 @@ export default function Contact() {
         message: '',
     });
     const [formStatus, setFormStatus] = useState('');
-    const [captchaValue, setCaptchaValue] = useState(null)
+    const [captchaValue, setCaptchaValue] = useState<string | null>(null);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -156,7 +156,7 @@ export default function Contact() {
                             </div>
                            <div className="mt-6">
                                 <ReCAPTCHA
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}   
+                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}   
                                     onChange={handleCaptchaChange} />
                             </div>
 

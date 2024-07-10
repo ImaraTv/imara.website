@@ -132,22 +132,27 @@ export default function Videos() {
 
     fetchCategories()
   }, [])
+  
+  const fetchVideos = async (pageNumber: number, category: number | null) => { 
+    try {
+      const query = category
+        ? `?category=${category}&page=${pageNumber}`
+        : `?page=${pageNumber}`;
+      const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
+      const data = await response.json();
+      if (data.data.length === 0) {
+        setHasMore(false);
+      } else {
+        setVideos((prevVideos) => [...prevVideos, ...data.data]);
+      }
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    }
+  };
 
   useEffect(() => {
-  const fetchVideos = async (pageNumber, category) => {
-  try {
-    const query = category ? `?category=${category}&page=${pageNumber}` : `?page=${pageNumber}`;
-    const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
-    const data = await response.json();
-    if (data.data.length === 0) {
-      setHasMore(false);
-    } else {
-      setVideos((prevVideos) => [...prevVideos, ...data.data]);
-    }
-  } catch (error) {
-    console.error('Error fetching videos:', error);
-  }
-};
+    fetchVideos(1, selectedCategory); // Initial fetch
+  }, [selectedCategory]);
   
   useEffect(() => {
   fetchVideos(page, selectedCategory);
