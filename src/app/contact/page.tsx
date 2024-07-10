@@ -18,20 +18,20 @@ export default function Contact() {
         message: '',
     });
     const [formStatus, setFormStatus] = useState('');
-    const [captchaValue, setCaptchaValue] = useState(null)
+    const [captchaValue, setCaptchaValue] = useState<string | null>(null);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const handleCaptchaChange = (value: string | null) => {
-    setCaptchaValue(value)
-}
+        setCaptchaValue(value)
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!captchaValue) {
-    setFormStatus('Please complete the reCAPTCHA')
-    return
-}
+            setFormStatus('Please complete the reCAPTCHA')
+            return
+        }
         setFormStatus('Sending...');
 
         try {
@@ -154,9 +154,9 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
-                           <div className="mt-6">
+                            <div className="mt-6">
                                 <ReCAPTCHA
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}   
+                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                                     onChange={handleCaptchaChange} />
                             </div>
 
