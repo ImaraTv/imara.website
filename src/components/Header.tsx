@@ -189,8 +189,32 @@ export function Header() {
     logout();
     router.push('/sign-in'); // Redirect to the login page
   };
+  
+  const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID; 
+   useEffect(() => {
+    if (GA_TRACKING_ID) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA_TRACKING_ID);
+    }
+  }, []);
 
   return (
+    {GA_TRACKING_ID && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_TRACKING_ID}');
+              `,
+            }}
+        </script>
+      )}
     <header className="py-6 bg-[#0033AB] md:bg-white">
       <Container2>
         <nav className="relative z-50 flex items-center justify-between">
