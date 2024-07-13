@@ -17,26 +17,46 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Rating from '@/components/Rating'
 
-const dates = [
+const locations = [
   {
     id: 1,
-    name: 'Jan',
+    name: 'Kajiado',
   },
   {
     id: 2,
-    name: 'Feb',
+    name: 'Nairobi',
   },
   {
     id: 3,
-    name: 'Mar',
+    name: 'Kisumu',
   },
   {
     id: 4,
-    name: 'Apr',
+    name: 'Narok',
   },
   {
     id: 5,
-    name: 'May',
+    name: 'Kapenguria',
+  },
+   {
+    id: 6,
+    name: 'Oloitok Tok',
+  },
+   {
+    id: 7,
+    name: 'Mombasa',
+  },
+  {
+    id: 7,
+    name: 'Mombasa',
+  },
+  {
+    id: 8,
+    name: 'Kilifi',
+  },
+  {
+    id: 10,
+    name: 'Machakos',
   },
 ]
 
