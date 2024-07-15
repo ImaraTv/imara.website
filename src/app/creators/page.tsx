@@ -56,6 +56,7 @@ export default function Actors() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const openModal = (file: File) => {
     setSelectedFile(file)
     setIsOpen(true)
@@ -92,6 +93,10 @@ export default function Actors() {
     alert("Please complete the reCAPTCHA challenge.");
     return;
   }
+    if (!acceptedTerms) {  
+      alert("Please accept the terms and conditions to proceed.");
+      return;
+    }
 
   const formData = new FormData(e.currentTarget);
   formData.append('recaptchaToken', recaptchaToken);
@@ -357,6 +362,26 @@ export default function Actors() {
                   </div>
                 </div>
               </div>
+              <div className="mt-4">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                className="mr-2"
+                required 
+              />
+              <label htmlFor="terms" className="text-gray-700">
+                I have read and accept the{' '}
+                <Link
+                  href="https://imara.tv/terms-of-use"
+                  target="_blank"
+                  className="text-blue-500 underline"
+                >
+                  terms and conditions
+                </Link>
+              </label>
+            </div>
+
               <div className="mt-6">
           <ReCAPTCHA
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
