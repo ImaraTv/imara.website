@@ -170,6 +170,7 @@ export default function Videos() {
       if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore) return;
       setPage((prevPage) => prevPage + 1);
     };
+  });
     useEffect(() => {
       fetchVideos(1, selectedCategory); // Initial fetch
     }, [selectedCategory]);
@@ -194,8 +195,6 @@ export default function Videos() {
       window.addEventListener('scroll', handleScroll);
       return () => window.removeEventListener('scroll', handleScroll);
     }, [hasMore]);
-
-  });
 
 
     const handleCategoryClick = (categoryName: any) => {
