@@ -156,11 +156,7 @@ export default function Contact() {
                             </div>
                             <div className="mt-6">
                                 <ReCAPTCHA
-<<<<<<< HEAD
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-=======
                                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}   
->>>>>>> 141e599662f12c878fc77be9c297a5967c8a9488
                                     onChange={handleCaptchaChange} />
                             </div>
 
