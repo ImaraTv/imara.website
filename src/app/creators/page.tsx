@@ -18,6 +18,7 @@ import defaultImage from '@/images/default.jpg'
 import Image from 'next/image'
 import { Newsletter } from '@/components/Newsletter'
 import ReCAPTCHA from "react-google-recaptcha";
+import Link from "next/link";
 
 interface File {
   name: string
