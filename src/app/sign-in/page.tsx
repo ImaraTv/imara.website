@@ -27,6 +27,7 @@ export default function SignIn() {
                         <div className="mt-8 flex justify-center">
                             <a
                                 href="https://imara.tv/admin/admin/oauth/google"
+<<<<<<< HEAD
                                 style={{ 
                                     '--c-400': 'var(--primary-400)',
                                     '--c-500': 'var(--primary-500)',
@@ -35,6 +36,12 @@ export default function SignIn() {
                                 className="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-custom fi-btn-color-primary fi-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid fi-btn-outlined ring-1 text-custom-600 ring-custom-600 hover:bg-custom-400/10 dark:text-custom-400 dark:ring-custom-500"
                             >
                                 <svg className="fi-btn-icon transition duration-75 h-5 w-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" /></svg>
+=======
+                                style={{ '--c-400': 'var(--primary-400)', '--c-500': 'var(--primary-500)', '--c-600': 'var(--primary-600)' }as React.CSSProperties}
+                                className="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-custom fi-btn-color-primary fi-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid fi-btn-outlined ring-1 text-custom-600 ring-custom-600 hover:bg-custom-400/10 dark:text-custom-400 dark:ring-custom-500"
+                            >
+                                <svg className="fi-btn-icon transition duration-75 h-5 w-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+>>>>>>> 141e599662f12c878fc77be9c297a5967c8a9488
                                 <span className="fi-btn-label">Google</span>
                             </a>
                         </div>

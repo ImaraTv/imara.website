@@ -132,9 +132,18 @@ export default function Videos() {
 
     fetchCategories()
   }, [])
+<<<<<<< HEAD
   const fetchVideos = async (pageNumber: any, category: any) => {
     try {
       const query = category ? `?category=${category}&page=${pageNumber}` : `?page=${pageNumber}`;
+=======
+  
+  const fetchVideos = async (pageNumber: number, category: number | null) => { 
+    try {
+      const query = category
+        ? `?category=${category}&page=${pageNumber}`
+        : `?page=${pageNumber}`;
+>>>>>>> 141e599662f12c878fc77be9c297a5967c8a9488
       const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
       const data = await response.json();
       if (data.data.length === 0) {
@@ -145,6 +154,30 @@ export default function Videos() {
     } catch (error) {
       console.error('Error fetching videos:', error);
     }
+<<<<<<< HEAD
+=======
+  };
+
+  useEffect(() => {
+    fetchVideos(1, selectedCategory); // Initial fetch
+  }, [selectedCategory]);
+  
+  useEffect(() => {
+  fetchVideos(page, selectedCategory);
+}, [page, selectedCategory]);
+
+useEffect(() => {
+  setPage(1);
+  setVideos([]);
+  setHasMore(true);
+  fetchVideos(1, selectedCategory);
+}, [selectedCategory]);
+
+    useEffect(() => {
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore) return;
+    setPage((prevPage) => prevPage + 1);
+>>>>>>> 141e599662f12c878fc77be9c297a5967c8a9488
   };
   useEffect(() => {
     fetchVideos(1, selectedCategory); // Initial fetch
