@@ -8,14 +8,6 @@ const nextConfig = {
     images: {
         domains: ['imara.tv'],
     },
-    async rewrites() {
-        return [
-            {
-                source: '/api/videos',
-                destination: 'https://imara.tv/admin/api/videos',
-            },
-        ]
-    },
 }
 
 module.exports = withMDX(nextConfig)
