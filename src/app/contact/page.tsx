@@ -7,10 +7,10 @@ import { Newsletter } from '@/components/Newsletter'
 import Banner from "@/images/9.jpg"
 import Image from "next/image"
 import { sendEmail } from "../../../utils/sendgrid"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha'
 
-
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 export default function Contact() {
     const [formData, setFormData] = useState({
         'name': '',
@@ -18,32 +18,47 @@ export default function Contact() {
         message: '',
     });
     const [formStatus, setFormStatus] = useState('');
-    const [captchaValue, setCaptchaValue] = useState<string | null>(null);
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const [recaptchaToken, setRecaptchaToken] = useState('');
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js';
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+
+        window.handleRecaptcha = (token) => { // Define the callback as a global function
+            setRecaptchaToken(token);
+        };
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-    const handleCaptchaChange = (value: string | null) => {
-        setCaptchaValue(value)
-    }
+   
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!captchaValue) {
-            setFormStatus('Please complete the reCAPTCHA')
-            return
+         if (!recaptchaToken) {
+            setFormStatus('Please complete the reCAPTCHA');
+            return;
         }
-        setFormStatus('Sending...');
 
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
-                body: new FormData(e.currentTarget),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...formData, recaptchaToken }),
             });
-
             if (response.ok) {
                 setFormStatus('Email sent successfully');
                 setFormData({ 'name': '', 'email': '', message: '' });
-                setCaptchaValue(null)
+                 setRecaptchaToken('');
+                window.grecaptcha.reset();
 
             } else {
                 setFormStatus('Failed to send email');
@@ -154,10 +169,12 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-6">
-                                <ReCAPTCHA
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}   
-                                    onChange={handleCaptchaChange} />
+                           <div className="mt-6">
+                                <div
+                                    className="g-recaptcha"
+                                    data-sitekey= {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                    data-callback="handleRecaptcha"
+                                ></div>
                             </div>
 
                             <div className="mt-10 flex justify-end">
