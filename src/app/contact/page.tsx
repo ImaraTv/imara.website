@@ -15,7 +15,7 @@ export default function Contact() {
     const [formData, setFormData] = useState({
         'name': '',
         'email': '',
-        message: '',
+        'message': '',
     });
     const [formStatus, setFormStatus] = useState('');
       const [recaptchaToken, setRecaptchaToken] = useState('');
@@ -56,7 +56,7 @@ export default function Contact() {
             });
             if (response.ok) {
                 setFormStatus('Email sent successfully');
-                setFormData({ 'name': '', 'email': '', message: '' });
+                setFormData({ 'name': '', 'email': '', 'message': '' });
                  setRecaptchaToken('');
                 window.grecaptcha.reset();
 
