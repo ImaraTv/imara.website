@@ -26,7 +26,7 @@ export default function Contact() {
         script.defer = true;
         document.body.appendChild(script);
 
-        window.handleRecaptcha = (token) => { // Define the callback as a global function
+        window.handleRecaptcha = (token: any) => { // Define the callback as a global function
             setRecaptchaToken(token);
         };
 
@@ -34,12 +34,12 @@ export default function Contact() {
             document.body.removeChild(script);
         };
     }, []);
-     const handleChange = (e) => {
+     const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
    
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
          if (!recaptchaToken) {
             setFormStatus('Please complete the reCAPTCHA');
