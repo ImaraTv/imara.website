@@ -190,7 +190,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
               <div>
                 <iframe
                   src={videoUrl}
-                  allow="autoplay; picture-in-picture; clipboard-write; full-screen"
+                  allow="autoplay; picture-in-picture; clipboard-write; fullscreen"
                   style={{
                     position: 'absolute',
                     top: '0',
