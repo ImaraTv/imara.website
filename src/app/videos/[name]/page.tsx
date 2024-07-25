@@ -105,8 +105,8 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
     const fetchVideoDetails = async () => {
       try {
         const response = await fetch('https://dashboard.imara.tv/api/videos')
-        const data = await response.json();
-        const videos = data.data;
+        const data = await response.json()
+        const videos = data.data
 
         const decodedName = decodeURIComponent(name)
 
