@@ -23,6 +23,7 @@ import { useParams, useSearchParams } from 'next/navigation'
 import SaveButton from '@/components/SaveButton'
 import ShareButton from '@/components/ShareButton'
 
+
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
 }
@@ -38,6 +39,13 @@ interface File {
   rating: number | null
   stars: number
   // Other properties
+}
+
+interface Sponsor {
+  name: string
+  about: string
+  website: string
+  logo: string
 }
 
 interface Sponsor {
@@ -80,7 +88,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
@@ -96,9 +104,9 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideoDetails = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
-        const data = await response.json()
-        const videos = data.data
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const data = await response.json();
+        const videos = data.data;
 
         const decodedName = decodeURIComponent(name)
 
@@ -194,6 +202,13 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
         {/* Buttons */}
         <Container>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-5">
+
+            <span>Sponsored By: {videoDetails?.sponsors?.name} </span>
+
+            <span>{videoDetails?.sponsors?.logo}</span>
+
+            <a href={videoDetails?.call_to_action_link} target="_blank">{videoDetails?.call_to_action}</a>
+
             {videoDetails && <SaveButton videoId={videoDetails.id} />}
 
             {videoDetails && <ShareButton videoId={videoDetails.id} />}
