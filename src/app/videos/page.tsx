@@ -448,7 +448,7 @@ export default function Videos() {
                     className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
                     {videos.map((video) => (
                       <li key={video.name} className="relative">
-                        <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}>
+                        <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}-${video.id}`}>
                           <div
                             className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                             <img src={video.image} alt=""
@@ -483,7 +483,7 @@ export default function Videos() {
                 <ul role="list" className="mt-10 md:-mt-12 space-y-12 xl:col-span-3">
                   {videos.map((video) => (
                     <li key={video.id}>
-                      <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}>
+                      <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}-${video.id}`}>
                         <div className="flex flex-row md:flex-col gap-10 pt-12 sm:flex-row items-center">
                           <img className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover" src={video.image} alt="" />
                           <div className="max-w-xl flex-col space-y-[26px]">
