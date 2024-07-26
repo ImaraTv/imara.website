@@ -22,6 +22,7 @@ import ReactPlayer from 'react-player'
 import { useParams, useSearchParams } from 'next/navigation'
 import SaveButton from '@/components/SaveButton'
 import ShareButton from '@/components/ShareButton'
+import { FC } from 'react'
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
@@ -54,14 +55,14 @@ interface Video {
   category: string
   description: string
   vimeo_link: string
-  call_to_action: string | null
+  call_to_action_btn: string | null
   call_to_action_link: string | null
   image: string
   creator: string
   rating: number | null
   stars: number
   sponsored_by: string | null
-  sponsors: Sponsor | null
+  sponsor: Sponsor | null
 }
 
 const VideoDetails = ({ params }: { params: { name: string } }) => {
@@ -80,7 +81,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
@@ -96,23 +97,34 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideoDetails = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch('https://dashboard.imara.tv/api/videos')
         const data = await response.json()
+        console.log('API Response:', data) // Log the entire response
+
         const videos = data.data
+        console.log('Videos:', videos) // Log the videos array
 
         const decodedName = decodeURIComponent(name)
+        console.log('Decoded Name:', decodedName) // Log the decoded name
 
         const video = videos.find(
           (v: Video) =>
             v.name.toLowerCase().replace(/\s+/g, '-') === decodedName,
         )
+        console.log('Found Video:', video) // Log the found video
 
-        const vimeoVideoId = video.vimeo_link?.split('/').pop()
-        setVideoUrl(
-          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`,
-        )
+        if (video) {
+          const vimeoVideoId = video.vimeo_link?.split('/').pop()
+          setVideoUrl(
+            `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`,
+          )
 
-        setVideoDetails({ ...video })
+          setVideoDetails({ ...video })
+          console.log('Set Video Details:', video) // Log the video details being set
+        } else {
+          console.error('Video not found')
+        }
+
         setIsLoading(false)
       } catch (error) {
         console.error('Error fetching video details:', error)
@@ -252,7 +264,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
             </div>
           ) : (
             <div>
-              {videoDetails && (
+              {videoDetails && videoDetails.sponsor && (
                 <div className="my-[58px] flex justify-between rounded-md md:my-[148px]">
                   <div className="relative flex h-[580px] w-full flex-col gap-12 rounded-md shadow-10xl md:h-auto md:w-3/4 md:flex-row md:rounded-none md:shadow-none">
                     <Image
@@ -283,6 +295,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                       <p className="mt-1 text-[18px] text-white md:text-[#525252]">
                         {videoDetails.description}
                       </p>
+
                       <div className="flex flex-col">
                         <div className="flex gap-2">
                           <span className="text-[18px] font-bold text-white md:text-[#525252]">
@@ -308,7 +321,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                             2 Jan 2024
                           </span>
                         </div>
-                        
+
                         <div className="flex gap-2">
                           <span className="text-[18px] font-bold text-white md:text-[#525252]">
                             Director:
@@ -325,6 +338,35 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                             {videoDetails.category}
                           </span>
                         </div>
+                      </div>
+
+                      <div className="mt-4">
+                        <h5 className="text-[18px] font-bold text-white md:text-[#525252]">
+                          Sponsored by:
+                        </h5>
+                        <div className="flex items-center gap-4">
+                          <img
+                            src={videoDetails.sponsor.logo}
+                            alt={`${videoDetails.sponsor.name} logo`}
+                            className="h-12 w-12 object-contain"
+                          />
+                          <div>
+                            <p className="text-[18px] font-medium text-white md:text-[#525252]">
+                              {videoDetails.sponsor.name}
+                            </p>
+                            <a
+                              href={videoDetails.sponsor.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[16px] text-blue-500 hover:underline"
+                            >
+                              Visit Website
+                            </a>
+                          </div>
+                        </div>
+                        <p className="mt-2 text-[16px] text-white md:text-[#525252]">
+                          {videoDetails.sponsor.about}
+                        </p>
                       </div>
                     </div>
                     <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#000000] via-[#000000] md:relative" />

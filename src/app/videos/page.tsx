@@ -230,7 +230,7 @@ export default function Videos() {
         setSearchResults([]);
       }
     }, [searchQuery]);
-    const numCards = 4
+    const numCards = 3
 
     return (
       <>
@@ -241,43 +241,14 @@ export default function Videos() {
 
             <div className='flex flex-col md:flex-row gap-2 justify-between mt-[40px] md:mt-[53px]'>
               <div className='flex'>
-                <div className="hidden md:flex flex-1 items-center justify-center px-2">
-                  <div className="w-full max-w-lg lg:max-w-xs">
-                    <label htmlFor="search" className="sr-only">
-                      Search
-                    </label>
-                    <div className="relative">
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                        <MagnifyingGlassIcon className="h-5 w-5 text-[#525252] font-medium" aria-hidden="true" />
-                      </div>
-                      <input
-                        value={searchQuery}
-                        onChange={(e) => {
-                          setSearchQuery(e.target.value);
-                        }}
-                        className="block w-full rounded-[15px] border-0 bg-[#E2E2E2] py-[10px] pl-[14px] text-[#525252] ring-1 ring-inset ring-gray-300 placeholder:text-[#525252] placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Search"
-                        type="text"
-                      />
-                      {searchResults.length > 0 && (
-                        <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
-                          {searchResults.map((result) => (
-                            <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
-                              <a href={`/videos/${result.id}`}>{result.name}</a>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'>
+                
+                <div className='flex flex-col md:flex-row'>
                   {categories.map((category, index) => (
                     <button
                       type="button"
                       key={category.id}
                       onClick={() => handleCategoryClick(category.name)}
-                      className={`text-12px] mr-[24px] inline-flex items-center gap-x-2 rounded-md bg-white px-[13px] py-2 font-medium text-[#525252] shadow-sm md:text-[17px] ${selectedCategory === category.id
+                      className={`text-12px] mr-[20px] inline-flex items-center gap-x-2 rounded-md bg-white px-[10px] py-2 font-medium text-[#525252] shadow-sm md:text-[14px] ${selectedCategory === category.id
                         ? 'ring-525252 ring-1 ring-inset'
                         : 'hover:bg-gray-50'
                         }`}
@@ -292,7 +263,7 @@ export default function Videos() {
                 <div className="">
                   <Listbox value={selected} onChange={setSelected}>
                     <div className="relative mt-1">
-                      <Listbox.Button className="relative inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
+                      <Listbox.Button className="relative inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
                         <span className="block truncate pr-1">{selected.name}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                           <ChevronDownIcon
@@ -342,7 +313,7 @@ export default function Videos() {
                 <div className="">
                   <Listbox value={active} onChange={setActive}>
                     <div className="relative mt-1">
-                      <Listbox.Button className="relative inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
+                      <Listbox.Button className="relative inline-flex mr-2 items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs md:text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
                         <span className="block truncate pr-1">{active.name}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                           <ChevronDownIcon
@@ -389,11 +360,7 @@ export default function Videos() {
                     </div>
                   </Listbox>
                 </div>
-                <Button href="#" color="blue">
-                  <span>
-                    Filter
-                  </span>
-                </Button>
+                <div className='flex px-6 py-1 text-white bg-blue-600 rounded items-center justify-center text-[14px]'>Filter</div>
               </div>
 
             </div>
@@ -405,7 +372,7 @@ export default function Videos() {
                     <div
                       key={index}
                       role="status"
-                      className="max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
+                      className="max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6 h-96"
                     >
                       <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
                         <svg
@@ -445,7 +412,7 @@ export default function Videos() {
               ) : (
                 <div>
                   <ul role="list"
-                    className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
+                    className="grid grid-cols-2 gap-x-4 gap-y-[25px] md:gap-y-[100px] md:grid-cols-3 md:gap-x-6">
                     {videos.map((video) => (
                       <li key={video.name} className="relative">
                         <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}-${video.id}`}>
