@@ -156,7 +156,7 @@ export default function About() {
                 width={616}
                 height={409}
                 alt={'image'}
-                className="w-50 object-cover xl:row-span-2 xl:row-end-2"
+                className="w-50 object-contain xl:row-span-2 xl:row-end-2"
               />
             </div>
           </div>
@@ -375,17 +375,13 @@ export default function About() {
           </Container>
         </div>
         <Container>
-          <div className="bg-white py-24 sm:py-32">
-              <div className='mx-auto'>
-                <Faq2>
-
-                </Faq2>
-
-              </div>
-            </div>
+          <div>
+            <Faq2></Faq2>
+          </div>
         </Container>
-
+      
         <Newsletter/>
+
       </main>
       <Footer />
     </>
