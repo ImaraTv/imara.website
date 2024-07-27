@@ -39,12 +39,12 @@ interface File {
   stars: number
   // Other properties
 }
-
+const fallbackImage = '/images/logos/logo/png';
 interface Sponsor {
   name: string
   about: string
   website: string
-  logo: string
+  logo: string | null
 }
 
 interface Video {
@@ -199,7 +199,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
             <Image
               width={405}
               height={352}
-              src={videoDetails?.sponsor?.logo}
+              src={videoDetails?.sponsor?.logo || fallbackImage}
               alt={'video image'}
               className="h-[35px] w-full object-cover md:h-[39px] md:w-[31px]"
             />
