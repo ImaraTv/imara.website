@@ -121,7 +121,7 @@ export default function Videos() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://dashboard.imara.tv/api/categories',
+          'https://imara.tv/admin/api/categories',
         )
         const data = await response.json()
         setCategories(data.data)
@@ -138,7 +138,7 @@ export default function Videos() {
       const query = category
         ? `?category=${category}&page=${pageNumber}`
         : `?page=${pageNumber}`;
-      const response = await fetch(`https://dashboard.imara.tv/api/videos${query}`);
+      const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
       const data = await response.json();
       if (data.data.length === 0) {
         setHasMore(false);
@@ -200,7 +200,7 @@ export default function Videos() {
     const handleCategoryClick = (categoryName: any) => {
       setSelectedCategory(categoryName);
       setIsLoading(true);
-      fetch(`https://dashboard.imara.tv/api/videos?category=${categoryName}`)
+      fetch(`https://imara.tv/admin/api/videos?category=${categoryName}`)
         .then((response) => response.json())
         .then((data) => {
           setVideos(data.data);
@@ -215,7 +215,7 @@ export default function Videos() {
 
     const fetchSearchResults = async (query: string) => {
       try {
-        const response = await fetch(`https://dashboard.imara.tv/api/videos?search=${query}`);
+        const response = await fetch(`https://imara.tv/admin/api/videos?search=${query}`);
         const data = await response.json();
         setSearchResults(data.data);
       } catch (error) {

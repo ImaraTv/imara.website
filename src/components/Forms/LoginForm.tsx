@@ -10,7 +10,7 @@ const LoginForm = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const response = await axios.post('https://dashboard.imara.tv/api/auth/login', data);
+      const response = await axios.post('https://imara.tv/admin/api/auth/login', data);
       const { access_token } = response.data;
 
       // Store the access token
