@@ -29,7 +29,7 @@ export default function ResetPassword() {
   const onSubmit = async (data: any) => {
     try {
       const response = await fetch(
-        'https://dashboard.imara.tv/api/auth/reset-password',
+        'https://imara.tv/admin/api/auth/reset-password',
         {
           method: 'POST',
           headers: {

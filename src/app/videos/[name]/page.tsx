@@ -79,7 +79,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const response = await fetch('https://imara.tv/admin/api/videos')
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
@@ -95,7 +95,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideoDetails = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const response = await fetch('https://imara.tv/admin/api/videos')
         const data = await response.json()
         const videos = data.data
 

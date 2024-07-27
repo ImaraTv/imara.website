@@ -266,7 +266,7 @@ export default function Saved() {
       try {
         const accessToken = getAccessToken()
         const response = await fetch(
-          'https://dashboard.imara.tv/api/bookmarks',
+          'https://imara.tv/admin/api/bookmarks',
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -295,7 +295,7 @@ export default function Saved() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos')
+        const response = await fetch('https://imara.tv/admin/api/videos')
         const data = await response.json()
         setVideos(data.data)
       } catch (error) {
@@ -312,7 +312,7 @@ export default function Saved() {
       try {
         const accessToken = getAccessToken()
         const response = await axios.get(
-          'https://dashboard.imara.tv/api/profile',
+          'https://imara.tv/admin/api/profile',
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
