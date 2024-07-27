@@ -7,33 +7,59 @@ import { Newsletter } from '@/components/Newsletter'
 import Banner from "@/images/9.jpg"
 import Image from "next/image"
 import { sendEmail } from "../../../utils/sendgrid"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha'
 
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 export default function Contact() {
     const [formData, setFormData] = useState({
         'name': '',
         'email': '',
-        message: '',
+        'message': '',
     });
     const [formStatus, setFormStatus] = useState('');
+      const [recaptchaToken, setRecaptchaToken] = useState('');
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js';
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        window.handleRecaptcha = (token: any) => { // Define the callback as a global function
+            setRecaptchaToken(token);
+        };
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+     const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+   
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        setFormStatus('Sending...');
+         if (!recaptchaToken) {
+            setFormStatus('Please complete the reCAPTCHA');
+            return;
+        }
 
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
-                body: new FormData(e.currentTarget),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...formData, recaptchaToken }),
             });
-
             if (response.ok) {
                 setFormStatus('Email sent successfully');
-                setFormData({ 'name': '', 'email': '', message: '' });
+                setFormData({ 'name': '', 'email': '', 'message': '' });
+                 setRecaptchaToken('');
+                window.grecaptcha.reset();
+
             } else {
                 setFormStatus('Failed to send email');
             }
@@ -72,7 +98,7 @@ export default function Contact() {
                                         <span className="block text-white">today</span>
                                     </h1>
                                     <p className="mx-auto mt-8 max-w-lg text-xl md:text-3xl text-white sm:max-w-3xl">
-                                        Call : +254780674252
+                                        Call : +254726489473
                                     </p>
                                 </div>
                             </div>
@@ -143,6 +169,14 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
+                           <div className="mt-6">
+                                <div
+                                    className="g-recaptcha"
+                                    data-sitekey= {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                    data-callback="handleRecaptcha"
+                                ></div>
+                            </div>
+
                             <div className="mt-10 flex justify-end">
                                 <button
                                     type="submit"

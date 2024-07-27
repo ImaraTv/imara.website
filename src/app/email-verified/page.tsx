@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { Suspense } from 'react'
 
 const EmailVerified = () => {
   const searchParams = useSearchParams()
@@ -17,7 +18,7 @@ const EmailVerified = () => {
     const verifyEmail = async () => {
       try {
         const response = await fetch(
-          'https://imara.tv/admin/api/auth/verify',
+          'https://dashboard.imara.tv/api/auth/verify',
           {
             method: 'POST',
             headers: {
@@ -52,6 +53,7 @@ const EmailVerified = () => {
     <>
       <Header />
       <main>
+<Suspense fallback={<div>Loading...</div>}>
       <div className="flex h-screen w-full items-center justify-center bg-gray-100 dark:bg-gray-950">
           <div className="mx-auto w-full max-w-md space-y-6 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
             {isLoading ? (
@@ -77,6 +79,7 @@ const EmailVerified = () => {
             )}
           </div>
         </div>
+</Suspense>
       </main>
       <Footer />
     </>

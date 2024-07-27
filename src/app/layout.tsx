@@ -5,7 +5,9 @@ import '@/styles/tailwind.css'
 import '@/styles/global.css'
 import { type Metadata } from 'next'
 import React from "react";
+import { Suspense } from 'react'
 import CookieConsentComponent from '@/components/CookieConsent';
+import { GoogleAnalytics } from '@next/third-parties/google';
 export const metadata: Metadata = {
   title: {
     template: '%s - ImaraTv',
@@ -34,9 +36,10 @@ export default function RootLayout({
       )}
     >
       <body className="flex h-full flex-col">
-        {children} 
+        <Suspense fallback={<>Loading...</>}>{children}</Suspense>
         <CookieConsentComponent />
       </body>
+      <GoogleAnalytics gaId="G-WZXW1066ZR" />
     </html>
   )
 }

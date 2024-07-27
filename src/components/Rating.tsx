@@ -41,7 +41,7 @@ const Rating: React.FC<Props> = ({
       });
     } else {
       try {
-        const response = await fetch('https://imara.tv/admin/api/rate', {
+        const response = await fetch('https://dashboard.imara.tv/api/rate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
