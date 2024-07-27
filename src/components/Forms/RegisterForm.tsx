@@ -37,7 +37,7 @@ const RegisterForm = () => {
         }
         try {
             const response = await axios.post(
-                'https://imara.tv/admin/api/auth/register',
+                'https://dashboard.imara.tv/api/auth/register',
                 {
                     ...data, recaptchaToken, 
                     url: 'https://imara.tv/email-verified',
