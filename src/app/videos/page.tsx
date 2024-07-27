@@ -233,7 +233,7 @@ export default function Videos() {
       setSearchResults([])
     }
   }, [searchQuery])
-  const numCards = 4
+  const numCards = 3
 
   return (
     <>
@@ -394,7 +394,7 @@ export default function Videos() {
                   <div
                     key={index}
                     role="status"
-                    className="max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
+                    className="max-w-sm h-96 animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
                   >
                     <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
                       <svg
