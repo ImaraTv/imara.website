@@ -4,10 +4,11 @@ import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { Footer } from '@/components/Footer'
 import { Header2 } from '@/components/Header2'
 import { Container } from '@/components/Container'
-import Image5 from '@/images/image5.png'
-import About1 from '@/images/about1.png'
-import About2 from '@/images/about2.png'
-import About3 from '@/images/aboutus.jpg'
+import { Faq2 } from '@/components/Faq2'
+import Image5 from '@/images/About_Page_Top_Banner.png'
+import About1 from '@/images/About_Tile_1.jpg'
+import About2 from '@/images/About_Page_Tile_2.jpg'
+import About3 from '@/images/About_page_tile_3.jpg'
 import Image3 from '@/images/vector2.svg'
 import { Button } from '@/components/Button'
 import logo1 from '@/images/partners/gov.svg'
@@ -20,7 +21,7 @@ import logo7 from '@/images/partners/actionaid.png'
 import logo8 from '@/images/partners/crowdsourseafrica.jpg'
 import logo from '@/images/logos/logo.png'
 
-import CEO from '@/images/members/steve.jpg'
+import CEO from '@/images/members/stevemaina.jpg'
 import CTO from '@/images/members/fred.png'
 import Emmah from '@/images/members/emmah.jpg'
 import Founder from '@/images/members/founder.jpg'
@@ -29,6 +30,7 @@ import Mercy from '@/images/members/cfo.jpg'
 
 import Image from 'next/image'
 import { StaticImageData } from 'next/image'
+import { Newsletter } from '@/components/Newsletter'
 
 const values = [
   {
@@ -91,49 +93,6 @@ const files: File[] = [
   },
 ]
 
-const partners = [
-  {
-    id: 1,
-    image: logo1,
-    url: 'http://www.parliament.go.ke',
-  },
-  {
-    id: 2,
-    image: logo2,
-    url: 'https://www.icrhk.org/',
-  },
-  {
-    id: 3,
-    image: logo3,
-    url: 'https://nailab.co/',
-  },
-  {
-    id: 4,
-    image: logo4,
-    url: 'https://www.ukaiddirect.org/',
-  },
-  {
-    id: 5,
-    image: logo5,
-    url: 'https://www.unfpa.org/',
-  },
-  {
-    id: 6,
-    image: logo6,
-    url: 'https://unhabitat.org/',
-  },
-  {
-    id: 7,
-    image: logo7,
-    url: 'https://actionaid-kenya.org/',
-  },
-  {
-    id: 8,
-    image: logo8,
-    url: 'https://www.facebook.com/crowdsourceafrica/',
-  },
-]
-
 const cardStyle = {
   boxShadow: '0px 4px 11px 1px #00000040',
 }
@@ -170,7 +129,7 @@ export default function About() {
           <div className="mx-[16px] max-w-[1440px] md:mx-[47px]">
             <div className="mx-auto max-w-2xl pt-40 lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
               <h1 className="max-w-2xl text-[20px] font-bold text-gray-900 sm:text-6xl md:text-[40px] lg:col-span-2 xl:col-auto">
-                Imara TV: Bridging Entertainment and Education
+                Bridging Entertainment and Education
               </h1>
               <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
                 <p className="text-lg leading-8 text-gray-600">
@@ -182,11 +141,11 @@ export default function About() {
                     href="/videos"
                     className="rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                   >
-                    Watch our videos
+                    Watch Films Now
                   </a>
                   <a
                     href="/sign-up"
-                    className="rounded-md px-3.5 py-1 text-xs font-semibold leading-6 text-gray-900 ring-2 ring-[#007BFF] md:text-sm"
+                    className="rounded-md px-3.5 py-2 text-xs font-semibold leading-6 text-gray-900 ring-2 ring-[#007BFF] md:text-sm"
                   >
                     Get Started
                   </a>
@@ -197,7 +156,7 @@ export default function About() {
                 width={616}
                 height={409}
                 alt={'image'}
-                className="w-full object-cover xl:row-span-2 xl:row-end-2"
+                className="w-50 object-contain xl:row-span-2 xl:row-end-2"
               />
             </div>
           </div>
@@ -213,14 +172,21 @@ export default function About() {
                       About Imara Tv
                     </p>
                     <p className="mt-[51px] text-lg leading-8 text-gray-600">
-                      Did you know that in Kenya, 42% of all new HIV infections
-                      occur among adolescents and young people aged 15-24 ?
-                      Moreover, over 300,000 girls aged between 10-19 becomes
-                      pregnant every year!<br></br> <br></br> Our research shows
-                      this is caused mainly by poverty and ignorance. Lack of
-                      jobs lead idle young people to engage in risky activities
-                      like prostitution to earn an income which exposes them to
-                      the virus.
+                    Imara.Tv educates the public using short entertainment films to make the world a 
+                    better place. What’s even better, the films are made by young people in Kenya who 
+                    self-employ their natural talents like acting and digital skills like animation to 
+                    create wholesome films that edutain our viewers for free on wholesome themes.
+                    <br></br> <br></br> Imara.Tv is the outcome of the I-AM co-creation hackathon by 
+                    the United Nations Population Fund (UNFPA), Kenya Government Ministry of Health 
+                    and UK Aid in collaboration with Nailab Accelerator to scale up access to youth 
+                    friendly information and services. Read more on the 
+                    {' '}
+                      <a
+                        className="text-[#F54029]"
+                        href="https://kenya.unfpa.org/en/news/unfpa-announces-winners-innovation-accelerator-focused-promoting-youth-sexual-reproductive"
+                      >
+                        UNFPA-K website
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -236,27 +202,23 @@ export default function About() {
           </div>
 
           <div className="overflow-hidden bg-white">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-100 px-6 lg:px-8">
               <div className="mx-auto grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-                <div className="lg:ml-auto lg:pl-2 lg:pt-4">
+                <div className="lg:ml-20 lg:pl-2 lg:pt-4">
                   <div className="lg:max-w-lg">
                     <p className="mt-10 text-lg leading-8 text-gray-600">
-                      Imara Tv kills these two birds with one stone:
-                      edutainment. Imara TV educates the public using
-                      entertainment films.
+                    Did you know that in Kenya, 42% of all new HIV infections occur among adolescents 
+                    and young people aged 15-24? Moreover, over 300,000 girls aged between 10-19 
+                    becomes pregnant every year!
                     </p>
                     <p className="mt-10 text-lg leading-8 text-gray-600">
-                      What&#39;s even better, we harness the creative talents of
-                      young people to produce short funny films that engage our
-                      audience in continuous learning.
+                    Our research found the main causes to be poverty and ignorance. Lack of jobs 
+                    lead idle young people to engage in risky activities like prostitution to earn 
+                    an income which exposes them to the HIV virus or unintended pregnancies. 
                     </p>
+
                     <p className="mt-10 text-lg leading-8 text-gray-600">
-                      This creates sustainable artistic jobs for out of work
-                      youth in the film industry paid for by advertising.
-                    </p>
-                    <p className="mt-10 text-lg leading-8 text-gray-600">
-                      The young people also own the films as digital assets for
-                      their economic empowerment.
+                      Imara Tv kills these two birds with one stone: edutainment.
                     </p>
                   </div>
                 </div>
@@ -266,7 +228,7 @@ export default function About() {
                     alt={'about'}
                     className="w-[48rem] max-w-none ring-1 ring-gray-400/10 sm:w-[57rem]"
                     width={667}
-                    height={443}
+                    height={409}
                   />
                 </div>
               </div>
@@ -278,22 +240,14 @@ export default function About() {
               <div className="mx-auto grid max-w-2xl grid-cols-1 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                 <div className="lg:pr-8 lg:pt-4">
                   <div className="lg:max-w-lg">
-                    <p className="mt-[51px] text-lg leading-8 text-gray-600">
-                      Imara.Tv is the outcome of a hackathon sponsored by UNFPA,
-                      the United Nations Population Fund and the Kenya
-                      Government Ministry of Health in collaboration with
-                      Nailab, a technology driven business incubator. <br></br>{' '}
-                      <br></br> Imara.Tv is one of four winning social
-                      entreprices from the I.AM iAccelerator co-creation event
-                      in August 2016 to scale up access to youth friendly sexual
-                      reproductive health (SRH) information and services.
-                      <br></br> Read more on the{' '}
-                      <a
-                        className="text-[#F54029]"
-                        href="https://kenya.unfpa.org/en/news/unfpa-announces-winners-innovation-accelerator-focused-promoting-youth-sexual-reproductive"
-                      >
-                        UNFPA-K website
-                      </a>
+                    <p className="mt-[50px] text-lg leading-8 text-gray-600">
+                    Imara Tv harnesses the creative talents of young people to produce short funny films 
+                    that engage our audience in continuous learning on wholesome themes. <br></br>
+                      <br></br>We create sustainable artistic and digital jobs for out of work youth in 
+                      the local film industry and support services paid for by advertising. The young 
+                      people also own the films as digital assets for their economic empowerment and career development.
+                      <br></br> <br></br>Our public viewers watch local, relatable and memorable edutainment content 
+                      while our corporate sponsors get increased public brand visibility and new customers for business growth.
                     </p>
                   </div>
                 </div>
@@ -347,7 +301,7 @@ export default function About() {
             <div className="mx-auto">
               <div className="mx-auto">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  Imara Tv Team
+                  Team Imara
                 </h2>
               </div>
               <ul
@@ -420,79 +374,14 @@ export default function About() {
             </div>
           </Container>
         </div>
-
         <Container>
-          <div className="bg-white py-24 sm:py-32">
-            <div className="mx-auto">
-              <div className="mx-auto">
-                <div className="flex items-center gap-4">
-                  <h2 className="text-[20px] font-bold text-[#2B2B2B] md:text-[40px]">
-                    Our Sponsors
-                  </h2>
-
-                  <Button href="https://dashboard.imara.tv/admin/register?r=sponsor" color="blue" className="hidden md:flex">
-              <span>
-                Become a Sponsor
-              </span>
-            </Button>
-                </div>
-
-                <div className="mx-auto mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-6 sm:gap-x-10 md:gap-x-8 lg:mx-0 lg:grid-cols-5">
-                  {partners.map((partner) => (
-                    <a href={partner.url} key={partner.id}>
-                    <div
-                      
-                      className="flex h-[90px] w-[180px] items-center justify-center bg-white px-[14px] text-center shadow-lg md:h-[126px] md:w-[239px] md:px-[28px]"
-                    >
-                        <Image
-                          className="col-span-2 max-h-20 w-full object-contain lg:col-span-1"
-                          src={partner.image}
-                          alt={'Transistor'}
-                          width={158}
-                          height={48}
-                        />
-                    </div>
-                      </a>
-                  ))}
-                </div>
-
-                <div className="bg-white py-16 sm:py-24">
-                  <div className="mx-auto max-w-7xl sm:px-6 lg:px-4">
-                    <div className="relative isolate overflow-hidden px-6 py-10 sm:px-10 xl:py-20">
-                      <h2 className="mx-auto max-w-2xl text-center text-4xl font-bold tracking-tight text-[#2B2B2B] sm:text-4xl">
-                        Don’t miss out on any of our content
-                      </h2>
-                      <p className="mx-auto mt-2 text-center text-lg leading-8 text-[#2B2B2B]">
-                        Subscribe to our newsletter and get personalised
-                        upskilling material today.
-                      </p>
-                      <form className="mx-auto mt-10 flex max-w-md gap-x-4">
-                        <label htmlFor="email-address" className="sr-only">
-                          Email address
-                        </label>
-                        <input
-                          id="email-address"
-                          name="email"
-                          type="email"
-                          autoComplete="email"
-                          required
-                          className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-[#3F4C5373] focus:ring-2 focus:ring-inset focus:ring-[#3F4C5373] sm:text-sm sm:leading-6"
-                          placeholder="Email"
-                        />
-                        <button
-                          type="submit"
-                          className="flex-none rounded-md bg-[#007BFF] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                        >
-                          Subscribe Now
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div>
+            <Faq2></Faq2>
           </div>
         </Container>
+      
+        <Newsletter/>
+
       </main>
       <Footer />
     </>
