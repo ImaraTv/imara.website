@@ -201,7 +201,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
               height={352}
               src={videoDetails?.sponsor?.logo || fallbackImage}
               alt={'video image'}
-              className="h-[35px] w-full object-cover md:h-[39px] md:w-[31px]"
+              className="h-[35px] w-full object-cover md:h-[50px] md:w-[150px]"
             />
 
             {/* <Link href={videoDetails?.call_to_action_link} target="_blank">{videoDetails?.call_to_action}</Link> */}
