@@ -196,8 +196,8 @@ export function Header2() {
             <NavLink href="/about">About</NavLink>
             <NavLink href="/videos">Watch Now</NavLink>
             <NavLink href="/creators">Creators</NavLink>
-            <MobileNavLink href="https://blog.imara.tv">Blog</MobileNavLink>
             <NavLink href="/sponsors">Sponsors</NavLink>
+            <MobileNavLink href="https://blog.imara.tv">Blog</MobileNavLink>
             <NavLink href="/contact">Contact</NavLink>
             
           </div>
