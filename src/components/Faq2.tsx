@@ -108,7 +108,7 @@ export function Faq2() {
                       </a> A person looking for wholesome edutainment content for themselves and/or their students and/or their children to enjoy and know more. <br></br>
                       <a
                         className="font-medium"
-                        href="https://dashboard.imara.tv/register"
+                        href="https://imara.tv/admin/register"
                         target='_blank'
                       >
                         Content Administrators:  
