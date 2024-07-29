@@ -84,6 +84,9 @@ export function Footer() {
                 <Link href={'/creators'}>Our Creators</Link>
               </div>
               <div className="text-lg font-semibold leading-6 text-white">
+                <Link href={'/sponsors'}>Our Sponsors</Link>
+              </div>
+              <div className="text-lg font-semibold leading-6 text-white">
                 <Link href={'/contact'}>Contact Us</Link>
               </div>
             </div>
