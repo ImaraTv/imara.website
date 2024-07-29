@@ -73,7 +73,7 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-y-6 ">
                
                 <div>
                     <div className="mt-2.5">
@@ -97,7 +97,7 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-y-10">
                 <div>
                     <div className="mt-10">
                         <input
@@ -139,11 +139,12 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
+            <div>
             <ReCAPTCHA
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''} 
                 onChange={(token) => setRecaptchaToken(token)}
                 className="mt-4"
-            />
+            /></div>
             <div className="mt-10 flex justify-end">
                 <button
                     type="submit"
