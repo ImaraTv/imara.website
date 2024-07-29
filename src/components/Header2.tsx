@@ -132,9 +132,10 @@ function MobileNavigation() {
             <MobileNavLink href="/about">About</MobileNavLink>
             <MobileNavLink href="/videos">Watch Now</MobileNavLink>
             <MobileNavLink href="/creators">Creators</MobileNavLink>
+            <MobileNavLink href="/sponsors">Sponsors</MobileNavLink>
             <MobileNavLink href="https://blog.imara.tv">Blog</MobileNavLink>
             <MobileNavLink href="/contact">Contact</MobileNavLink>
-            <MobileNavLink href="/sponsors">Sponsors</MobileNavLink>
+            
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
               <MobileNavLink href="https://imara.tv/admin/register?r=creator">
@@ -195,10 +196,10 @@ export function Header2() {
             <NavLink href="/about">About</NavLink>
             <NavLink href="/videos">Watch Now</NavLink>
             <NavLink href="/creators">Creators</NavLink>
+            <NavLink href="/sponsors">Sponsors</NavLink>
             <NavLink href="https://blog.imara.tv">Blog</NavLink>
             <NavLink href="/contact">Contact</NavLink>
-            <NavLink href="/sponsors">Sponsors</NavLink>
-
+            
           </div>
         </div>
         <div className="flex items-center gap-x-5 md:gap-x-4">
