@@ -5,7 +5,7 @@ import { Header } from '@/components/Header'
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
-import Banner from "@/images/1.jpg"
+import Banner from "@/images/signin_img.jpg"
 import Image from "next/image"
 import Link from 'next/link'
 import LoginForm from '@/components/Forms/LoginForm'
