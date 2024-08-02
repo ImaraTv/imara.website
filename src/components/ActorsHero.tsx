@@ -112,7 +112,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image || defaultImage}
                   alt="avatar"
-                  className="w-[194px] h-[120px] rounded-[3px] sm:w-full md:h-auto"
+                  className="w-[194px] h-[120px] rounded-[3px] sm:w-[250px] md:h-[250px]"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}
@@ -133,7 +133,7 @@ export function ActorsHero() {
                   height={120}
                   src={creator.image || defaultImage}
                   alt="avatar"
-                  className="w-[194px] h-[120px] rounded-[3px] sm:w-full md:h-auto"
+                  className="w-[194px] h-[120px] rounded-[3px] sm:w-[250px] md:h-[250px]"
                 />
                 <p className="pointer-events-none mt-2 block truncate text-[20px] font-bold text-[#2B2B2B]">
                   {creator.name}
