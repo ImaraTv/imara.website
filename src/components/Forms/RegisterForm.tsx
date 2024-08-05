@@ -14,7 +14,7 @@ type FormData = {
     url: string
 }
 
-const RegisterForm = () => {
+const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void }) => { // Accept setProgress as prop
     const router = useRouter();
     const {
         register,
@@ -24,6 +24,9 @@ const RegisterForm = () => {
     } = useForm<FormData>();
 
      const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+     useEffect(() => {
+        onStepChange(1); // Update the step when the form is mounted
+    }, []);
 
     const onSubmit = async (data: any) => {
         if (!recaptchaToken) {
@@ -36,6 +39,7 @@ const RegisterForm = () => {
             return;
         }
         try {
+             setProgress(50); // Update progress to 50% when starting the request
             const response = await axios.post(
                 'https://imara.tv/admin/api/auth/register',
                 {
@@ -46,6 +50,8 @@ const RegisterForm = () => {
                     },
                 }
             );
+            setProgress(100); // Update progress to 100% upon successful request
+            
             // Handle successful registration
             console.log(response.data);
 
@@ -60,6 +66,7 @@ const RegisterForm = () => {
                 router.push('/verify-email'); // Assuming you have a /login page
             });
         } catch (error) {
+             setProgress(0); // Reset progress upon error
             // Handle registration error
             console.error(error);
             Swal.fire({
@@ -70,7 +77,9 @@ const RegisterForm = () => {
             });
         }
     };
-
+       useEffect(() => {
+        setProgress(0); // Reset progress when component mounts
+        }, [setProgress]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
             <div className="grid grid-cols-1 gap-y-6 ">
