@@ -8,8 +8,11 @@ import Banner from "@/images/1.jpg"
 import Image from "next/image"
 import Link from 'next/link'
 import RegisterForm from '@/components/Forms/RegisterForm'
+import ProgressBar from '@/components/ProgressBar' 
+import { useState } from 'react' 
 
 export default function SignUp() {
+    const [progress, setProgress] = useState(0); // Add progress state
     return (
         <>
             <Header />
@@ -51,8 +54,8 @@ export default function SignUp() {
                         <div className="max-w-2xl">
                             <h2 className="text-xl md:text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Create Account</h2>
                         </div>
-
-                        <RegisterForm />
+                        <ProgressBar progress={progress} /> {/* Include ProgressBar */}
+                        <RegisterForm setProgress={setProgress} /> {/* Pass setProgress to RegisterForm */}
                         <div className="mt-4">
                             <input type="checkbox" id="terms" name="terms" className="mr-2" />
                             <label htmlFor="terms" className="text-gray-700">
