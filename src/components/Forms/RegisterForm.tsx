@@ -145,6 +145,15 @@ const RegisterForm = () => {
                 onChange={(token) => setRecaptchaToken(token)}
                 className="mt-4"
             /></div>
+             <div className="mt-4">
+                            <input type="checkbox" id="terms" name="terms" className="mr-2" />
+                            <label htmlFor="terms" className="text-gray-700">
+                                I have read and accept the{' '}
+                                <Link href="https://imara.tv/terms-of-use" target="_blank" className="text-blue-500 underline">
+                                    terms and conditions
+                                </Link>
+                            </label>
+                        </div>
             <div className="mt-10 flex justify-end">
                 <button
                     type="submit"
