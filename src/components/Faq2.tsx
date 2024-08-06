@@ -87,21 +87,21 @@ export function Faq2() {
                 <li className="mt-4 text-sm text-slate-700">{' '}
                       <a
                         className="font-medium"
-                        href="https://imara.tv/admin/register?r=admin"
+                        href="https://imara.tv/admin/register?r=creator"
                         target='_blank'
                       >
                         Content Creators:  
                       </a> A young person who has a natural talent or digital skill looking for an opportunity to earn money, build their craft and create films. <br></br>
                       <a
                         className="font-medium"
-                        href="https://imara.tv/admin/register?r=admin"
+                        href="https://imara.tv/admin/register?r=sponsor"
                         target='_blank'
                       >
                         Content Sponsors:  
                       </a> A person or organisation selling a product, service or advocacy message looking for a mass media platform to advertise and reach targeted members of the public. <br></br>
                       <a
                         className="font-medium"
-                        href="/sign-up"
+                        href="https://imara.tv/sign-up"
                         target='_blank'
                       >
                         Content Consumers:  
