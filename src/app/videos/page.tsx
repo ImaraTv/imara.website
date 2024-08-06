@@ -493,7 +493,7 @@ export default function Videos() {
                 className="mt-10 space-y-12 md:-mt-12 xl:col-span-3"
               >
                 {videos.map((video) => (
-                  <li key={video.id}>
+                  <li key={video.name}>
                     <Link
                       href={`/videos/${encodeURIComponent(
                         video.name.toLowerCase().replace(/\s+/g, '-'),
