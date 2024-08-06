@@ -4,7 +4,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import ReCAPTCHA from 'react-google-recaptcha'; 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 type FormData = {
     name: string
@@ -24,6 +25,12 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
     } = useForm<FormData>();
 
      const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
+     // Define onStepChange function
+    const onStepChange = (step: number) => {
+        console.log(`Current step: ${step}`);
+    };
+    
      useEffect(() => {
         onStepChange(1); // Update the step when the form is mounted
     }, []);
