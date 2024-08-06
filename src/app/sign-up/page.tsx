@@ -4,7 +4,7 @@ import { Header } from '@/components/Header'
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
-import Banner from "@/images/signup.png"
+import Banner from "@/images/1.jpg"
 import Image from "next/image"
 import Link from 'next/link'
 import RegisterForm from '@/components/Forms/RegisterForm'
@@ -37,7 +37,7 @@ export default function SignUp() {
                                         <span className="block text-white">Personalize your films by signing up now!</span>
                                     </h1>
                                     <p className="mt-8 text-sm md:text-lg text-white">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
+                                        Save a fillm to your personal playlist and share our films with your friends.
                                     </p>
                                 </div>
                             </div>
