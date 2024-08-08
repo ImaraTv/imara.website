@@ -16,7 +16,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ videoId }) => {
     try {
       const accessToken = getAccessToken()
       const response = await axios.post(
-        'https://dashboard.imara.tv/api/bookmark',
+        'https://imara.tv/admin/api/bookmark',
         { video_id: videoId },
         {
           headers: {

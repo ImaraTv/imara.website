@@ -4,7 +4,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import ReCAPTCHA from 'react-google-recaptcha'; 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 type FormData = {
     name: string
@@ -14,7 +15,7 @@ type FormData = {
     url: string
 }
 
-const RegisterForm = () => {
+const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void }) => { // Accept setProgress as prop
     const router = useRouter();
     const {
         register,
@@ -24,6 +25,15 @@ const RegisterForm = () => {
     } = useForm<FormData>();
 
      const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
+     // Define onStepChange function
+    const onStepChange = (step: number) => {
+        console.log(`Current step: ${step}`);
+    };
+    
+     useEffect(() => {
+        onStepChange(1); // Update the step when the form is mounted
+    }, []);
 
     const onSubmit = async (data: any) => {
         if (!recaptchaToken) {
@@ -36,8 +46,9 @@ const RegisterForm = () => {
             return;
         }
         try {
+             setProgress(50); // Update progress to 50% when starting the request
             const response = await axios.post(
-                'https://dashboard.imara.tv/api/auth/register',
+                'https://imara.tv/admin/api/auth/register',
                 {
                     ...data, recaptchaToken, 
                     url: 'https://imara.tv/email-verified',
@@ -46,6 +57,8 @@ const RegisterForm = () => {
                     },
                 }
             );
+            setProgress(100); // Update progress to 100% upon successful request
+            
             // Handle successful registration
             console.log(response.data);
 
@@ -60,6 +73,7 @@ const RegisterForm = () => {
                 router.push('/verify-email'); // Assuming you have a /login page
             });
         } catch (error) {
+             setProgress(0); // Reset progress upon error
             // Handle registration error
             console.error(error);
             Swal.fire({
@@ -70,10 +84,12 @@ const RegisterForm = () => {
             });
         }
     };
-
+       useEffect(() => {
+        setProgress(0); // Reset progress when component mounts
+        }, [setProgress]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-y-6 ">
                
                 <div>
                     <div className="mt-2.5">
@@ -97,7 +113,7 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-y-10">
                 <div>
                     <div className="mt-10">
                         <input
@@ -139,11 +155,21 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
+            <div>
             <ReCAPTCHA
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''} 
                 onChange={(token) => setRecaptchaToken(token)}
                 className="mt-4"
-            />
+            /></div>
+             <div className="mt-4">
+                            <input type="checkbox" id="terms" name="terms" className="mr-2" />
+                            <label htmlFor="terms" className="text-gray-700">
+                                I have read and accept the{' '}
+                                <Link href="https://imara.tv/terms-of-use" target="_blank" className="text-blue-500 underline">
+                                    terms and conditions
+                                </Link>
+                            </label>
+                        </div>
             <div className="mt-10 flex justify-end">
                 <button
                     type="submit"

@@ -67,7 +67,7 @@ const items = [
   },
   {
     name: 'Create on Imara',
-    href: 'https://dashboard.imara.tv/register?r=creator',
+    href: 'https://imara.tv/admin/register?r=creator',
     icon: IconFive,
   },
   {
@@ -132,12 +132,13 @@ function MobileNavigation() {
             <MobileNavLink href="/about">About</MobileNavLink>
             <MobileNavLink href="/videos">Watch Now</MobileNavLink>
             <MobileNavLink href="/creators">Creators</MobileNavLink>
+            <MobileNavLink href="/sponsors">Sponsors</MobileNavLink>
             <MobileNavLink href="https://blog.imara.tv">Blog</MobileNavLink>
             <MobileNavLink href="/contact">Contact</MobileNavLink>
-            <MobileNavLink href="/sponsors">Sponsors</MobileNavLink>
+            
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
-              <MobileNavLink href="https://dashboard.imara.tv/register?r=creator">
+              <MobileNavLink href="https://imara.tv/admin/register?r=creator">
                 Create on Imara
               </MobileNavLink>
               <MobileNavLink href="/sign-in">Login</MobileNavLink>
@@ -160,7 +161,7 @@ export function Header2() {
 
   const fetchSearchResults = async (query: string) => {
     try {
-      const response = await fetch(`https://dashboard.imara.tv/api/videos?search=${query}`);
+      const response = await fetch(`https://imara.tv/admin/api/videos?search=${query}`);
       const data = await response.json();
       setSearchResults(data.data);
     } catch (error) {
@@ -195,10 +196,10 @@ export function Header2() {
             <NavLink href="/about">About</NavLink>
             <NavLink href="/videos">Watch Now</NavLink>
             <NavLink href="/creators">Creators</NavLink>
-            <MobileNavLink href="https://blog.imara.tv">Blog</MobileNavLink>
-            <NavLink href="/contact">Contact</NavLink>
             <NavLink href="/sponsors">Sponsors</NavLink>
-
+            <NavLink href="https://blog.imara.tv">Blog</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
+            
           </div>
         </div>
         <div className="flex items-center gap-x-5 md:gap-x-4">
@@ -236,7 +237,7 @@ export function Header2() {
             </div>
           </div>
           <Button
-            href="https://dashboard.imara.tv/register?r=creator"
+            href="https://imara.tv/admin/register?r=creator"
             color="blue"
             className="hidden md:flex"
           >

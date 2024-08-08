@@ -5,7 +5,7 @@ import { Header } from '@/components/Header'
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
 import Image5 from "@/images/image5.png"
-import Banner from "@/images/1.jpg"
+import Banner from "@/images/signin_img.jpg"
 import Image from "next/image"
 import Link from 'next/link'
 import LoginForm from '@/components/Forms/LoginForm'
@@ -26,7 +26,7 @@ export default function SignIn() {
                         {/* Google Sign-In Button */}
                         <div className="mt-8 flex justify-center">
                             <a
-                                href="https://dashboard.imara.tv/admin/oauth/google"
+                                href="https://imara.tv/admin/admin/oauth/google"
                                 style={{ '--c-400': 'var(--primary-400)', '--c-500': 'var(--primary-500)', '--c-600': 'var(--primary-600)' }as React.CSSProperties}
                                 className="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-custom fi-btn-color-primary fi-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid fi-btn-outlined ring-1 text-custom-600 ring-custom-600 hover:bg-custom-400/10 dark:text-custom-400 dark:ring-custom-500"
                             >

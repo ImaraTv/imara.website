@@ -8,8 +8,11 @@ import Banner from "@/images/signup.png"
 import Image from "next/image"
 import Link from 'next/link'
 import RegisterForm from '@/components/Forms/RegisterForm'
+import ProgressBar from '@/components/ProgressBar'
+import { useState } from 'react'
 
 export default function SignUp() {
+    const [progress, setProgress] = useState(0); // Add progress state
     return (
         <>
             <Header />
@@ -37,7 +40,7 @@ export default function SignUp() {
                                         <span className="block text-white">Personalize your films by signing up now!</span>
                                     </h1>
                                     <p className="mt-8 text-sm md:text-lg text-white">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.
+                                        Save a fillm to your personal playlist and share our films with your friends.
                                     </p>
                                 </div>
                             </div>
@@ -51,17 +54,9 @@ export default function SignUp() {
                         <div className="max-w-2xl">
                             <h2 className="text-xl md:text-[40px] font-semibold tracking-tight text-gray-900 sm:text-4xl">Create Account</h2>
                         </div>
-
-                        <RegisterForm />
-                        <div className="mt-4">
-                            <input type="checkbox" id="terms" name="terms" className="mr-2" />
-                            <label htmlFor="terms" className="text-gray-700">
-                                I have read and accept the{' '}
-                                <Link href="https://imara.tv/terms-of-use" target="_blank" className="text-blue-500 underline">
-                                    terms and conditions
-                                </Link>
-                            </label>
-                        </div>
+                        <ProgressBar progress={progress} /> {/* Include ProgressBar */}
+                        <RegisterForm setProgress={setProgress} /> {/* Pass setProgress to RegisterForm */}
+                        
                         <div className='mt-5 flex justify-end'>
                             <div className='flex gap-2'>
                                 <div className='font-medium text-[#767676] text-xs md:text-xl'>Have an account?</div>
