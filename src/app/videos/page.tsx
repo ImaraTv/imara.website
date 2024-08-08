@@ -126,6 +126,7 @@ export default function Videos() {
     fetchCategories()
   }, [])
 
+  
   const fetchVideos = async (pageNumber: number, category: number | null) => {
     try {
       const query = category
