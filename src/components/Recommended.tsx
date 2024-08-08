@@ -527,10 +527,12 @@ export function Recommended() {
       <div className="mb-[44px] mt-[44px] hidden w-full border-t-[1px] border-[#D9D9D9] md:block" />
 
       <Container>
-        <div className="mb-[60px] hidden items-center justify-end space-x-[34px] text-[#F2970F] md:flex">
-          <span className="text-[26px] font-bold">Watch more </span>
-          <ArrowRightIcon className="h-[36px] w-[36px]" />
-        </div>
+        <Link href="/videos">
+          <div className="mb-[60px] hidden items-center justify-end space-x-[34px] text-[#F2970F] md:flex">
+            <span className="text-[26px] font-bold">Watch more </span>
+            <ArrowRightIcon className="h-[36px] w-[36px]" />
+          </div>
+        </Link>
       </Container>
     </>
   )

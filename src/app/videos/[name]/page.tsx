@@ -113,7 +113,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
 
         const vimeoVideoId = video.vimeo_link?.split('/').pop()
         setVideoUrl(
-          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`,
+          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=58479`,
         )
 
         setVideoDetails({ ...video })
