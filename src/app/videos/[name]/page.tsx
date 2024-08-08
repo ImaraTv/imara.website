@@ -22,6 +22,7 @@ import ReactPlayer from 'react-player'
 import { useParams, useSearchParams } from 'next/navigation'
 import SaveButton from '@/components/SaveButton'
 import ShareButton from '@/components/ShareButton'
+import { FC } from 'react'
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
@@ -54,7 +55,7 @@ interface Video {
   category: string
   description: string
   vimeo_link: string
-  call_to_action: string | null
+  call_to_action_btn: string | null
   call_to_action_link: string | null
   image: string
   creator: string
@@ -97,7 +98,10 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
       try {
         const response = await fetch('https://imara.tv/admin/api/videos')
         const data = await response.json()
+        console.log('API Response:', data) // Log the entire response
+
         const videos = data.data
+        console.log('Videos:', videos) // Log the videos array
 
         const decodedName = decodeURIComponent(name)
 
@@ -109,7 +113,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
 
         const vimeoVideoId = video.vimeo_link?.split('/').pop()
         setVideoUrl(
-          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autopause=0&title=0&player_id=0&app_id=58479`,
+          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=58479`,
         )
 
         setVideoDetails({ ...video })
