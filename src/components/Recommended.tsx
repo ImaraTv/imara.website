@@ -145,7 +145,7 @@ export function Recommended() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://imara.tv/admin/api/categories',
+          'https://imara.tv/admin/api/topics',
         )
         const data = await response.json()
         setCategories(data.data)
