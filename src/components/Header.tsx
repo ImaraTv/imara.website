@@ -256,7 +256,7 @@ export function Header() {
                     <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
                       {searchResults.map((result) => (
                         <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
-                          <a href={`/videos/${result.id}`}>{result.name}</a>
+                          <a href={`/videos/${result.name}`}>{result.name}</a>
                         </li>
                       ))}
                     </ul>
