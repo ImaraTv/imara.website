@@ -83,12 +83,21 @@ const suggestions = [
 interface File {
   id: number
   name: string
-  category: string
   duration: number
+  category: string
   description: string
+  vimeo_link: string
+  call_to_action_btn: string
+  call_to_action_link: string
   image: string
-  creator: string
-  rating: number | null
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: number
   stars: number
   // Other properties
 }
@@ -99,9 +108,7 @@ export function Recommended() {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
   )
-  const [topics, setTopics] = useState<{ id: number; name: string }[]>(
-    [],
-  )
+  const [topics, setTopics] = useState<{ id: number; name: string }[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [videos, setVideos] = useState<
     {
@@ -111,10 +118,16 @@ export function Recommended() {
       category: string
       description: string
       vimeo_link: string
-      call_to_action: string
+      call_to_action_btn: string
       call_to_action_link: string
       image: string
-      creator: string
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
       rating: number
       stars: number
     }[]
@@ -128,10 +141,16 @@ export function Recommended() {
       category: string
       description: string
       vimeo_link: string
-      call_to_action: string
+      call_to_action_btn: string
       call_to_action_link: string
       image: string
-      creator: string
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
       rating: number
       stars: number
     }[]
@@ -139,8 +158,8 @@ export function Recommended() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
-  const numCards = 4;
-  const numCards2 = 3;
+  const numCards = 4
+  const numCards2 = 3
   let [isOpen, setIsOpen] = useState(false)
 
   const [selectedItem, setSelectedItem] = useState(null)
@@ -165,9 +184,7 @@ export function Recommended() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(
-          'https://imara.tv/admin/api/categories',
-        )
+        const response = await fetch('https://imara.tv/admin/api/categories')
         const data = await response.json()
         setCategories(data.data)
       } catch (error) {
@@ -179,125 +196,143 @@ export function Recommended() {
   }, [])
 
   useEffect(() => {
-    const fetchTopics = async () => {
+    const fetchLatestVideos = async () => {
       try {
         const response = await fetch(
-          'https://imara.tv/admin/api/topics',
+          'https://dashboard.imara.tv/api/videos/latest',
         )
         const data = await response.json()
-        setTopics(data.data)
+        console.log(data)
+        setLatest(data.data)
+        setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching topics:', error)
+        console.error('Error fetching latest videos:', error)
+        setIsLoading(false)
       }
     }
 
-    fetchTopics()
-  }, [])
-
- 
-  useEffect(() => {
-    const fetchLatestVideos = async () => {
-      try {
-        const response = await fetch('https://dashboard.imara.tv/api/videos/latest');
-        const data = await response.json();
-        console.log(data);
-        setLatest(data.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching latest videos:', error);
-        setIsLoading(false);
-      }
-    };
-
     const fetchAllVideos = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos');
-        const data = await response.json();
-        setVideos(data.data);
-        setIsLoading(false);
+        const response = await fetch(
+          'https://dashboard.imara.tv/api/videos/latest',
+        )
+        const data = await response.json()
+        const placeholderImage =
+          'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
+
+        const processedVideos = await Promise.all(
+          data.data.map(async (video: any) => {
+            // Check if image is null
+            if (!video.image) {
+              video.image = placeholderImage
+            } else {
+              try {
+                // Check if the image exists
+                const imageResponse = await fetch(video.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  video.image = placeholderImage // Fallback image if the original doesn't exist
+                }
+              } catch (error) {
+                video.image = placeholderImage // Fallback image in case of fetch error
+              }
+            }
+            return video
+          }),
+        )
+        setVideos(processedVideos)
+        setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching videos:', error);
-        setIsLoading(false);
+        console.error('Error fetching videos:', error)
+        setIsLoading(false)
       }
-    };
+    }
 
     const fetchFilteredVideos = async () => {
-      setIsLoading(true);
+      setIsLoading(true)
       try {
-        const query = selectedCategory ? `?category=${selectedCategory}` : '';
-        const response = await fetch(`https://imara.tv/admin/api/videos${query}`);
-        const data = await response.json();
-        setVideos(data.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-        setIsLoading(false);
-      }
-    };
-    
+        const query = selectedCategory ? `?category=${selectedCategory}` : ''
+        const response = await fetch(
+          `https://dashboard.imara.tv/api/videos/latest${query}`,
+        )
+        const data = await response.json()
+        const placeholderImage =
+          'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
 
-    fetchLatestVideos();
-    fetchAllVideos();
-    fetchFilteredVideos();
-  }, [selectedCategory]);
+        const processedVideos = await Promise.all(
+          data.data.map(async (video: any) => {
+            // Check if image is null
+            if (!video.image) {
+              video.image = placeholderImage
+            } else {
+              try {
+                // Check if the image exists
+                const imageResponse = await fetch(video.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  video.image = placeholderImage // Fallback image if the original doesn't exist
+                }
+              } catch (error) {
+                video.image = placeholderImage // Fallback image in case of fetch error
+              }
+            }
+            return video
+          }),
+        )
+        setVideos(processedVideos)
+        setIsLoading(false)
+      } catch (error) {
+        console.error('Error fetching videos:', error)
+        setIsLoading(false)
+      }
+    }
+
+    fetchLatestVideos()
+    fetchAllVideos()
+    fetchFilteredVideos()
+  }, [selectedCategory])
 
   const handleCategoryClick = (categoryName: any) => {
-    setSelectedCategory(categoryName);
-    setIsLoading(true);
+    setSelectedCategory(categoryName)
+    setIsLoading(true)
     fetch(`https://imara.tv/admin/api/videos?category=${categoryName}`)
       .then((response) => response.json())
       .then((data) => {
-        setVideos(data.data);
-        setIsLoading(false);
+        setVideos(data.data)
+        setIsLoading(false)
       })
       .catch((error) => {
-        console.error('Error fetching videos:', error);
-        setIsLoading(false);
-      });
-  };
-
-  const handleTopicClick = (topicName: any) => {
-    setSelectedCategory(topicName);
-    setIsLoading(true);
-    fetch(`https://imara.tv/admin/api/videos?topic=${topicName}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setVideos(data.data);
-        setIsLoading(false);
+        console.error('Error fetching videos:', error)
+        setIsLoading(false)
       })
-      .catch((error) => {
-        console.error('Error fetching videos:', error);
-        setIsLoading(false);
-      });
-  };
-
+  }
 
   return (
     <>
       <Container>
-      <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
-            Recommended
-          </div> 
-        <div className="mt-[20px] justify-between md:flex w-full">
-          
+        <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
+          Recommended
+        </div>
+        <div className="mt-[20px] w-full justify-between md:flex">
           <div className="gap-4 md:flex md:flex-wrap">
-
             {categories.map((category, index) => (
               <button
-              type="button"
-              key={category.id}
-              onClick={() => handleCategoryClick(category.name)}
-              className={`text-[12px] inline-flex items-center rounded-md px-[13px] py-2 font-medium shadow-sm md:text-[14px] ${
-                selectedCategory === category.name
-                  ? 'bg-blue-500 text-white' // Active category styling
-                  : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
-              }`}
-            >
+                type="button"
+                key={category.id}
+                onClick={() => handleCategoryClick(category.name)}
+                className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow-sm md:text-[14px] ${
+                  selectedCategory === category.name
+                    ? 'bg-blue-500 text-white' // Active category styling
+                    : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
+                }`}
+              >
                 {category.name}
               </button>
             ))}
           </div>
-          <div className="hidden px-6 md:flex justify-end w-2/5">
+          <div className="hidden w-2/5 justify-end px-6 md:flex">
             <div className="">
               <Listbox value={selected} onChange={setSelected}>
                 <div className="relative mt-1">
@@ -321,9 +356,10 @@ export function Recommended() {
                         <Listbox.Option
                           key={qualityIdx}
                           className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                              ? 'bg-amber-100 text-amber-900'
-                              : 'text-gray-900'
+                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                              active
+                                ? 'bg-amber-100 text-amber-900'
+                                : 'text-gray-900'
                             }`
                           }
                           value={quality}
@@ -331,8 +367,9 @@ export function Recommended() {
                           {({ selected }) => (
                             <>
                               <span
-                                className={`block truncate ${selected ? 'font-medium' : 'font-normal'
-                                  }`}
+                                className={`block truncate ${
+                                  selected ? 'font-medium' : 'font-normal'
+                                }`}
                               >
                                 {quality.name}
                               </span>
@@ -376,9 +413,10 @@ export function Recommended() {
                         <Listbox.Option
                           key={dateIdx}
                           className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                              ? 'bg-amber-100 text-amber-900'
-                              : 'text-gray-900'
+                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                              active
+                                ? 'bg-amber-100 text-amber-900'
+                                : 'text-gray-900'
                             }`
                           }
                           value={date}
@@ -386,8 +424,9 @@ export function Recommended() {
                           {({ active }) => (
                             <>
                               <span
-                                className={`block truncate ${active ? 'font-medium' : 'font-normal'
-                                  }`}
+                                className={`block truncate ${
+                                  active ? 'font-medium' : 'font-normal'
+                                }`}
                               >
                                 {date.name}
                               </span>
@@ -469,8 +508,9 @@ export function Recommended() {
               >
                 {videos.map((video) => (
                   <li key={video.id} className="relative">
-                    <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}>
-
+                    <Link
+                      href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                    >
                       <div
                         onClick={() => openModal(video)}
                         className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
@@ -503,12 +543,8 @@ export function Recommended() {
                       </div>
 
                       <div className="mt-2 flex items-center gap-3">
-                        <Rating
-                          videoId={video.id}
-                          initialRating={video.stars || 0}
-                        />
                         <div className="text-sm italic text-gray-500">
-                          {video.creator}
+                          {video.creator.name}
                         </div>
                       </div>
 
@@ -529,29 +565,35 @@ export function Recommended() {
             </div>
           )}
 
-
           <div className="md:w-1/4">
             {isLoading ? (
-
-              <div role="status" className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center">
-                <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
-                  <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+              <div
+                role="status"
+                className="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0 rtl:space-x-reverse"
+              >
+                <div className="flex h-48 w-full items-center justify-center rounded bg-gray-300 dark:bg-gray-700 sm:w-96">
+                  <svg
+                    className="h-10 w-10 text-gray-200 dark:text-gray-600"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 18"
+                  >
                     <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
                   </svg>
                 </div>
                 <div className="w-full">
-                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-                  <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
-                  <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-                  <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
-                  <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
-                  <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+                  <div className="mb-4 h-2.5 w-48 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mb-2.5 h-2 max-w-[480px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mb-2.5 h-2 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mb-2.5 h-2 max-w-[440px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="mb-2.5 h-2 max-w-[460px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="h-2 max-w-[360px] rounded-full bg-gray-200 dark:bg-gray-700"></div>
                 </div>
                 <span className="sr-only">Loading...</span>
               </div>
             ) : (
               <div>
-
                 <div className="mb-[48px] text-[20px] font-bold text-[#2B2B2B] md:mb-[53px] md:text-[40px]">
                   Latest
                 </div>
@@ -560,13 +602,12 @@ export function Recommended() {
                   className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3"
                 >
                   {videos.map((video) => (
-                    <li
-                      key={video.id}
-
-                    >
-                      <Link href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`} className='group'>
+                    <li key={video.id}>
+                      <Link
+                        href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                        className="group"
+                      >
                         <div className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10">
-
                           <Image
                             width={131}
                             height={118}
