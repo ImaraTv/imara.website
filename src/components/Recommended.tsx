@@ -99,6 +99,9 @@ export function Recommended() {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
   )
+  const [topics, setTopics] = useState<{ id: number; name: string }[]>(
+    [],
+  )
   const [isLoading, setIsLoading] = useState(true)
   const [videos, setVideos] = useState<
     {
@@ -117,7 +120,25 @@ export function Recommended() {
     }[]
   >([])
 
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const [latest, setLatest] = useState<
+    {
+      id: number
+      name: string
+      duration: number
+      category: string
+      description: string
+      vimeo_link: string
+      call_to_action: string
+      call_to_action_link: string
+      image: string
+      creator: string
+      rating: number
+      stars: number
+    }[]
+  >([])
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
   const numCards = 4;
   const numCards2 = 3;
   let [isOpen, setIsOpen] = useState(false)
@@ -145,7 +166,7 @@ export function Recommended() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://imara.tv/admin/api/topics',
+          'https://imara.tv/admin/api/categories',
         )
         const data = await response.json()
         setCategories(data.data)
@@ -157,8 +178,37 @@ export function Recommended() {
     fetchCategories()
   }, [])
 
-
   useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await fetch(
+          'https://imara.tv/admin/api/topics',
+        )
+        const data = await response.json()
+        setTopics(data.data)
+      } catch (error) {
+        console.error('Error fetching topics:', error)
+      }
+    }
+
+    fetchTopics()
+  }, [])
+
+ 
+  useEffect(() => {
+    const fetchLatestVideos = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/videos/latest');
+        const data = await response.json();
+        console.log(data);
+        setLatest(data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching latest videos:', error);
+        setIsLoading(false);
+      }
+    };
+
     const fetchAllVideos = async () => {
       try {
         const response = await fetch('https://imara.tv/admin/api/videos');
@@ -184,7 +234,9 @@ export function Recommended() {
         setIsLoading(false);
       }
     };
+    
 
+    fetchLatestVideos();
     fetchAllVideos();
     fetchFilteredVideos();
   }, [selectedCategory]);
@@ -204,6 +256,21 @@ export function Recommended() {
       });
   };
 
+  const handleTopicClick = (topicName: any) => {
+    setSelectedCategory(topicName);
+    setIsLoading(true);
+    fetch(`https://imara.tv/admin/api/videos?topic=${topicName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVideos(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching videos:', error);
+        setIsLoading(false);
+      });
+  };
+
 
   return (
     <>
@@ -211,25 +278,26 @@ export function Recommended() {
       <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
             Recommended
           </div> 
-        <div className="mt-[20px] justify-between md:flex">
+        <div className="mt-[20px] justify-between md:flex w-full">
           
-          <div className="gap-4 md:flex">
+          <div className="gap-4 md:flex md:flex-wrap">
 
             {categories.map((category, index) => (
               <button
-                type="button"
-                key={category.id}
-                onClick={() => handleCategoryClick(category.name)}
-                className={`text-12px] inline-flex items-center rounded-md bg-white px-[13px] py-2 font-medium text-[#525252] shadow-sm md:text-[14px] ${selectedCategory === category.id
-                    ? 'ring-525252 ring-1 ring-inset'
-                    : 'hover:bg-gray-50'
-                  }`}
-              >
+              type="button"
+              key={category.id}
+              onClick={() => handleCategoryClick(category.name)}
+              className={`text-[12px] inline-flex items-center rounded-md px-[13px] py-2 font-medium shadow-sm md:text-[14px] ${
+                selectedCategory === category.name
+                  ? 'bg-blue-500 text-white' // Active category styling
+                  : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
+              }`}
+            >
                 {category.name}
               </button>
             ))}
           </div>
-          <div className="hidden px-6 md:flex">
+          <div className="hidden px-6 md:flex justify-end w-2/5">
             <div className="">
               <Listbox value={selected} onChange={setSelected}>
                 <div className="relative mt-1">
@@ -342,7 +410,7 @@ export function Recommended() {
             </div>
             <Link
               href="#"
-              className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-[28px] py-1.5 text-sm font-medium text-white focus:outline-none"
+              className="flex items-center justify-center rounded-lg bg-[#007BFF] px-[28px] py-1 text-sm font-medium text-white focus:outline-none"
             >
               Filter
             </Link>
