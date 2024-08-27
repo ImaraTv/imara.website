@@ -69,6 +69,13 @@ export default function Videos() {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
   )
+  const [genres, setGenres] = useState<{ id: number; name: string }[]>(
+    [],
+  )
+  const [locations, setLocations] = useState<{ id: number; name: string }[]>(
+    [],
+  )
+
   const [videos, setVideos] = useState<
     {
       id: number
@@ -91,7 +98,9 @@ export default function Videos() {
 
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
 
@@ -126,6 +135,52 @@ export default function Videos() {
     fetchCategories()
   }, [])
 
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/genres')
+        const data = await response.json()
+        setGenres(data.data)
+      } catch (error) {
+        console.error('Error fetching genres:', error)
+      }
+    }
+
+    fetchGenres()
+  }, [])
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch('https://dashboard.imara.tv/api/locations')
+        const data = await response.json()
+        setLocations(data.data)
+      } catch (error) {
+        console.error('Error fetching locations:', error)
+      }
+    }
+
+    const fetchVideos = async (pageNumber: number, category: number | null) => {
+      try {
+        const query = category
+          ? `?category=${category}&page=${pageNumber}`
+          : `?page=${pageNumber}`
+        const response = await fetch(`https://imara.tv/admin/api/videos${query}`)
+        const data = await response.json()
+        if (data.data.length === 0) {
+          setHasMore(false)
+        } else {
+          setVideos((prevVideos) => [...prevVideos, ...data.data])
+        }
+      } catch (error) {
+        console.error('Error fetching videos:', error)
+      }
+    }
+
+    fetchLocations()
+    fetchVideos()
+  }, [])
+
   
   const fetchVideos = async (pageNumber: number, category: number | null) => {
     try {
@@ -144,20 +199,7 @@ export default function Videos() {
     }
   }
 
-  useEffect(() => {
-    fetchVideos(1, selectedCategory) // Initial fetch
-  }, [selectedCategory])
-
-  useEffect(() => {
-    fetchVideos(page, selectedCategory)
-  }, [page, selectedCategory])
-
-  useEffect(() => {
-    setPage(1)
-    setVideos([])
-    setHasMore(true)
-    fetchVideos(1, selectedCategory)
-  }, [selectedCategory])
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,20 +212,6 @@ export default function Videos() {
       setPage((prevPage) => prevPage + 1)
     }
   })
-  useEffect(() => {
-    fetchVideos(1, selectedCategory) // Initial fetch
-  }, [selectedCategory])
-
-  useEffect(() => {
-    fetchVideos(page, selectedCategory)
-  }, [page, selectedCategory])
-
-  useEffect(() => {
-    setPage(1)
-    setVideos([])
-    setHasMore(true)
-    fetchVideos(1, selectedCategory)
-  }, [selectedCategory])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -247,20 +275,20 @@ export default function Videos() {
 
           <div className="mt-[20px] justify-between md:flex">
             <div className="gap-4 md:flex">
-              {categories.map((category, index) => (
-                <button
-                  type="button"
-                  key={category.id}
-                  onClick={() => handleCategoryClick(category.name)}
-                  className={`text-12px] inline-flex items-center rounded-md bg-white px-[13px] py-2 font-medium text-[#525252] shadow-sm md:text-[14px] ${
-                    selectedCategory === category.id
-                      ? 'ring-525252 ring-1 ring-inset'
-                      : 'hover:bg-gray-50'
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
+            {categories.map((category, index) => (
+              <button
+                type="button"
+                key={category.id}
+                onClick={() => handleCategoryClick(category.name)}
+                className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow-sm md:text-[14px] ${
+                  selectedCategory === category.name
+                    ? 'bg-blue-500 text-white' // Active category styling
+                    : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
             </div>
             <div className="flex">
               <div className="">
@@ -283,10 +311,10 @@ export default function Videos() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                        {qualities.map((quality, qualityIdx) => (
+                      <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                        {genres.map((genre, genreIdx) => (
                           <Listbox.Option
-                            key={qualityIdx}
+                            key={genreIdx}
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                 active
@@ -294,7 +322,7 @@ export default function Videos() {
                                   : 'text-gray-900'
                               }`
                             }
-                            value={quality}
+                            value={genre}
                           >
                             {({ selected }) => (
                               <>
@@ -303,7 +331,7 @@ export default function Videos() {
                                     selected ? 'font-medium' : 'font-normal'
                                   }`}
                                 >
-                                  {quality.name}
+                                  {genre.name}
                                 </span>
                                 {selected ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
@@ -340,10 +368,10 @@ export default function Videos() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs shadow-lg ring-1 ring-black/5 focus:outline-none md:text-base">
-                        {dates.map((date, dateIdx) => (
+                      <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-xs shadow-lg ring-1 ring-black/5 focus:outline-none md:text-base">
+                        {locations.map((location, locationIdx) => (
                           <Listbox.Option
-                            key={dateIdx}
+                            key={locationIdx}
                             className={({ active }) =>
                               `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                 active
@@ -351,7 +379,7 @@ export default function Videos() {
                                   : 'text-gray-900'
                               }`
                             }
-                            value={date}
+                            value={location}
                           >
                             {({ active }) => (
                               <>
@@ -360,7 +388,7 @@ export default function Videos() {
                                     active ? 'font-sm' : 'font-xs'
                                   }`}
                                 >
-                                  {date.name}
+                                  {location.name}
                                 </span>
                                 {active ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">

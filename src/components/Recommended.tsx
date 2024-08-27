@@ -220,27 +220,27 @@ export function Recommended() {
         const placeholderImage =
           'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
 
-        const processedVideos = await Promise.all(
-          data.data.map(async (video: any) => {
-            // Check if image is null
-            if (!video.image) {
-              video.image = placeholderImage
-            } else {
-              try {
-                // Check if the image exists
-                const imageResponse = await fetch(video.image, {
-                  method: 'HEAD',
-                })
-                if (!imageResponse.ok) {
-                  video.image = placeholderImage // Fallback image if the original doesn't exist
+          const processedVideos = await Promise.all(
+            data.data.map(async (video: any) => {
+              // Check if image is null or empty
+              if (!video.image) {
+                video.image = placeholderImage;
+              } else {
+                try {
+                  // Attempt to fetch the image using the HEAD method
+                  const imageResponse = await fetch(video.image, { method: 'HEAD' });
+                  if (!imageResponse.ok) {
+                    // If the image doesn't exist, use the placeholder
+                    video.image = placeholderImage;
+                  }
+                } catch (error) {
+                  // If fetching the image fails (e.g., network error), use the placeholder
+                  video.image = placeholderImage;
                 }
-              } catch (error) {
-                video.image = placeholderImage // Fallback image in case of fetch error
               }
-            }
-            return video
-          }),
-        )
+              return video;
+            })
+          )
         setVideos(processedVideos)
         setIsLoading(false)
       } catch (error) {
@@ -260,27 +260,28 @@ export function Recommended() {
         const placeholderImage =
           'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
 
-        const processedVideos = await Promise.all(
-          data.data.map(async (video: any) => {
-            // Check if image is null
-            if (!video.image) {
-              video.image = placeholderImage
-            } else {
-              try {
-                // Check if the image exists
-                const imageResponse = await fetch(video.image, {
-                  method: 'HEAD',
-                })
-                if (!imageResponse.ok) {
-                  video.image = placeholderImage // Fallback image if the original doesn't exist
+          const processedVideos = await Promise.all(
+            data.data.map(async (video: any) => {
+              // Check if image is null or empty
+              if (!video.image) {
+                video.image = placeholderImage;
+              } else {
+                try {
+                  // Attempt to fetch the image using the HEAD method
+                  const imageResponse = await fetch(video.image, { method: 'HEAD' });
+                  if (!imageResponse.ok) {
+                    // If the image doesn't exist, use the placeholder
+                    video.image = placeholderImage;
+                  }
+                } catch (error) {
+                  // If fetching the image fails (e.g., network error), use the placeholder
+                  video.image = placeholderImage;
                 }
-              } catch (error) {
-                video.image = placeholderImage // Fallback image in case of fetch error
               }
-            }
-            return video
-          }),
-        )
+              return video;
+            })
+          )
+
         setVideos(processedVideos)
         setIsLoading(false)
       } catch (error) {
