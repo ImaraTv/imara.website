@@ -160,20 +160,41 @@ export default function Videos() {
       }
     }
 
-    const fetchVideos = async (pageNumber: number, category: number | null) => {
+    const fetchVideos = async () => {
       try {
-        const query = category
-          ? `?category=${category}&page=${pageNumber}`
-          : `?page=${pageNumber}`
-        const response = await fetch(`https://imara.tv/admin/api/videos${query}`)
+        const response = await fetch(
+          'https://dashboard.imara.tv/api/videos/latest',
+        )
         const data = await response.json()
-        if (data.data.length === 0) {
-          setHasMore(false)
-        } else {
-          setVideos((prevVideos) => [...prevVideos, ...data.data])
-        }
+        const placeholderImage =
+          'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
+
+          const processedVideos = await Promise.all(
+            data.data.map(async (video: any) => {
+              // Check if image is null or empty
+              if (!video.image) {
+                video.image = placeholderImage;
+              } else {
+                try {
+                  // Attempt to fetch the image using the HEAD method
+                  const imageResponse = await fetch(video.image, { method: 'HEAD' });
+                  if (!imageResponse.ok) {
+                    // If the image doesn't exist, use the placeholder
+                    video.image = placeholderImage;
+                  }
+                } catch (error) {
+                  // If fetching the image fails (e.g., network error), use the placeholder
+                  video.image = placeholderImage;
+                }
+              }
+              return video;
+            })
+          )
+        setVideos(processedVideos)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching videos:', error)
+        setIsLoading(false)
       }
     }
 
