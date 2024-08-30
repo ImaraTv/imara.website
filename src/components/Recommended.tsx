@@ -199,7 +199,7 @@ export function Recommended() {
     const fetchLatestVideos = async () => {
       try {
         const response = await fetch(
-          'https://dashboard.imara.tv/api/videos/latest',
+          'https://teststudio.imara.tv/api/videos/latest',
         )
         const data = await response.json()
         console.log(data)
@@ -214,11 +214,11 @@ export function Recommended() {
     const fetchAllVideos = async () => {
       try {
         const response = await fetch(
-          'https://dashboard.imara.tv/api/videos/latest',
+          'https://teststudio.imara.tv/api/videos/latest',
         )
         const data = await response.json()
         const placeholderImage =
-          'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
+          'https://teststudio.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
 
           const processedVideos = await Promise.all(
             data.data.map(async (video: any) => {
@@ -254,11 +254,11 @@ export function Recommended() {
       try {
         const query = selectedCategory ? `?category=${selectedCategory}` : ''
         const response = await fetch(
-          `https://dashboard.imara.tv/api/videos/latest${query}`,
+          `https://teststudio.imara.tv/api/videos/latest${query}`,
         )
         const data = await response.json()
         const placeholderImage =
-          'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
+          'https://teststudio.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
 
           const processedVideos = await Promise.all(
             data.data.map(async (video: any) => {

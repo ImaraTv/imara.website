@@ -138,7 +138,7 @@ export default function Videos() {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/genres')
+        const response = await fetch('https://teststudio.imara.tv/api/genres')
         const data = await response.json()
         setGenres(data.data)
       } catch (error) {
@@ -152,7 +152,7 @@ export default function Videos() {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('https://dashboard.imara.tv/api/locations')
+        const response = await fetch('https://teststudio.imara.tv/api/locations')
         const data = await response.json()
         setLocations(data.data)
       } catch (error) {
@@ -163,11 +163,11 @@ export default function Videos() {
     const fetchVideos = async () => {
       try {
         const response = await fetch(
-          'https://dashboard.imara.tv/api/videos/latest',
+          'https://teststudio.imara.tv/api/videos/latest',
         )
         const data = await response.json()
         const placeholderImage =
-          'https://dashboard.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
+          'https://teststudio.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
 
           const processedVideos = await Promise.all(
             data.data.map(async (video: any) => {
