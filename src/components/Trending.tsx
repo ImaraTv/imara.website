@@ -95,7 +95,7 @@ export function Trending() {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch('https://teststudio.imara.tv/api/videos')
         const data = await response.json()
         setTrending(data.data)
         setIsLoading(false)

@@ -145,7 +145,7 @@ export default function Contact() {
                                     <div className="mt-2.5">
                                         <input
                                             type="email"
-                                            name="email"
+                                            name="email_or_phone"
                                             id="email"
                                             placeholder='Email'
                                             autoComplete="email"

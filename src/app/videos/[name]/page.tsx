@@ -14,6 +14,7 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import { ShareIcon } from '@heroicons/react/24/solid'
 import { StarIcon } from '@heroicons/react/24/solid'
 import Yt from '@/images/player.png'
+import Fallback from '@/images/video.png'
 import styled from 'styled-components'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import VimeoPlayer from '@/components/VimeoPlayer'
@@ -31,16 +32,44 @@ const cardStyle = {
 interface File {
   id: number
   name: string
+  slug: string
+  release_date: string
+  duration: number | null
   category: string
-  duration: number
+  topics: string[]
   description: string
+  vimeo_link: string
+  call_to_action_btn: string | null
+  call_to_action_link: string | null
   image: string
-  creator: string
-  rating: number | null
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: string
+  sponsor: {
+    name: string
+    about: string
+    website: string
+    logo: string
+  }
+  location: {
+    id: number | null
+    name: string | null
+  }
   stars: number
-  // Other properties
+  media: {
+    poster: string
+    trailer: string | null
+    trailer_vimeo: string | null
+    hd_film: string
+    hd_film_vimeo: string
+  }
 }
-const fallbackImage = '/images/logos/logo/png';
+const fallbackImage = Fallback
 interface Sponsor {
   name: string
   about: string
@@ -51,17 +80,42 @@ interface Sponsor {
 interface Video {
   id: number
   name: string
-  duration: number
+  slug: string
+  release_date: string
+  duration: number | null
   category: string
+  topics: string[]
   description: string
   vimeo_link: string
   call_to_action_btn: string | null
   call_to_action_link: string | null
   image: string
-  creator: string
-  rating: number | null
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: string
+  sponsor: {
+    name: string
+    about: string
+    website: string
+    logo: string
+  }
+  location: {
+    id: number | null
+    name: string | null
+  }
   stars: number
-  sponsor: Sponsor | null
+  media: {
+    poster: string
+    trailer: string | null
+    trailer_vimeo: string | null
+    hd_film: string
+    hd_film_vimeo: string
+  }
 }
 
 const VideoDetails = ({ params }: { params: { name: string } }) => {
@@ -80,7 +134,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch('https://teststudio.imara.tv/api/videos')
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
@@ -96,7 +150,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
   useEffect(() => {
     const fetchVideoDetails = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch('https://teststudio.imara.tv/api/videos')
         const data = await response.json()
         console.log('API Response:', data) // Log the entire response
 
@@ -198,13 +252,13 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
         {/* Buttons */}
         <Container>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-5">
-            <span>Sponsored By: {videoDetails?.sponsor?.name} </span> 
+            <span>Sponsored By: {videoDetails?.sponsor?.name} </span>
 
             <Image
               width={405}
               height={352}
               src={videoDetails?.sponsor?.logo || fallbackImage}
-              alt={'video image'}
+              alt={'sponsor logo'}
               className="h-[35px] w-full object-cover md:h-[50px] md:w-[150px]"
             />
 
@@ -329,7 +383,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                             Director:
                           </span>
                           <span className="text-[18px] text-white md:text-[#525252]">
-                            {videoDetails.creator}
+                            {videoDetails.creator.name}
                           </span>
                         </div>
                         <div className="flex gap-2">
@@ -465,7 +519,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                           initialRating={video.stars || 0}
                         />
                         <div className="text-sm italic text-gray-500">
-                          {video.creator}
+                          {video.creator.name}
                         </div>
                       </div>
 
