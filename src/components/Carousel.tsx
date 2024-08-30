@@ -69,7 +69,7 @@ export function CarouselHome(props: any) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos', {
+        const response = await fetch('https://teststudio.imara.tv/api/videos', {
           cache: 'force-cache',
         })
         const data = await response.json()

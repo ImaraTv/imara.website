@@ -67,7 +67,7 @@ const items = [
   },
   {
     name: 'Create on Imara',
-    href: 'https://imara.tv/admin/register?r=creator',
+    href: 'https://teststudio.imara.tv/register?r=creator',
     icon: IconFive,
   },
   {
@@ -138,7 +138,7 @@ function MobileNavigation() {
             
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
-              <MobileNavLink href="https://imara.tv/admin/register?r=creator">
+              <MobileNavLink href="https://teststudio.imara.tv/register?r=creator">
                 Create on Imara
               </MobileNavLink>
               <MobileNavLink href="/sign-in">Login</MobileNavLink>
@@ -161,7 +161,7 @@ export function Header2() {
 
   const fetchSearchResults = async (query: string) => {
     try {
-      const response = await fetch(`https://imara.tv/admin/api/videos?search=${query}`);
+      const response = await fetch(`https://teststudio.imara.tv/api/videos?search=${query}`);
       const data = await response.json();
       setSearchResults(data.data);
     } catch (error) {
@@ -237,7 +237,7 @@ export function Header2() {
             </div>
           </div>
           <Button
-            href="https://imara.tv/admin/register?r=creator"
+            href="https://teststudio.imara.tv/register?r=creator"
             color="blue"
             className="hidden md:flex"
           >
