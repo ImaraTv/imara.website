@@ -10,6 +10,7 @@ import React, { Fragment, useEffect, useState, Suspense } from 'react'
 import { Button } from '@/components/Button'
 import Image from 'next/image'
 import Yt from '@/images/player.png'
+import Fallback from '@/images/video.png'
 import Recent from '@/images/recent.png'
 import Link from 'next/link'
 import { Container } from '@/components/Container'
@@ -128,6 +129,8 @@ export function Recommended() {
     [],
   )
   const [topics, setTopics] = useState<{ id: number; name: string }[]>([])
+  const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
+  const [locations, setLocations] = useState<{ id: number; name: string }[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [videos, setVideos] = useState<
     {
@@ -217,6 +220,8 @@ export function Recommended() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
   const numCards = 4
   const numCards2 = 3
   let [isOpen, setIsOpen] = useState(false)
@@ -244,7 +249,7 @@ export function Recommended() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/categories',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
         )
         const data = await response.json()
         setCategories(data.data)
@@ -257,10 +262,24 @@ export function Recommended() {
   }, [])
 
   useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`)
+        const data = await response.json()
+        setGenres(data.data)
+      } catch (error) {
+        console.error('Error fetching genres:', error)
+      }
+    }
+
+    fetchGenres()
+  }, [])
+
+  useEffect(() => {
     const fetchLatestVideos = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/videos/latest',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`,
         )
         const data = await response.json()
         console.log(data)
@@ -272,40 +291,51 @@ export function Recommended() {
       }
     }
 
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`,
+        )
+        const data = await response.json()
+        setLocations(data.data)
+      } catch (error) {
+        console.error('Error fetching locations:', error)
+      }
+    }
+
     const fetchAllVideos = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/videos/latest',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended`,
         )
         const data = await response.json()
-        // const placeholderImage =
-        //   'https://teststudio.imara.tv/storage/77/01J3SQM28ZG9B2Q7TB9SFKAVT8.jpeg'
+        const placeholderImage =Fallback
 
-        // const processedVideos = await Promise.all(
-        //   data.data.map(async (video: any) => {
-        //     // Check if image is null or empty
-        //     if (!video.image) {
-        //       video.image = placeholderImage
-        //     } else {
-        //       try {
-        //         // Attempt to fetch the image using the HEAD method
-        //         const imageResponse = await fetch(video.image, {
-        //           method: 'HEAD',
-        //         })
-        //         if (!imageResponse.ok) {
-        //           // If the image doesn't exist, use the placeholder
-        //           video.image = placeholderImage
-        //         }
-        //       } catch (error) {
-        //         // If fetching the image fails (e.g., network error), use the placeholder
-        //         video.image = placeholderImage
-        //       }
-        //     }
-        //     return video
-        //   }),
-        // )
-        // setVideos(processedVideos)
-        setVideos(data.data);
+        const processedVideos = await Promise.all(
+          data.data.map(async (video: any) => {
+            // Check if image is null or empty
+            if (!video.image) {
+              video.image = placeholderImage
+            } else {
+              try {
+                // Attempt to fetch the image using the HEAD method
+                const imageResponse = await fetch(video.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  // If the image doesn't exist, use the placeholder
+                  video.image = placeholderImage
+                }
+              } catch (error) {
+                // If fetching the image fails (e.g., network error), use the placeholder
+                video.image = placeholderImage
+              }
+            }
+            return video
+          }),
+        )
+        setVideos(processedVideos)
+        // setVideos(data.data);
         setIsLoading(false)
       } catch (error) {
         console.error('Error fetching videos:', error)
@@ -318,7 +348,7 @@ export function Recommended() {
       try {
         const query = selectedCategory ? `?category=${selectedCategory}` : ''
         const response = await fetch(
-          `https://teststudio.imara.tv/api/videos/latest${query}`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest${query}`,
         )
         const data = await response.json()
         setVideos(data.data);
@@ -330,6 +360,7 @@ export function Recommended() {
     }
 
     fetchLatestVideos()
+    fetchLocations()
     fetchAllVideos()
     fetchFilteredVideos()
   }, [selectedCategory])
@@ -337,7 +368,7 @@ export function Recommended() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
-    fetch(`https://teststudio.imara.tv/api/videos?category=${categoryName}`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`)
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -391,8 +422,8 @@ export function Recommended() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                      {qualities.map((quality, qualityIdx) => (
+                    <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                      {genres.map((quality, qualityIdx) => (
                         <Listbox.Option
                           key={qualityIdx}
                           className={({ active }) =>
@@ -448,8 +479,8 @@ export function Recommended() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                      {dates.map((date, dateIdx) => (
+                    <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                      {locations.map((date, dateIdx) => (
                         <Listbox.Option
                           key={dateIdx}
                           className={({ active }) =>
@@ -641,7 +672,7 @@ export function Recommended() {
                   role="list"
                   className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3"
                 >
-                  {videos.map((video) => (
+                  {latest.map((video) => (
                     <li key={video.id}>
                       <Link
                         href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}

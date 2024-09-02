@@ -13,7 +13,7 @@ export default function Home() {
       <Header />
       <main>
          <CarouselHome />
-          <Trending />
+          <Trending /> 
           <Recommended />
 
           <ActorsHero />

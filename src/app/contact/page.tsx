@@ -47,7 +47,7 @@ export default function Contact() {
         }
 
         try {
-            const response = await fetch('https://teststudio.imara.tv/api/contact', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -176,7 +176,7 @@ export default function Videos() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/categories',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
         )
         const data = await response.json()
         setCategories(data.data)
@@ -191,7 +191,7 @@ export default function Videos() {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await fetch('https://teststudio.imara.tv/api/genres')
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`)
         const data = await response.json()
         setGenres(data.data)
       } catch (error) {
@@ -206,7 +206,7 @@ export default function Videos() {
     const fetchLocations = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/locations',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`,
         )
         const data = await response.json()
         setLocations(data.data)
@@ -218,7 +218,7 @@ export default function Videos() {
     const fetchVideos = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/videos/latest',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`,
         )
         const data = await response.json()
         const placeholderImage = Fallback
@@ -264,7 +264,7 @@ export default function Videos() {
         ? `?category=${category}&page=${pageNumber}`
         : `?page=${pageNumber}`
       const response = await fetch(
-        `https://teststudio.imara.tv/api/videos${query}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos${query}`,
       )
       const data = await response.json()
       if (data.data.length === 0) {
@@ -307,7 +307,7 @@ export default function Videos() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
-    fetch(`https://teststudio.imara.tv/api/videos?category=${categoryName}`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`)
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -322,7 +322,7 @@ export default function Videos() {
   const fetchSearchResults = async (query: string) => {
     try {
       const response = await fetch(
-        `https://teststudio.imara.tv/api/videos?search=${query}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?search=${query}`,
       )
       const data = await response.json()
       setSearchResults(data.data)
