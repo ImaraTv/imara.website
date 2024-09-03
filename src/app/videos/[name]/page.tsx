@@ -262,7 +262,9 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
               className="h-[35px] w-full object-cover md:h-[50px] md:w-[150px]"
             />
 
-            {/* <Link href={videoDetails?.call_to_action_link} target="_blank">{videoDetails?.call_to_action}</Link> */}
+            <Link href={`${videoDetails?.call_to_action_link}`} target="_blank" className="inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-6 py-2.5 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              {videoDetails?.call_to_action_btn}
+            </Link>
 
             {videoDetails && <SaveButton videoId={videoDetails.id} />}
 

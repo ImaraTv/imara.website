@@ -124,7 +124,14 @@ export function Trending() {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending`, {
+          method: 'GET', // Specify the request method if not GET by default
+          headers: {
+            'Content-Type': 'application/json', // Ensure the content type is correct
+            'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
+            // Include any other headers required by the server, like authentication tokens
+          },
+        })
         const data = await response.json()
         const placeholderImage = Trend1
 
