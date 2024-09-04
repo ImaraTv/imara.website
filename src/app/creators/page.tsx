@@ -207,7 +207,7 @@ export default function Actors() {
                       href="#"
                       className="mx-8 rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                     >
-                      View profile
+                      Watch my Films
                     </a>
                   </li>
                 ))}
