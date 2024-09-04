@@ -113,7 +113,7 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-y-10">
+            <div className="grid grid-cols-1">
                 <div>
                     <div className="mt-10">
                         <input
