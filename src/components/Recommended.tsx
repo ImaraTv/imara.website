@@ -81,6 +81,7 @@ const suggestions = [
     imageUrl: Recent,
   },
 ]
+
 interface File {
   id: number
   name: string
@@ -123,8 +124,8 @@ interface File {
 }
 
 export function Recommended() {
-  const [selected, setSelected] = useState(qualities[0])
-  const [active, setActive] = useState(dates[0])
+  const [selected, setSelected] = useState()
+  const [active, setActive] = useState()
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
   )
@@ -220,8 +221,9 @@ export function Recommended() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null)
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<{ id: number; name: string } | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<{ id: number; name: string } | null>(null)
+
   const numCards = 4
   const numCards2 = 3
   let [isOpen, setIsOpen] = useState(false)
@@ -412,10 +414,10 @@ export function Recommended() {
           </div>
           <div className="hidden w-2/5 justify-end px-6 md:flex">
             <div className="">
-              <Listbox value={selected} onChange={setSelected}>
+              <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                 <div className="relative mt-1">
                   <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
-                    <span className="block truncate pr-1">{selected.name}</span>
+                    <span className="block truncate pr-1">{selectedGenre ? selectedGenre.name : 'Select a genre'}</span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                       <ChevronDownIcon
                         className="h-5 w-5 text-gray-400"
@@ -469,10 +471,10 @@ export function Recommended() {
               </Listbox>
             </div>
             <div className="">
-              <Listbox value={active} onChange={setActive}>
+              <Listbox value={selectedLocation} onChange={setSelectedLocation}>
                 <div className="relative mt-1">
                   <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
-                    <span className="block truncate pr-1">{active.name}</span>
+                    <span className="block truncate pr-1">{selectedLocation ? selectedLocation.name : 'Select a location'}</span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                       <ChevronDownIcon
                         className="h-5 w-5 text-gray-400"
