@@ -75,6 +75,7 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
         });
       } catch (error: any) {
         setProgress(0); // Reset progress upon error
+        
         if (error.response && error.response.data && error.response.data.errors) {
             const fieldErrors = error.response.data.errors; // Assuming error response is structured like { errors: { fieldName: "Error message" } }
       
@@ -137,7 +138,7 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
 
         {/* URL Field */}
         <div>
-          <div className="mt-10">
+          <div className="mt-2.5">
             <input
               type="text"
               placeholder="Website URL"
@@ -151,7 +152,7 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
 
         {/* Password Field */}
         <div>
-          <div className="mt-10">
+          <div className="mt-2.5">
             <input
               type="password"
               placeholder="Set password"
@@ -165,7 +166,7 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
 
         {/* Password Confirmation Field */}
         <div>
-          <div className="mt-10">
+          <div className="mt-2.5">
             <input
               type="password"
               placeholder="Repeat password"
