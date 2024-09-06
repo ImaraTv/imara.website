@@ -61,7 +61,7 @@ const navigation = {
 
     {
       name: 'Tiktok',
-      href: 'https://www.tiktok.com/@imara.tv1?_t=8oSBj9CJutB&_r=1',
+      href: 'https://www.tiktok.com/@imaratvkenya',
       icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
