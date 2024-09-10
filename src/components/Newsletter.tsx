@@ -1,6 +1,5 @@
 "use client"
 
-import { newsletter } from "../../utils/sendgrid2"
 import { useState } from 'react';
 
 export function Newsletter() {
@@ -9,31 +8,37 @@ export function Newsletter() {
     });
     const [formStatus, setFormStatus] = useState('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus('Sending...');
-
+      
         try {
-            const response = await fetch('/api/newsletter', {
-                method: 'POST',
-                body: new FormData(e.currentTarget),
-            });
-
-            if (response.ok) {
-                setFormStatus('Subscription Successful');
-                setFormData({ 'email': '' });
-            } else {
-                setFormStatus('Subscription Failed');
-            }
+          const response = await fetch('/api/newsletter', {
+            method: 'POST',  // Ensure method is POST
+            headers: {
+              'Content-Type': 'application/json',  // Set content type to JSON
+            },
+            body: JSON.stringify(formData),  // Send JSON data
+          });
+      
+          if (response.ok) {
+            setFormStatus('Subscription Successful');
+            setFormData({ 'email': '' });
+          } else {
+            const errorData = await response.json();  // Parse the JSON error response
+            setFormStatus(`Subscription Failed: ${errorData.error}`);
+          }
         } catch (error) {
-            console.error(error);
-            setFormStatus('Subscription Failed');
+          console.error(error);
+          setFormStatus('Subscription Failed');
         }
-    };
+      };
+      
+
     return (
         <div className="bg-white py-16 sm:py-24">
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-4">

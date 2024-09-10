@@ -204,7 +204,7 @@ export default function Actors() {
                       {creator.stage_name}
                     </p>
                     <a
-                      href="#"
+                      href="/videos"
                       className="mx-8 rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                     >
                       Watch my Films
