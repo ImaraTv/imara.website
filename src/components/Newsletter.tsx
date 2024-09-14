@@ -61,7 +61,7 @@ export function Newsletter({}: Props) {
                 if (datas.status >= 400) {
                   setStatus(datas.status)
                   setMessage(
-                    'Error joining the newsletter. You can directly contact me at github@ebraj.',
+                    'Error joining the newsletter.',
                   )
                   setTimeout(() => {
                     setMessage('')
@@ -83,7 +83,7 @@ export function Newsletter({}: Props) {
               } catch (error) {
                 setStatus(500)
                 setMessage(
-                  'Error joining the newsletter. You can directly contact me at github@ebraj.',
+                  'Error joining the newsletter.',
                 )
                 setTimeout(() => {
                   setMessage('')
