@@ -192,7 +192,7 @@ export default function ProfileEdit() {
       try {
         const accessToken = getAccessToken()
         const response = await axios.get(
-          'https://teststudio.imara.tv/api/profile',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/profile`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -216,7 +216,7 @@ export default function ProfileEdit() {
     const accessToken = getAccessToken()
     // send a request to the API
     const response = await fetch(
-      'https://teststudio.imara.tv/api/change-password',
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/change-password`,
       {
         method: 'POST',
         headers: {

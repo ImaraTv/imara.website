@@ -87,14 +87,14 @@ export function Faq2() {
                 <li className="mt-4 text-sm text-slate-700">{' '}
                       <a
                         className="font-medium"
-                        href="https://teststudio.imara.tv/register?r=creator"
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}
                         target='_blank'
                       >
                         Content Creators:  
                       </a> A young person who has a natural talent or digital skill looking for an opportunity to earn money, build their craft and create films. <br></br>
                       <a
                         className="font-medium"
-                        href="https://teststudio.imara.tv/register?r=sponsor"
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=sponsor`}
                         target='_blank'
                       >
                         Content Sponsors:  
@@ -108,7 +108,7 @@ export function Faq2() {
                       </a> A person looking for wholesome edutainment content for themselves and/or their students and/or their children to enjoy and know more. <br></br>
                       <a
                         className="font-medium"
-                        href="https://teststudio.imara.tv/register"
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/register`}
                         target='_blank'
                       >
                         Content Administrators:  
