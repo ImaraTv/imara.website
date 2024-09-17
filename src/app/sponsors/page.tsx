@@ -304,7 +304,7 @@ export default function About() {
                     Our Sponsors
                   </h2>
 
-                  <Button href="https://imara.tv/admin/admin/register?r=sponsor" color="blue" className="hidden md:flex">
+                  <Button href={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/register?r=sponsor`} color="blue" className="hidden md:flex">
               <span>
                 Become a Sponsor
               </span>

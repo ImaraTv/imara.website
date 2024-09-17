@@ -1,20 +1,45 @@
-// app/api/contact/route.ts
+import type { NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
-import { newsletter } from '@/../../utils/sendgrid2'; // Update this path to match the location of your sendgrid.ts file
 
-export async function POST(request: Request) {
-  const body = await request.formData();
-  const email = body.get('email');
-
+export async function POST(req: Request, res: NextApiResponse) {
   try {
-    await newsletter(
-      process.env.SENDGRID_TO_EMAIL || '',
-      `New message from ${email}`,
-      `Email: ${email}`
-    );
-    return NextResponse.json({ message: 'Successfully subscribed to our newsletter' });
+    const { email } = await req.json();
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    const MailchimpKey = process.env.MAILCHIMP_API_KEY;
+    const MailchimpServer = process.env.MAILCHIMP_SERVER_PREFIX;
+    const MailchimpAudience = process.env.MAILCHIMP_AUDIENCE_ID;
+
+    if (!MailchimpKey || !MailchimpServer || !MailchimpAudience) {
+      throw new Error('Missing Mailchimp environment variables');
+    }
+
+    const customUrl = `https://${MailchimpServer}.api.mailchimp.com/3.0/lists/${MailchimpAudience}/members`;
+
+    const response = await fetch(customUrl, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${Buffer.from(`anystring:${MailchimpKey}`).toString('base64')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email_address: email,
+        status: 'subscribed',
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json({ error: errorData.detail });
+    }
+
+    const received = await response.json();
+    return NextResponse.json(received);
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 }

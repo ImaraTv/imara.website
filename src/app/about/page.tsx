@@ -27,6 +27,7 @@ import Emmah from '@/images/members/emmah.jpg'
 import Founder from '@/images/members/founder.jpg'
 import Fred from '@/images/members/fred.jpeg'
 import Mercy from '@/images/members/cfo.jpg'
+import Jerusha from '@/images/members/jerusha.jpeg'
 
 import Image from 'next/image'
 import { StaticImageData } from 'next/image'
@@ -90,6 +91,12 @@ const files: File[] = [
     role: 'Chief Finance Officer',
     description: '',
     imageUrl: Mercy,
+  },
+  {
+    name: 'Jerusha Oketch',
+    role: 'Film Production and Office Administrator',
+    description: 'Jerusha Oketch is an enthusiastic Film Production and Office Administrator who has recently joined our team. With a solid background in film production and animation, she is deeply committed to the idea that media has the power to educate, inspire, and make a positive difference in society. Her proactive approach and organizational skills ensure that our projects run smoothly and effectively, helping to position Imara TV as a leading destination for meaningful and engaging content.',
+    imageUrl: Jerusha,
   },
 ]
 

@@ -72,7 +72,7 @@ const items = [
   },
   {
     name: 'Create on Imara',
-    href: 'https://imara.tv/admin/register?r=creator',
+    href: `${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`,
     icon: IconFive,
   }
 
@@ -136,7 +136,7 @@ function MobileNavigation() {
               
               <hr className="m-2 border-slate-300/40" />
               <div className="flex gap-2">
-                <MobileNavLink href="https://imara.tv/admin/register?r=creator">Create on Imara</MobileNavLink>
+                <MobileNavLink href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}>Create on Imara</MobileNavLink>
                 <MobileNavLink href="/sign-in">Login</MobileNavLink>
               </div>
 
@@ -161,7 +161,7 @@ export function Header() {
 
   const fetchSearchResults = async (query: string) => {
     try {
-      const response = await fetch(`https://imara.tv/admin/api/videos?search=${query}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?search=${query}`);
       const data = await response.json();
       setSearchResults(data.data);
     } catch (error) {
@@ -256,7 +256,7 @@ export function Header() {
                     <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
                       {searchResults.map((result) => (
                         <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
-                          <a href={`/videos/${result.id}`}>{result.name}</a>
+                          <a href={`/videos/${encodeURIComponent(result.name.toLowerCase().replace(/\s+/g, '-'))}`}>{result.name}</a>
                         </li>
                       ))}
                     </ul>
@@ -265,7 +265,7 @@ export function Header() {
                 </div>
               </div>
             </div>
-            <Button href="https://imara.tv/admin/register?r=creator" color="blue" className="hidden md:flex">
+            <Button href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`} color="blue" className="hidden md:flex">
               <span>
                 Create a Film
               </span>

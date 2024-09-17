@@ -79,13 +79,42 @@ export function Trending() {
     {
       id: number
       name: string
-      duration: number
+      slug: string
+      release_date: string
+      duration: number | null
       category: string
+      topics: string[]
       description: string
       vimeo_link: string
-      call_to_action: string
-      call_to_action_link: string
+      call_to_action_btn: string | null
+      call_to_action_link: string | null
       image: string
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
+      rating: string
+      sponsor: {
+        name: string
+        about: string
+        website: string
+        logo: string
+      }
+      location: {
+        id: number | null
+        name: string | null
+      }
+      stars: number
+      media: {
+        poster: string
+        trailer: string | null
+        trailer_vimeo: string | null
+        hd_film: string
+        hd_film_vimeo: string
+      }
     }[]
   >([])
   const [isLoading, setIsLoading] = useState(true)
@@ -95,9 +124,42 @@ export function Trending() {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const response = await fetch('https://imara.tv/admin/api/videos')
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending`, {
+          method: 'GET', // Specify the request method if not GET by default
+          headers: {
+            'Content-Type': 'application/json', // Ensure the content type is correct
+            'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
+            // Include any other headers required by the server, like authentication tokens
+          },
+        })
         const data = await response.json()
-        setTrending(data.data)
+        const placeholderImage = Trend1
+
+        const processedVideos = await Promise.all(
+          data.data.map(async (video: any) => {
+            // Check if image is null or empty
+            if (!video.image) {
+              video.image = placeholderImage
+            } else {
+              try {
+                // Attempt to fetch the image using the HEAD method
+                const imageResponse = await fetch(video.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  // If the image doesn't exist, use the placeholder
+                  video.image = placeholderImage
+                }
+              } catch (error) {
+                // If fetching the image fails (e.g., network error), use the placeholder
+                video.image = placeholderImage
+              }
+            }
+            return video
+          }),
+        )
+        setTrending(processedVideos)
+        // setTrending(data.data)
         setIsLoading(false)
       } catch (error) {
         console.error('Error fetching trending videos:', error)
