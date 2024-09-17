@@ -18,7 +18,7 @@ const EmailVerified = () => {
     const verifyEmail = async () => {
       try {
         const response = await fetch(
-          'https://teststudio.imara.tv/api/auth/verify',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify`,
           {
             method: 'POST',
             headers: {

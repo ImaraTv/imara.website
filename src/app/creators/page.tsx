@@ -71,7 +71,7 @@ export default function Actors() {
   useEffect(() => {
     const fetchCreators = async () => {
       try {
-        const response = await fetch('https://teststudio.imara.tv/api/creators');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/creators`);
         const data = await response.json();
         setCreators(data.data);
       } catch (error) {
@@ -101,7 +101,7 @@ export default function Actors() {
 
   const formData = new FormData(e.currentTarget);
   formData.append('recaptchaToken', recaptchaToken);
-  fetch('https://teststudio.imara.tv/api/creators', {
+  fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/creators`, {
     method: 'POST',
     body: formData,
   })

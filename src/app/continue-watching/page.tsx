@@ -143,7 +143,7 @@ export default function ContinueWatching() {
   const fetchVideosByCategory = async () => {
     try {
       const response = await fetch(
-        `https://teststudio.imara.tv/api/videos?category=${selectedCategory}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${selectedCategory}`,
       )
       const data = await response.json()
       setVideos(data.data)
@@ -186,7 +186,7 @@ export default function ContinueWatching() {
       try {
         const accessToken = getAccessToken()
         const response = await axios.get(
-          'https://teststudio.imara.tv/api/profile',
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/profile`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -208,7 +208,7 @@ export default function ContinueWatching() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('https://teststudio.imara.tv/api/videos')
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`)
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)

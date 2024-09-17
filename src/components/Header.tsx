@@ -72,7 +72,7 @@ const items = [
   },
   {
     name: 'Create on Imara',
-    href: 'https://teststudio.imara.tv/register?r=creator',
+    href: `${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`,
     icon: IconFive,
   }
 
@@ -136,7 +136,7 @@ function MobileNavigation() {
               
               <hr className="m-2 border-slate-300/40" />
               <div className="flex gap-2">
-                <MobileNavLink href="https://teststudio.imara.tv/register?r=creator">Create on Imara</MobileNavLink>
+                <MobileNavLink href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}>Create on Imara</MobileNavLink>
                 <MobileNavLink href="/sign-in">Login</MobileNavLink>
               </div>
 
@@ -161,7 +161,7 @@ export function Header() {
 
   const fetchSearchResults = async (query: string) => {
     try {
-      const response = await fetch(`https://teststudio.imara.tv/api/videos?search=${query}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?search=${query}`);
       const data = await response.json();
       setSearchResults(data.data);
     } catch (error) {
@@ -265,7 +265,7 @@ export function Header() {
                 </div>
               </div>
             </div>
-            <Button href="https://teststudio.imara.tv/register?r=creator" color="blue" className="hidden md:flex">
+            <Button href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`} color="blue" className="hidden md:flex">
               <span>
                 Create a Film
               </span>

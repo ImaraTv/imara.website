@@ -55,7 +55,7 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
     }
     try {
         setProgress(50); // Update progress to 50% when starting the request
-        const response = await axios.post('https://teststudio.imara.tv/api/auth/register', {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`, {
           ...data,
           recaptchaToken,
           url: 'https://imara.tv/email-verified',
