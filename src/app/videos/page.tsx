@@ -150,8 +150,8 @@ export default function Videos() {
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null)
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<{ id: number; name: string } | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<{ id: number; name: string } | null>(null)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
 
@@ -368,11 +368,11 @@ export default function Videos() {
             </div>
             <div className="flex">
               <div className="">
-                <Listbox value={selected} onChange={setSelected}>
+                <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                   <div className="relative mt-1">
                     <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:text-[14px]">
                       <span className="block truncate pr-1">
-                        {selected.name}
+                      {selectedGenre ? selectedGenre.name : 'Select a genre'}
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                         <ChevronDownIcon
@@ -427,10 +427,10 @@ export default function Videos() {
                 </Listbox>
               </div>
               <div className="">
-                <Listbox value={active} onChange={setActive}>
+                <Listbox value={selectedLocation} onChange={setSelectedLocation}>
                   <div className="relative mt-1">
                     <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:text-[14px]">
-                      <span className="block truncate pr-1">{active.name}</span>
+                      <span className="block truncate pr-1">{selectedLocation ? selectedLocation.name : 'Select a location'}</span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                         <ChevronDownIcon
                           className="h-5 w-5 text-gray-400"
@@ -483,12 +483,6 @@ export default function Videos() {
                   </div>
                 </Listbox>
               </div>
-              <Link
-                href="#"
-                className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-[28px] py-1.5 text-sm font-medium text-white focus:outline-none"
-              >
-                Filter
-              </Link>
             </div>
           </div>
 
@@ -643,67 +637,7 @@ export default function Videos() {
             </div>
           </div>
 
-          <div className="mt-[90px] flex flex-col justify-between md:flex-row">
-            {isLoading ? (
-              <div className="flex gap-4">{/* Loading skeletons */}</div>
-            ) : (
-              <div>
-                <ul
-                  role="list"
-                  className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-3 xl:gap-x-8"
-                >
-                  {videos.map((video) => (
-                    <li key={video.id} className="relative">
-                      <Link
-                        href={`/videos/${encodeURIComponent(
-                          video.name.toLowerCase().replace(/\s+/g, '-'),
-                        )}`}
-                      >
-                        <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                          <img
-                            src={video.image}
-                            alt=""
-                            className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                          />
-                          <Image
-                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
-                            width={150}
-                            height={150}
-                            src={Yt}
-                            alt={'ÿt'}
-                          />
-                        </div>
-                        <div className="mt-[18px] flex gap-3 md:mt-5">
-                          <button
-                            type="button"
-                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
-                          >
-                            {video.duration} min
-                          </button>
-                          <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                            {video.category}
-                          </p>
-                        </div>
-                        <div className="mt-2 flex items-center gap-3">
-                          <Rating
-                            videoId={video.id}
-                            initialRating={video.stars || 0}
-                          />
-                          <div className="text-sm italic text-gray-500">
-                            {video.creator.name}
-                          </div>
-                        </div>
-                        <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                          {video.name}
-                        </p>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {!hasMore && <p>No more videos to load</p>}
-          </div>
+          
         </Container>
       </main>
       <Footer />
