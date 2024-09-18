@@ -527,12 +527,6 @@ export function Recommended() {
                 </div>
               </Listbox>
             </div>
-            <Link
-              href="#"
-              className="flex items-center justify-center rounded-lg bg-[#007BFF] px-[28px] py-1 text-sm font-medium text-white focus:outline-none"
-            >
-              Filter
-            </Link>
           </div>
         </div>
 
