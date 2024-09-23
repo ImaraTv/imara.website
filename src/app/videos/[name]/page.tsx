@@ -340,7 +340,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                     <Image
                       width={405}
                       height={352}
-                      src={videoDetails.image}
+                      src={videoDetails.image || Fallback}
                       alt={'video image'}
                       className="absolute inset-0 -z-10 h-[352px] w-full flex-shrink-0 rounded-md object-cover md:relative md:mr-4 md:h-[391px] md:w-[316px]"
                     />
@@ -500,8 +500,10 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                       )}`}
                     >
                       <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                        <img
-                          src={video.image}
+                        <Image
+                          src={video.image || Fallback}
+                          width={168}
+                          height={97}
                           alt=""
                           className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                         />
