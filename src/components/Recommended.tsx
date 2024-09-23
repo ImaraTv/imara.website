@@ -627,7 +627,7 @@ export function Recommended() {
             <div className="md:w-3/4">
               <ul
                 role="list"
-                className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-2 xl:gap-x-8"
+                className="grid grid-cols-2 gap-x-4 gap-y-[12px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[50px] lg:grid-cols-3 xl:gap-x-8"
               >
                 {videos.map((video) => (
                   <li key={video.id} className="relative">
@@ -646,7 +646,7 @@ export function Recommended() {
                           className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                         />
                         <Image
-                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
                           width={50}
                           height={43}
                           src={Yt}
@@ -671,7 +671,7 @@ export function Recommended() {
                         </div>
                       </div>
 
-                      <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                      <p className="pointer-events-none block text-[15px] font-bold text-[#525252] md:text-[19px]">
                         {video.name}
                       </p>
                     </Link>
