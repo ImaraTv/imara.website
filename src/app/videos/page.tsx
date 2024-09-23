@@ -578,7 +578,7 @@ export default function Videos() {
                             className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                           />
                           <Image
-                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
                             width={150}
                             height={150}
                             src={Yt}

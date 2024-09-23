@@ -32,17 +32,15 @@ function MobileNavLink({
   children: React.ReactNode
 }) {
   return (
-   <Popover>
-    <Popover.Button as={Link} href={href} className="block w-full p-2">
-      {children}
-    </Popover.Button>
-   </Popover>
+    <Link href={href} passHref>
+      <Popover.Button as="a" className="block w-full p-2">
+        {children}
+      </Popover.Button>
+    </Link> 
   )
 }
 
-const solutions = [
-  { name: 'All videos', href: '/videos' },
-]
+const solutions = [{ name: 'All videos', href: '/videos' }]
 
 const items = [
   {
@@ -135,10 +133,12 @@ function MobileNavigation() {
             <MobileNavLink href="/sponsors">Sponsors</MobileNavLink>
             <MobileNavLink href="https://blog.imara.tv">Blog</MobileNavLink>
             <MobileNavLink href="/contact">Contact</MobileNavLink>
-            
+
             <hr className="m-2 border-slate-300/40" />
             <div className="flex gap-2">
-              <MobileNavLink href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}>
+              <MobileNavLink
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}
+              >
                 Create on Imara
               </MobileNavLink>
               <MobileNavLink href="/sign-in">Login</MobileNavLink>
@@ -156,26 +156,28 @@ const cardStyle = {
 
 export function Header2() {
   const router = useRouter()
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<any[]>([])
 
   const fetchSearchResults = async (query: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?search=${query}`);
-      const data = await response.json();
-      setSearchResults(data.data);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?search=${query}`,
+      )
+      const data = await response.json()
+      setSearchResults(data.data)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   useEffect(() => {
     if (searchQuery.length > 2) {
-      fetchSearchResults(searchQuery);
+      fetchSearchResults(searchQuery)
     } else {
-      setSearchResults([]);
+      setSearchResults([])
     }
-  }, [searchQuery]);
+  }, [searchQuery])
 
   const handleLogout = () => {
     logout()
@@ -199,7 +201,6 @@ export function Header2() {
             <NavLink href="/sponsors">Sponsors</NavLink>
             <NavLink href="https://blog.imara.tv">Blog</NavLink>
             <NavLink href="/contact">Contact</NavLink>
-            
           </div>
         </div>
         <div className="flex items-center gap-x-5 md:gap-x-4">
@@ -218,21 +219,28 @@ export function Header2() {
                 <input
                   value={searchQuery}
                   onChange={(e) => {
-                    setSearchQuery(e.target.value);
+                    setSearchQuery(e.target.value)
                   }}
                   className="block w-full rounded-[15px] border-0 bg-[#C4C4C433] py-[10px] pl-[14px] text-white ring-1 ring-inset ring-[#C4C4C433] ring-gray-300 placeholder:font-medium placeholder:text-white focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 md:bg-[#E2E2E2] md:text-[#525252] md:placeholder:text-[#525252]"
                   placeholder="Search"
                   type="text"
                 />
                 {searchResults.length > 0 && (
-                    <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
-                      {searchResults.map((result) => (
-                        <li key={result.id} className="px-4 py-2 hover:bg-gray-100">
-                          <a href={`/videos/${encodeURIComponent(result.name.toLowerCase().replace(/\s+/g, '-'))}`}>{result.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <ul className="absolute mt-1 w-full rounded-md bg-white shadow-lg">
+                    {searchResults.map((result) => (
+                      <li
+                        key={result.id}
+                        className="px-4 py-2 hover:bg-gray-100"
+                      >
+                        <a
+                          href={`/videos/${encodeURIComponent(result.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                        >
+                          {result.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>
@@ -244,12 +252,12 @@ export function Header2() {
             <span>Create on Imara</span>
           </Button>
           {!isLoggedIn() && (
-          <Link
-            href="/sign-in"
-            className="group hidden items-center justify-center rounded-lg px-10 py-2 text-lg font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:inline-flex"
-          >
-            Login
-          </Link>
+            <Link
+              href="/sign-in"
+              className="group hidden items-center justify-center rounded-lg px-10 py-2 text-lg font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:inline-flex"
+            >
+              Login
+            </Link>
           )}
           {isLoggedIn() && (
             <div className="hidden px-4 md:flex">
