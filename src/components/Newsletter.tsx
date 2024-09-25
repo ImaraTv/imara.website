@@ -109,7 +109,7 @@ export function Newsletter({}: Props) {
                 <button
                   type="submit"
                   disabled={buttonDisabled}
-                  className="flex-none rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-none rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {submitting ? 'Submitting...' : 'Subscribe Now'}
                 </button>

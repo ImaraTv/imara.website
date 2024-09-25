@@ -182,7 +182,7 @@ export default function Actors() {
               </div>
               <ul
                 role="list"
-                className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8"
+                className="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-10 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
               >
                 {creators.map((creator) => (
                   <li
@@ -191,12 +191,13 @@ export default function Actors() {
                     style={cardStyle}
                   >
                     <Image
-                      className="h-48 w-full rounded-t-[5px] object-cover shadow-xl md:h-56"
-                      src={creator.image || defaultImage}
-                      alt=""
-                      width={192}
-                      height={192}
-                    />
+                        className="aspect-[2/2] w-full object-scale-down rounded-t-[5px] shadow-xl"
+                        src={creator.image || defaultImage}
+                        alt=""
+                        width={192}
+                        height={192}
+                      />
+                    
                     <h3 className="mt-6 px-8 text-xl font-bold tracking-tight text-[#474747] md:text-2xl">
                       {creator.name}
                     </h3>
