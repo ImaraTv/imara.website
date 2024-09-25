@@ -4,6 +4,16 @@ import Link from 'next/link'
 import { FacebookShareButton, FacebookIcon } from 'next-share'
 import { TwitterShareButton, TwitterIcon } from 'next-share'
 import { EmailShareButton, EmailIcon } from 'next-share'
+import { WhatsappShareButton, WhatsappIcon } from 'next-share'
+import {
+  TelegramShareButton,
+  TelegramIcon,
+} from 'next-share'
+import {
+  LinkedinShareButton,
+  LinkedinIcon,
+} from 'next-share'
+
 import { ShareIcon } from '@heroicons/react/24/solid'
 
 interface ShareButtonProps {
@@ -82,6 +92,25 @@ const ShareButton: React.FC<ShareButtonProps> = ({ videoId }) => {
                     >
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
+                    <WhatsappShareButton
+                      url={`https://imara.tv/videos/${videoId}`}
+                      title={'ImaraTV videos are fun.'}
+                      separator=":: "
+                    >
+                      <WhatsappIcon size={32} round />
+                    </WhatsappShareButton>
+                    <LinkedinShareButton
+                      url={`https://imara.tv/videos/${videoId}`}
+                      title={'ImaraTV videos are fun.'}
+                    >
+                      <LinkedinIcon size={32} round />
+                    </LinkedinShareButton>
+                    <TelegramShareButton
+                      url={`https://imara.tv/videos/${videoId}`}
+                      title={'ImaraTV videos are fun.'}
+                    >
+                      <TelegramIcon size={32} round />
+                    </TelegramShareButton>
                     <EmailShareButton
                       url={`https://imara.tv/videos/${videoId}`}
                       subject={'ImaraTV videos are fun.'}

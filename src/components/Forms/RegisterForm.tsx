@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 type FormData = {
-  name: string;
   email: string;
   password: string;
   password_confirmation: string;
@@ -17,7 +16,6 @@ type FormData = {
 };
 
 const schema = yup.object().shape({
-  name: yup.string().required('Name is required'),
   email: yup.string().email('Invalid email address').required('Email is required'),
   password: yup
     .string()
@@ -108,19 +106,6 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
       <div className="grid grid-cols-1 gap-y-4">
-        {/* Name Field */}
-        <div>
-          <div className="mt-2.5">
-            <input
-              type="text"
-              placeholder="Name"
-              autoComplete="name"
-              className="block w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              {...register('name')}
-            />
-            {errors.name && <span className="text-red-500">{errors.name.message}</span>}
-          </div>
-        </div>
 
         {/* Email Field */}
         <div>
@@ -133,20 +118,6 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
               {...register('email')}
             />
             {errors.email && <span className="text-red-500">{errors.email.message}</span>}
-          </div>
-        </div>
-
-        {/* URL Field */}
-        <div>
-          <div className="mt-2.5">
-            <input
-              type="text"
-              placeholder="Website URL"
-              autoComplete="url"
-              className="block w-full bg-transparent rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              {...register('url')}
-            />
-            {errors.url && <span className="text-red-500">{errors.url.message}</span>}
           </div>
         </div>
 

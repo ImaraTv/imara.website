@@ -355,7 +355,24 @@ export function Recommended() {
     const fetchFilteredVideos = async () => {
       setIsLoading(true)
       try {
-        const query = selectedCategory ? `?category=${selectedCategory}` : ''
+        // const query = selectedCategory ? `?category=${selectedCategory}` : ''
+        // Initialize query parameters
+    let query = '';
+
+    // Add category to query if selected
+    if (selectedCategory) {
+      query += `?category=${selectedCategory}`;
+    }
+
+    // Add genre to query if selected
+    if (selectedGenre) {
+      query += query ? `&genre=${selectedGenre.id}` : `?genre=${selectedGenre.id}`;
+    }
+
+    // Add location to query if selected
+    if (selectedLocation) {
+      query += query ? `&location=${selectedLocation.id}` : `?location=${selectedLocation.id}`;
+    }
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest${query}`,
         )
@@ -372,12 +389,42 @@ export function Recommended() {
     fetchLocations()
     fetchAllVideos()
     fetchFilteredVideos()
-  }, [selectedCategory])
+  }, [selectedCategory, selectedGenre, selectedLocation])
 
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVideos(data.data)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.error('Error fetching videos:', error)
+        setIsLoading(false)
+      })
+  }
+
+  const handleGenreClick = (genreName: any) => {
+    setSelectedGenre(genreName)
+    setIsLoading(true)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?genre=${genreName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVideos(data.data)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.error('Error fetching videos:', error)
+        setIsLoading(false)
+      })
+  }
+
+  const handleLocationClick = (locationName: any) => {
+    setSelectedLocation(locationName)
+    setIsLoading(true)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?location=${locationName}`)
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -450,6 +497,7 @@ export function Recommended() {
                                 className={`block truncate ${
                                   selected ? 'font-medium' : 'font-normal'
                                 }`}
+                                onClick={() => handleGenreClick(quality.name)}
                               >
                                 {quality.name}
                               </span>
@@ -507,6 +555,7 @@ export function Recommended() {
                                 className={`block truncate ${
                                   active ? 'font-medium' : 'font-normal'
                                 }`}
+                                onClick={() => handleLocationClick(date.name)}
                               >
                                 {date.name}
                               </span>
@@ -578,7 +627,7 @@ export function Recommended() {
             <div className="md:w-3/4">
               <ul
                 role="list"
-                className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-2 xl:gap-x-8"
+                className="grid grid-cols-2 gap-x-4 gap-y-[12px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[50px] lg:grid-cols-3 xl:gap-x-8"
               >
                 {videos.map((video) => (
                   <li key={video.id} className="relative">
@@ -590,14 +639,14 @@ export function Recommended() {
                         className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
                       >
                         <Image
-                          src={video.image}
+                          src={video.image || Fallback}
                           alt=""
                           width={168}
                           height={97}
                           className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                         />
                         <Image
-                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
                           width={50}
                           height={43}
                           src={Yt}
@@ -622,7 +671,7 @@ export function Recommended() {
                         </div>
                       </div>
 
-                      <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                      <p className="pointer-events-none block text-[15px] font-bold text-[#525252] md:text-[19px]">
                         {video.name}
                       </p>
                     </Link>
@@ -686,7 +735,7 @@ export function Recommended() {
                             width={131}
                             height={118}
                             className="w-[131px] rounded-l-2xl object-cover"
-                            src={video.image}
+                            src={video.image || Fallback}
                             alt=""
                           />
                           <div className="max-w-xl flex-auto space-y-[26px]">

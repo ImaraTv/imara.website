@@ -143,6 +143,14 @@ export default function Videos() {
       }
     }[]
   >([])
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
+  useEffect(() => {
+    fetchVideos(currentPage)
+  }, [currentPage])
+
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<any[]>([])
   let [isOpen, setIsOpen] = useState(false)
@@ -150,8 +158,14 @@ export default function Videos() {
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null)
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<{
+    id: number
+    name: string
+  } | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<{
+    id: number
+    name: string
+  } | null>(null)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
 
@@ -172,6 +186,50 @@ export default function Videos() {
     }
   }, [])
 
+  const fetchVideos = async (page: any) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest?page=${page}`,
+      )
+      const data = await response.json()
+      const placeholderImage = Fallback
+
+      const processedVideos = await Promise.all(
+        data.data.map(async (video: any) => {
+          // Check if image is null or empty
+          if (!video.image) {
+            video.image = placeholderImage
+          } else {
+            try {
+              // Attempt to fetch the image using the HEAD method
+              const imageResponse = await fetch(video.image, {
+                method: 'HEAD',
+              })
+              if (!imageResponse.ok) {
+                // If the image doesn't exist, use the placeholder
+                video.image = placeholderImage
+              }
+            } catch (error) {
+              // If fetching the image fails (e.g., network error), use the placeholder
+              video.image = placeholderImage
+            }
+          }
+          return video
+        }),
+      )
+      setVideos(processedVideos)
+      setTotalPages(data.meta.last_page)
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Error fetching videos:', error)
+      setIsLoading(false)
+    }
+  }
+
+  const handlePageChange = (newPage: any) => {
+    setCurrentPage(newPage)
+  }
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -191,7 +249,9 @@ export default function Videos() {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`)
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`,
+        )
         const data = await response.json()
         setGenres(data.data)
       } catch (error) {
@@ -214,68 +274,27 @@ export default function Videos() {
         console.error('Error fetching locations:', error)
       }
     }
-
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`,
-        )
-        const data = await response.json()
-        const placeholderImage = Fallback
-
-        const processedVideos = await Promise.all(
-          data.data.map(async (video: any) => {
-            // Check if image is null or empty
-            if (!video.image) {
-              video.image = placeholderImage
-            } else {
-              try {
-                // Attempt to fetch the image using the HEAD method
-                const imageResponse = await fetch(video.image, {
-                  method: 'HEAD',
-                })
-                if (!imageResponse.ok) {
-                  // If the image doesn't exist, use the placeholder
-                  video.image = placeholderImage
-                }
-              } catch (error) {
-                // If fetching the image fails (e.g., network error), use the placeholder
-                video.image = placeholderImage
-              }
-            }
-            return video
-          }),
-        )
-        setVideos(processedVideos)
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      }
-    }
-
     fetchLocations()
-    fetchVideos()
   }, [])
 
-  const fetchVideos = async (pageNumber: number, category: number | null) => {
-    try {
-      const query = category
-        ? `?category=${category}&page=${pageNumber}`
-        : `?page=${pageNumber}`
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos${query}`,
-      )
-      const data = await response.json()
-      if (data.data.length === 0) {
-        setHasMore(false)
-      } else {
-        setVideos((prevVideos) => [...prevVideos, ...data.data])
-      }
-    } catch (error) {
-      console.error('Error fetching videos:', error)
-    }
-  }
+  // const fetchVideos = async (pageNumber: number, category: number | null) => {
+  //   try {
+  //     const query = category
+  //       ? `?category=${category}&page=${pageNumber}`
+  //       : `?page=${pageNumber}`
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos${query}`,
+  //     )
+  //     const data = await response.json()
+  //     if (data.data.length === 0) {
+  //       setHasMore(false)
+  //     } else {
+  //       setVideos((prevVideos) => [...prevVideos, ...data.data])
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching videos:', error)
+  //   }
+  // }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -307,7 +326,9 @@ export default function Videos() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`,
+    )
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -368,11 +389,11 @@ export default function Videos() {
             </div>
             <div className="flex">
               <div className="">
-                <Listbox value={selected} onChange={setSelected}>
+                <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                   <div className="relative mt-1">
                     <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:text-[14px]">
                       <span className="block truncate pr-1">
-                        {selected.name}
+                        {selectedGenre ? selectedGenre.name : 'Select a genre'}
                       </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                         <ChevronDownIcon
@@ -427,10 +448,17 @@ export default function Videos() {
                 </Listbox>
               </div>
               <div className="">
-                <Listbox value={active} onChange={setActive}>
+                <Listbox
+                  value={selectedLocation}
+                  onChange={setSelectedLocation}
+                >
                   <div className="relative mt-1">
                     <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:text-[14px]">
-                      <span className="block truncate pr-1">{active.name}</span>
+                      <span className="block truncate pr-1">
+                        {selectedLocation
+                          ? selectedLocation.name
+                          : 'Select a location'}
+                      </span>
                       <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                         <ChevronDownIcon
                           className="h-5 w-5 text-gray-400"
@@ -483,12 +511,6 @@ export default function Videos() {
                   </div>
                 </Listbox>
               </div>
-              <Link
-                href="#"
-                className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-[28px] py-1.5 text-sm font-medium text-white focus:outline-none"
-              >
-                Filter
-              </Link>
             </div>
           </div>
 
@@ -556,7 +578,7 @@ export default function Videos() {
                             className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                           />
                           <Image
-                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
                             width={150}
                             height={150}
                             src={Yt}
@@ -590,6 +612,38 @@ export default function Videos() {
                     </li>
                   ))}
                 </ul>
+                <div className="mb-4 mt-8 flex justify-center">
+                  <nav
+                    className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                    aria-label="Pagination"
+                  >
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'cursor-not-allowed' : ''}`}
+                    >
+                      <span className="sr-only">Previous</span>
+                      &larr;
+                    </button>
+                    {[...Array(totalPages).keys()].map((page) => (
+                      <button
+                        key={page + 1}
+                        onClick={() => handlePageChange(page + 1)}
+                        className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === page + 1 ? 'bg-indigo-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'}`}
+                      >
+                        {page + 1}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === totalPages ? 'cursor-not-allowed' : ''}`}
+                    >
+                      <span className="sr-only">Next</span>
+                      &rarr;
+                    </button>
+                  </nav>
+                </div>
               </div>
             )}
             <div>
@@ -625,85 +679,8 @@ export default function Videos() {
               </ul>
             </div>
           </div>
-          <div className="mb-[223px] mt-[112px] flex items-center justify-center gap-8">
-            <div className="flex items-center justify-center bg-[#007BFF] p-4 text-[15px] font-semibold text-white">
-              1
-            </div>
-            <div className="flex items-center justify-center bg-[#0000002E] p-4 text-[15px] font-semibold text-white">
-              2
-            </div>
-            <div className="flex items-center justify-center bg-[#0000002E] p-4 text-[15px] font-semibold text-white">
-              3
-            </div>
-            <div className="flex items-center justify-center bg-[#0000002E] p-4 text-[15px] font-semibold text-white">
-              4
-            </div>
-            <div className="flex items-center justify-center bg-[#0000002E] p-4 text-[15px] font-semibold text-white">
-              5
-            </div>
-          </div>
 
-          <div className="mt-[90px] flex flex-col justify-between md:flex-row">
-            {isLoading ? (
-              <div className="flex gap-4">{/* Loading skeletons */}</div>
-            ) : (
-              <div>
-                <ul
-                  role="list"
-                  className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-3 xl:gap-x-8"
-                >
-                  {videos.map((video) => (
-                    <li key={video.id} className="relative">
-                      <Link
-                        href={`/videos/${encodeURIComponent(
-                          video.name.toLowerCase().replace(/\s+/g, '-'),
-                        )}`}
-                      >
-                        <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                          <img
-                            src={video.image}
-                            alt=""
-                            className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                          />
-                          <Image
-                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
-                            width={150}
-                            height={150}
-                            src={Yt}
-                            alt={'ÿt'}
-                          />
-                        </div>
-                        <div className="mt-[18px] flex gap-3 md:mt-5">
-                          <button
-                            type="button"
-                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
-                          >
-                            {video.duration} min
-                          </button>
-                          <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                            {video.category}
-                          </p>
-                        </div>
-                        <div className="mt-2 flex items-center gap-3">
-                          <Rating
-                            videoId={video.id}
-                            initialRating={video.stars || 0}
-                          />
-                          <div className="text-sm italic text-gray-500">
-                            {video.creator.name}
-                          </div>
-                        </div>
-                        <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                          {video.name}
-                        </p>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {!hasMore && <p>No more videos to load</p>}
-          </div>
+          {/* Pagination Controls */}
         </Container>
       </main>
       <Footer />
