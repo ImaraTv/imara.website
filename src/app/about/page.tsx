@@ -313,7 +313,7 @@ export default function About() {
               </div>
               <ul
                 role="list"
-                className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-40 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+                className="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-20 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4"
               >
                 {files.map((file) => (
                   <li key={file.name}>
@@ -321,7 +321,7 @@ export default function About() {
                       onClick={() => openModal(file)}
                       width={286}
                       height={192}
-                      className="aspect-[3/2] w-full cursor-pointer rounded-2xl object-cover"
+                      className="aspect-[2/2] w-full cursor-pointer rounded-2xl object-cover"
                       src={file.imageUrl}
                       alt=""
                     />
