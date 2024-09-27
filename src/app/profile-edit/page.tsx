@@ -184,7 +184,7 @@ export default function ProfileEdit() {
       <Header />
       <main>
         <Container>
-          <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-14 text-lg md:text-[40px] font-bold text-[#2B2B2B]">
             {userData ? (
               <div>
                 <p>Welcome {userData.name}</p>
@@ -195,12 +195,12 @@ export default function ProfileEdit() {
             )}
           </div>
 
-          <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
+          <div className="-ml-4 mb-10 md:mb-[70px] mt-[33px] grid grid-cols-2 md:grid-cols-5 px-4 gap-y-2">
             {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
-                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
+                className={`mr-2 flex items-center justify-center gap-1 md:gap-2 rounded-md px-2 md:px-6 py-2 text-xs md:text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
                   category.name === 'Edit profile'
                     ? 'bg-blue-500 text-white'
                     : 'bg-white'
@@ -212,13 +212,13 @@ export default function ProfileEdit() {
           </div>
         </Container>
 
-        <div className="mb-[105px] flex flex-col space-y-[60px] bg-[#F3F3F3] p-[60px]">
-          <div className="text-center text-[24px] font-medium text-[#767676]">
+        <div className="mb-[105px] flex flex-col space-y-4 md:space-y-[60px] bg-[#F3F3F3] p-6 md:p-[60px]">
+          <div className="text-center text-lg md:text-[24px] font-medium text-[#767676]">
             Edit and update your password
           </div>
 
           <form onSubmit={handleSubmit} className="mt-16 sm:mt-20">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-4 md:gap-y-10 sm:grid-cols-2">
               <div>
                 <div className="mt-10">
                   <input
@@ -227,7 +227,7 @@ export default function ProfileEdit() {
                     id="password"
                     placeholder="Password"
                     autoComplete="password"
-                    className="block w-full rounded-md border-0 bg-transparent px-3.5 py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-transparent px-3.5 py-3 md:py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -240,7 +240,7 @@ export default function ProfileEdit() {
                     id="password_confirmation"
                     placeholder="confirm password"
                     autoComplete="family-name"
-                    className="block w-full rounded-md border-0 bg-transparent px-3.5 py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-transparent px-3.5 py-3 md:py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xl sm:leading-6"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -249,7 +249,7 @@ export default function ProfileEdit() {
             <div className="mt-10 flex justify-end">
               <button
                 type="submit"
-                className="w-1/2 rounded-md bg-[#007BFF] px-10 py-5 text-center text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="w-1/2 rounded-md bg-[#007BFF] px-4 md:px-10 py-2 md:py-5 text-center text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Login
               </button>
@@ -257,12 +257,12 @@ export default function ProfileEdit() {
           </form>
           <div className="mt-5 flex justify-end">
             <div className="flex gap-2">
-              <div className="text-xl font-medium text-[#767676]">
+              <div className="text-sm md:text-xl font-medium text-[#767676]">
                 Want to change password?
               </div>
               <Link
                 href="/reset-password"
-                className="inline-block text-xl font-bold text-[#F2970F]"
+                className="inline-block text-sm md:text-xl font-bold text-[#F2970F]"
               >
                 Go reset password
               </Link>

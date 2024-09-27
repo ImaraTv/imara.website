@@ -315,7 +315,7 @@ export default function ContinueWatching() {
       <Header />
       <main>
         <Container>
-          <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-14 text-lg md:text-[40px] font-bold text-[#2B2B2B]">
             {userData ? (
               <div>
                 <p>Welcome {userData.name}</p>
@@ -326,12 +326,12 @@ export default function ContinueWatching() {
             )}
           </div>
 
-          <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
+          <div className="-ml-4 mb-10 md:mb-[70px] mt-[33px] grid grid-cols-2 md:grid-cols-5 px-4 gap-y-2">
             {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
-                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-gray-50 ${
+                className={`mr-2 flex items-center justify-center gap-1 md:gap-2 rounded-md px-2 md:px-6 py-2 text-xs md:text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
                   category.name === 'Continue Watching'
                     ? 'bg-blue-500 text-white'
                     : 'bg-white'
@@ -343,15 +343,15 @@ export default function ContinueWatching() {
           </div>
         </Container>
 
-        <div className="mb-[105px] flex flex-col space-y-[60px] bg-[#F3F3F3] p-[60px]">
-          <div className="text-[24px] font-medium text-[#767676]">
+        <div className="mb-10 md:mb-[105px] flex flex-col space-y-[20px] md:space-y-[60px] bg-[#F3F3F3] p-4 md:p-[60px]">
+          <div className="text-lg md:text-[24px] font-medium text-[#767676]">
             Continue watching from where you left on your favorite films
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {videos.map((post) => (
               <article
                 key={post.id}
-                className="relative isolate flex flex-col justify-end overflow-hidden rounded-[5px] bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
+                className="relative isolate flex flex-col justify-end overflow-hidden rounded-[5px] bg-gray-900 px-8 pb-8 pt-10 md:pt-80 sm:pt-48 lg:pt-80"
                 style={cardStyle}
               >
                 <img
@@ -395,7 +395,7 @@ export default function ContinueWatching() {
 
         {/* Related Films */}
         <Container>
-          <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-2 md:mt-14 text-2xl md:text-[40px] font-bold text-[#2B2B2B]">
             Other related films
           </div>
 
