@@ -251,7 +251,7 @@ export function Recommended() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`,
         )
         const data = await response.json()
         setCategories(data.data)
@@ -394,7 +394,7 @@ export function Recommended() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`)
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -449,7 +449,7 @@ export function Recommended() {
                 type="button"
                 key={category.id}
                 onClick={() => handleCategoryClick(category.name)}
-                className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow-sm md:text-[14px] ${
+                className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${
                   selectedCategory === category.name
                     ? 'bg-blue-500 text-white' // Active category styling
                     : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
