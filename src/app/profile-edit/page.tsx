@@ -200,7 +200,7 @@ export default function ProfileEdit() {
               <Link
                 href={category.url}
                 key={category.id}
-                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-gray-50 ${
+                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
                   category.name === 'Edit profile'
                     ? 'bg-blue-500 text-white'
                     : 'bg-white'
