@@ -645,7 +645,7 @@ export default function Videos() {
                           </h3>
                           <div className="mt-2 text-sm text-yellow-700">
                             <p>
-                              We couldn't find any videos at the moment. Please
+                              We couldn&apos;t find any videos at the moment. Please
                               search another topic or try refreshing the page.
                             </p>
                           </div>
