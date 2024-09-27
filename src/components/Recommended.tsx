@@ -678,13 +678,6 @@ export function Recommended() {
                   </li>
                 ))}
               </ul>
-
-              <Container>
-                <div className="mb-[60px] flex items-center justify-end space-x-2 text-[#F2970F] md:hidden">
-                  <span className="text-[18px] font-bold">Load more </span>
-                  <ArrowDownIcon className="h-[18px] w-[18px]" />
-                </div>
-              </Container>
             </div>
           )}
 
