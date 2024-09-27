@@ -191,7 +191,7 @@ export default function Actors() {
                     style={cardStyle}
                   >
                     <Image
-                        className="aspect-[2/2] w-full object-scale-down rounded-t-[5px] shadow-xl"
+                        className="aspect-[2/2] w-full object-cover rounded-t-[5px] shadow-xl"
                         src={creator.image || defaultImage}
                         alt=""
                         width={192}
@@ -204,12 +204,12 @@ export default function Actors() {
                     <p className="mb-7 px-8 text-sm font-medium text-[#474747] md:text-lg">
                       {creator.stage_name}
                     </p>
-                    <a
-                      href="/videos"
+                    <Link
+                      href={`/creators/${creator.id}`}
                       className="mx-8 rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                     >
                       Watch my Films
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

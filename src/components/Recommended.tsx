@@ -221,8 +221,14 @@ export function Recommended() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
-  const [selectedGenre, setSelectedGenre] = useState<{ id: number; name: string } | null>(null)
-  const [selectedLocation, setSelectedLocation] = useState<{ id: number; name: string } | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<{
+    id: number
+    name: string
+  } | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<{
+    id: number
+    name: string
+  } | null>(null)
 
   const numCards = 4
   const numCards2 = 3
@@ -266,7 +272,9 @@ export function Recommended() {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`)
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`,
+        )
         const data = await response.json()
         setGenres(data.data)
       } catch (error) {
@@ -308,17 +316,18 @@ export function Recommended() {
     const fetchAllVideos = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended`, {
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended`,
+          {
             method: 'GET', // Specify the request method if not GET by default
             headers: {
               'Content-Type': 'application/json', // Ensure the content type is correct
               'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
               // Include any other headers required by the server, like authentication tokens
             },
-          }
+          },
         )
         const data = await response.json()
-        const placeholderImage =Fallback
+        const placeholderImage = Fallback
 
         const processedVideos = await Promise.all(
           data.data.map(async (video: any) => {
@@ -357,27 +366,31 @@ export function Recommended() {
       try {
         // const query = selectedCategory ? `?category=${selectedCategory}` : ''
         // Initialize query parameters
-    let query = '';
+        let query = ''
 
-    // Add category to query if selected
-    if (selectedCategory) {
-      query += `?category=${selectedCategory}`;
-    }
+        // Add category to query if selected
+        if (selectedCategory) {
+          query += `?category=${selectedCategory}`
+        }
 
-    // Add genre to query if selected
-    if (selectedGenre) {
-      query += query ? `&genre=${selectedGenre.id}` : `?genre=${selectedGenre.id}`;
-    }
+        // Add genre to query if selected
+        if (selectedGenre) {
+          query += query
+            ? `&genre=${selectedGenre.id}`
+            : `?genre=${selectedGenre.id}`
+        }
 
-    // Add location to query if selected
-    if (selectedLocation) {
-      query += query ? `&location=${selectedLocation.id}` : `?location=${selectedLocation.id}`;
-    }
+        // Add location to query if selected
+        if (selectedLocation) {
+          query += query
+            ? `&location=${selectedLocation.id}`
+            : `?location=${selectedLocation.id}`
+        }
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest${query}`,
         )
         const data = await response.json()
-        setVideos(data.data);
+        setVideos(data.data)
         setIsLoading(false)
       } catch (error) {
         console.error('Error fetching videos:', error)
@@ -394,7 +407,9 @@ export function Recommended() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`,
+    )
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -424,7 +439,9 @@ export function Recommended() {
   const handleLocationClick = (locationName: any) => {
     setSelectedLocation(locationName)
     setIsLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?location=${locationName}`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?location=${locationName}`,
+    )
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -464,7 +481,9 @@ export function Recommended() {
               <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                 <div className="relative mt-1">
                   <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
-                    <span className="block truncate pr-1">{selectedGenre ? selectedGenre.name : 'Select a genre'}</span>
+                    <span className="block truncate pr-1">
+                      {selectedGenre ? selectedGenre.name : 'Select a genre'}
+                    </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                       <ChevronDownIcon
                         className="h-5 w-5 text-gray-400"
@@ -522,7 +541,11 @@ export function Recommended() {
               <Listbox value={selectedLocation} onChange={setSelectedLocation}>
                 <div className="relative mt-1">
                   <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
-                    <span className="block truncate pr-1">{selectedLocation ? selectedLocation.name : 'Select a location'}</span>
+                    <span className="block truncate pr-1">
+                      {selectedLocation
+                        ? selectedLocation.name
+                        : 'Select a location'}
+                    </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                       <ChevronDownIcon
                         className="h-5 w-5 text-gray-400"
@@ -646,7 +669,7 @@ export function Recommended() {
                           className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                         />
                         <Image
-                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
+                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:h-auto md:w-[61px] md:object-cover"
                           width={50}
                           height={43}
                           src={Yt}
