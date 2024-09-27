@@ -17,7 +17,7 @@ const nextConfig = {
 
   // Add any other Next.js config below
   images: {
-    domains: ['imara.tv', 'teststudio.imara.tv', 'dashboard.imara.tv'],
+    domains: ['imara.tv', 'teststudio.imara.tv', 'dashboard.imara.tv', 'studio.imara.tv'],
   },
 };
 
