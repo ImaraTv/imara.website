@@ -14,6 +14,7 @@ import Fallback from '@/images/video.png'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Button } from '@/components/Button'
 import { url } from 'inspector'
+import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
@@ -234,7 +235,7 @@ export default function Videos() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`,
         )
         const data = await response.json()
         setCategories(data.data)
@@ -277,25 +278,6 @@ export default function Videos() {
     fetchLocations()
   }, [])
 
-  // const fetchVideos = async (pageNumber: number, category: number | null) => {
-  //   try {
-  //     const query = category
-  //       ? `?category=${category}&page=${pageNumber}`
-  //       : `?page=${pageNumber}`
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos${query}`,
-  //     )
-  //     const data = await response.json()
-  //     if (data.data.length === 0) {
-  //       setHasMore(false)
-  //     } else {
-  //       setVideos((prevVideos) => [...prevVideos, ...data.data])
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching videos:', error)
-  //   }
-  // }
-
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -327,7 +309,7 @@ export default function Videos() {
     setSelectedCategory(categoryName)
     setIsLoading(true)
     fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?category=${categoryName}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -371,13 +353,13 @@ export default function Videos() {
           </div>
 
           <div className="mt-[20px] justify-between md:flex">
-            <div className="gap-4 md:flex">
+            <div className="gap-4 md:flex md:flex-wrap">
               {categories.map((category, index) => (
                 <button
                   type="button"
                   key={category.id}
                   onClick={() => handleCategoryClick(category.name)}
-                  className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow-sm md:text-[14px] ${
+                  className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${
                     selectedCategory === category.name
                       ? 'bg-blue-500 text-white' // Active category styling
                       : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
@@ -387,7 +369,7 @@ export default function Videos() {
                 </button>
               ))}
             </div>
-            <div className="flex">
+            <div className="w-2/5 justify-end px-6 md:flex">
               <div className="">
                 <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                   <div className="relative mt-1">
@@ -514,7 +496,7 @@ export default function Videos() {
             </div>
           </div>
 
-          <div className="mt-[90px] flex flex-col gap-32 justify-between md:flex-row">
+          <div className="mt-[90px] flex flex-col justify-between gap-32 md:flex-row">
             {isLoading ? (
               <div className="flex gap-4">
                 {Array.from({ length: numCards }, (_, index) => (
@@ -559,94 +541,122 @@ export default function Videos() {
                 ))}
               </div>
             ) : (
-              <div className='md:w-3/4'>
-                <ul
-                  role="list"
-                  className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-3 xl:gap-x-8"
-                >
-                  {videos.map((video) => (
-                    <li key={video.name} className="relative">
-                      <Link
-                        href={`/videos/${encodeURIComponent(
-                          video.name.toLowerCase().replace(/\s+/g, '-'),
-                        )}-${video.id}`}
-                      >
-                        <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                          <img
-                            src={video.image}
-                            alt=""
-                            className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                          />
-                          <Image
-                            className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
-                            width={150}
-                            height={150}
-                            src={Yt}
-                            alt={'ÿt'}
-                          />
-                        </div>
-                        <div className="mt-[18px] flex gap-3 md:mt-5">
-                          <button
-                            type="button"
-                            className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+              <div className="md:w-3/4">
+                {videos && videos.length > 0 ? (
+                  <>
+                    <ul
+                      role="list"
+                      className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-3 xl:gap-x-8"
+                    >
+                      {videos.map((video) => (
+                        <li key={video.name} className="relative">
+                          <Link
+                            href={`/videos/${encodeURIComponent(
+                              video.name.toLowerCase().replace(/\s+/g, '-'),
+                            )}-${video.id}`}
                           >
-                            {video.duration} min
+                            <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                              <img
+                                src={video.image}
+                                alt=""
+                                className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
+                              />
+                              <Image
+                                className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:h-auto md:w-[61px] md:object-cover"
+                                width={150}
+                                height={150}
+                                src={Yt}
+                                alt={'ÿt'}
+                              />
+                            </div>
+                            <div className="mt-[18px] flex gap-3 md:mt-5">
+                              <button
+                                type="button"
+                                className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                              >
+                                {video.duration} min
+                              </button>
+                              <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
+                                {video.category}
+                              </p>
+                            </div>
+                            <div className="mt-2 flex items-center gap-3">
+                              <Rating
+                                videoId={video.id}
+                                initialRating={video.stars || 0}
+                              />
+                              <div className="text-sm italic text-gray-500">
+                                {video.creator.name}
+                              </div>
+                            </div>
+                            <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                              {video.name}
+                            </p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mb-4 mt-8 flex justify-center">
+                      <nav
+                        className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                        aria-label="Pagination"
+                      >
+                        <button
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          disabled={currentPage === 1}
+                          className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'cursor-not-allowed' : ''}`}
+                        >
+                          <span className="sr-only">Previous</span>
+                          &larr;
+                        </button>
+                        {[...Array(totalPages).keys()].map((page) => (
+                          <button
+                            key={page + 1}
+                            onClick={() => handlePageChange(page + 1)}
+                            className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === page + 1 ? 'bg-indigo-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'}`}
+                          >
+                            {page + 1}
                           </button>
-                          <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                            {video.category}
-                          </p>
-                        </div>
-                        <div className="mt-2 flex items-center gap-3">
-                          <Rating
-                            videoId={video.id}
-                            initialRating={video.stars || 0}
+                        ))}
+                        <button
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                          className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === totalPages ? 'cursor-not-allowed' : ''}`}
+                        >
+                          <span className="sr-only">Next</span>
+                          &rarr;
+                        </button>
+                      </nav>
+                    </div>
+                  </>
+                ) : (
+                  <div className="mb-4 flex justify-center">
+                    <div className="rounded-md bg-yellow-50 p-4">
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <ExclamationTriangleIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 text-yellow-400"
                           />
-                          <div className="text-sm italic text-gray-500">
-                            {video.creator.name}
+                        </div>
+                        <div className="ml-3">
+                          <h3 className="text-sm font-medium text-yellow-800">
+                            No Videos Available
+                          </h3>
+                          <div className="mt-2 text-sm text-yellow-700">
+                            <p>
+                              We couldn't find any videos at the moment. Please
+                              search another topic or try refreshing the page.
+                            </p>
                           </div>
                         </div>
-                        <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                          {video.name}
-                        </p>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mb-4 mt-8 flex justify-center">
-                  <nav
-                    className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-                    aria-label="Pagination"
-                  >
-                    <button
-                      onClick={() => handlePageChange(currentPage - 1)}
-                      disabled={currentPage === 1}
-                      className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'cursor-not-allowed' : ''}`}
-                    >
-                      <span className="sr-only">Previous</span>
-                      &larr;
-                    </button>
-                    {[...Array(totalPages).keys()].map((page) => (
-                      <button
-                        key={page + 1}
-                        onClick={() => handlePageChange(page + 1)}
-                        className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === page + 1 ? 'bg-indigo-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'}`}
-                      >
-                        {page + 1}
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => handlePageChange(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                      className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === totalPages ? 'cursor-not-allowed' : ''}`}
-                    >
-                      <span className="sr-only">Next</span>
-                      &rarr;
-                    </button>
-                  </nav>
-                </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
-            <div className='md:w-1/4'>
+            <div className="md:w-1/4">
               <ul
                 role="list"
                 className="mt-10 space-y-12 md:-mt-12 xl:col-span-3"
