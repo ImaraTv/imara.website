@@ -591,7 +591,7 @@ export default function Saved() {
       <Header />
       <main>
         <Container>
-          <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-14 text-lg md:text-[40px] font-bold text-[#2B2B2B]">
             {userData ? (
               <div>
                 <p>Welcome {userData.name}</p>
@@ -602,12 +602,12 @@ export default function Saved() {
             )}
           </div>
 
-          <div className="-ml-4 mb-[70px] mt-[33px] flex px-6">
+          <div className="-ml-4 mb-10 md:mb-[70px] mt-[33px] grid grid-cols-2 md:grid-cols-5 px-4 gap-y-2">
             {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
-                className={`mr-2 inline-flex items-center gap-x-2 rounded-md px-6 py-2 text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
+                className={`mr-2 flex items-center justify-center gap-1 md:gap-2 rounded-md px-2 md:px-6 py-2 text-xs md:text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
                   category.name === 'Saved Films'
                     ? 'bg-blue-500 text-white'
                     : 'bg-white'
@@ -619,24 +619,24 @@ export default function Saved() {
           </div>
         </Container>
 
-        <div className="mb-[105px] flex flex-col space-y-[60px] bg-[#F3F3F3] p-[60px]">
-          <div className="text-[24px] font-medium text-[#767676]">
+        <div className="mb-10 md:mb-[105px] flex flex-col space-y-[20px] md:space-y-[60px] bg-[#F3F3F3] p-10 md:p-[60px]">
+          <div className="text-lg md:text-[24px] font-medium text-[#767676]">
             You love a show? we allow you come back to it later.
           </div>
 
-          <div className="mt-[53px] flex justify-between">
-            <div className="flex px-6">
+          <div className="mt-[53px] md:flex md:justify-between">
+            <div className="grid grid-cols-2 md:grid-cols-4 px-0 md:px-6 gap-2 md:gap-0">
               {filters.map((filter) => (
                 <button
                   type="button"
                   key={filter.id}
-                  className="mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
+                  className="mr-2 inline-flex items-center justify-center gap-1 md:gap-2 rounded-md bg-white px-2 md:px-6 py-2 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
                 >
                   {filter.name}
                 </button>
               ))}
             </div>
-            <div className="w-2/5 justify-end px-6 md:flex">
+            <div className="hidden w-2/5 justify-end px-6 md:flex">
             <div className="">
               <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                 <div className="relative mt-1">
@@ -809,7 +809,7 @@ export default function Saved() {
               ) : (
                 <button
                   type="button"
-                  className="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="relative block w-48 md:w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   <QuestionMarkCircleIcon className="mx-auto h-12 w-12 text-gray-500" />
                   <span className="mt-2 block text-sm font-semibold text-gray-900">
@@ -890,7 +890,7 @@ export default function Saved() {
         </div>
 
         <Container>
-          <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-2 md:mt-14 text-2xl md:text-[40px] font-bold text-[#2B2B2B]">
             Other recommended films
           </div>
 
