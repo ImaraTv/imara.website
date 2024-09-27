@@ -744,7 +744,7 @@ const CreatorVideosPage = ({ params }: VideosPageProps) => {
               </button>
             </div>
           )}
-          {/* Pagination Controls */}
+          
         </Container>
       </main>
       <Footer />

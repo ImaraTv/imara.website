@@ -7,7 +7,8 @@ import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { Container } from '@/components/Container'
 import Image from 'next/image'
 import Link from 'next/link'
-import Yt from '@/images/yt.png'
+import Yt from '@/images/player.png'
+import Fallback from '@/images/video.png'
 import Address from '@/components/Address'
 // import { getLoggedInUser } from '../../../utils/authUtils';
 import { useAuth } from '@/../hooks/useAuth'
@@ -101,23 +102,48 @@ interface UserData {
 interface File {
   id: number
   name: string
+  slug: string
+  release_date: string
+  duration: number | null
   category: string
-  duration: number
+  topics: string[]
   description: string
+  vimeo_link: string
+  call_to_action_btn: string | null
+  call_to_action_link: string | null
   image: string
-  creator: string
-  rating: number | null
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: string
+  sponsor: {
+    name: string
+    about: string
+    website: string
+    logo: string
+  }
+  location: {
+    id: number | null
+    name: string | null
+  }
   stars: number
-  // Other properties
+  media: {
+    poster: string
+    trailer: string | null
+    trailer_vimeo: string | null
+    hd_film: string
+    hd_film_vimeo: string
+  }
 }
 
 export default function ContinueWatching() {
   // const user = getLoggedInUser();
 
   const { user, isLoggedIn, logout } = useAuth()
-  // const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-  //   [],
-  // )
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedCategory, setSelectedCategory] = useState('')
 
@@ -127,18 +153,45 @@ export default function ContinueWatching() {
     {
       id: number
       name: string
-      duration: number
+      slug: string
+      release_date: string
+      duration: number | null
       category: string
+      topics: string[]
       description: string
       vimeo_link: string
-      call_to_action: string
-      call_to_action_link: string
+      call_to_action_btn: string | null
+      call_to_action_link: string | null
       image: string
-      creator: string
-      rating: number
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
+      rating: string
+      sponsor: {
+        name: string
+        about: string
+        website: string
+        logo: string
+      }
+      location: {
+        id: number | null
+        name: string | null
+      }
       stars: number
+      media: {
+        poster: string
+        trailer: string | null
+        trailer_vimeo: string | null
+        hd_film: string
+        hd_film_vimeo: string
+      }
     }[]
   >([])
+  const numCards = 4
 
   const fetchVideosByCategory = async () => {
     try {
@@ -210,12 +263,46 @@ export default function ContinueWatching() {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`,
+          {
+            method: 'GET', // Specify the request method if not GET by default
+            headers: {
+              'Content-Type': 'application/json', // Ensure the content type is correct
+              'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
+              // Include any other headers required by the server, like authentication tokens
+            },
+          },
         )
         const data = await response.json()
-        setVideos(data.data)
+        const placeholderImage = Fallback
+
+        const processedVideos = await Promise.all(
+          data.data.map(async (video: any) => {
+            // Check if image is null or empty
+            if (!video.image) {
+              video.image = placeholderImage
+            } else {
+              try {
+                // Attempt to fetch the image using the HEAD method
+                const imageResponse = await fetch(video.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  // If the image doesn't exist, use the placeholder
+                  video.image = placeholderImage
+                }
+              } catch (error) {
+                // If fetching the image fails (e.g., network error), use the placeholder
+                video.image = placeholderImage
+              }
+            }
+            return video
+          }),
+        )
+        setVideos(processedVideos)
+        // setVideos(data.data);
         setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching categories:', error)
+        console.error('Error fetching videos:', error)
         setIsLoading(false)
       }
     }
@@ -306,6 +393,7 @@ export default function ContinueWatching() {
           </div>
         </div>
 
+        {/* Related Films */}
         <Container>
           <div className="mt-14 text-[40px] font-bold text-[#2B2B2B]">
             Other related films
@@ -352,7 +440,7 @@ export default function ContinueWatching() {
                       initialRating={video.stars || 0}
                     />
                     <div className="text-sm italic text-gray-500">
-                      {video.creator}
+                      {video.creator.name}
                     </div>
                   </div>
                   <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
