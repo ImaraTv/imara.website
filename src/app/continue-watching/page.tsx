@@ -118,7 +118,7 @@ export default function ContinueWatching() {
   // const [categories, setCategories] = useState<{ id: number; name: string }[]>(
   //   [],
   // )
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedCategory, setSelectedCategory] = useState('')
 
   const [userData, setUserData] = useState<UserData | null>(null)
@@ -165,21 +165,21 @@ export default function ContinueWatching() {
   let [isOpen, setIsOpen] = useState(true)
 
   const openModal = (file: File) => {
-    setSelectedFile(file);
-    setIsOpen(true);
-  };
+    setSelectedFile(file)
+    setIsOpen(true)
+  }
 
   const closeModal = () => {
-    setIsOpen(false);
-    setSelectedFile(null);
-  };
+    setIsOpen(false)
+    setSelectedFile(null)
+  }
 
   useEffect(() => {
     // Reset isOpen state when the component unmounts
     return () => {
-      setIsOpen(false);
-    };
-  }, []);
+      setIsOpen(false)
+    }
+  }, [])
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -208,7 +208,9 @@ export default function ContinueWatching() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`)
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`,
+        )
         const data = await response.json()
         setVideos(data.data)
         setIsLoading(false)
@@ -274,9 +276,7 @@ export default function ContinueWatching() {
                 <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
 
                 <div className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-                  <div className="mr-8">
-                    {post.duration} min
-                  </div>
+                  <div className="mr-8">{post.duration} min</div>
                   <div className="-ml-4 flex items-center gap-x-4">
                     <svg
                       viewBox="0 0 2 2"
@@ -317,97 +317,118 @@ export default function ContinueWatching() {
               className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
             >
               {videos.map((video) => (
-                  <li key={video.name} className="relative">
-                    <div onClick={() => openModal(video)}
-                      className="relative group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
-                      <img src={video.image} alt=""
-                        className="pointer-events-none h-full w-full object-cover group-hover:opacity-75" />
-                      <Image className='w-[32.81px] md:w-[61px] h-[23.13px] md:h-auto absolute inset-0 m-auto object-cover' width={150} height={150} src={Yt}
-                        alt={"ÿt"} />
-                    </div>
-                    <div className='flex gap-3 mt-[18px] md:mt-5'>
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 md:px-6 py-1.5 text-[12px] md:text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50"
-                      >
-                        {video.duration} min
-                      </button>
-                      <p className="pointer-events-none mt-2 block truncate text-[12px] md:text-[16px] font-medium text-[#525252]">{video.category}</p>
-                    </div>
-                    <div className="mt-2 flex items-center gap-3">
-                    <Rating
-        videoId={video.id}
-        initialRating={video.stars || 0}
-      />
-                      <div className='text-gray-500 italic text-sm'>{video.creator}</div>
-                    </div>
-                    <p className="pointer-events-none block text-[15px] md:text-[19px] mt-4 md:mt-9 font-bold text-[#525252]">{video.name}</p>
-                  </li>
-                ))}
-            </ul>
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
+                <li key={video.name} className="relative">
+                  <div
+                    onClick={() => openModal(video)}
+                    className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
                   >
-                    <div className="fixed inset-0 bg-black/25" />
-                  </Transition.Child>
-
-                  <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
-                      <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                      >
-                        <Dialog.Panel
-                          className="w-[342px] h-auto max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                          <Dialog.Title
-                            as="h3"
-                            className="text-[19px] font-bold text-[#525252]"
-                          >
-                            {selectedFile && selectedFile.name}
-                          </Dialog.Title>
-                          <div className='flex gap-7 items-center mt-5'>
-                            <button
-                              className='px-2 py-1 bg-[#F2970F] rounded-lg font-bold text-[18px] text-white'>HD
-                            </button>
-                            <div className='font-medium text-[15px] text-[#525252]'>{selectedFile && selectedFile.duration} min</div>
-                          </div>
-                          <div className='flex gap-1 items-center mt-[55px] mb-[27px]'>
-                            <div className='font-bold text-[20px] text-[#525252]'>Category:
-                            </div>
-                            <div className='font-medium text-[17px] text-[#525252]'>{selectedFile && selectedFile.category}</div>
-                          </div>
-                          <div className="mt-2">
-                            <p className="text-[15px] text-[#525252]">
-                              {selectedFile && selectedFile.description}
-                            </p>
-                          </div>
-
-                          <div className="mt-9">
-                            <Link href={`/videos/${selectedFile && encodeURIComponent(selectedFile.name.toLowerCase().replace(/\s+/g, '-'))}`}
-                              className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            >
-                              Watch Now
-                            </Link>
-                          </div>
-                        </Dialog.Panel>
-                      </Transition.Child>
+                    <img
+                      src={video.image}
+                      alt=""
+                      className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
+                    />
+                    <Image
+                      className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                      width={150}
+                      height={150}
+                      src={Yt}
+                      alt={'ÿt'}
+                    />
+                  </div>
+                  <div className="mt-[18px] flex gap-3 md:mt-5">
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                    >
+                      {video.duration} min
+                    </button>
+                    <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
+                      {video.category}
+                    </p>
+                  </div>
+                  <div className="mt-2 flex items-center gap-3">
+                    <Rating
+                      videoId={video.id}
+                      initialRating={video.stars || 0}
+                    />
+                    <div className="text-sm italic text-gray-500">
+                      {video.creator}
                     </div>
                   </div>
-                </Dialog>
-              </Transition>
+                  <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                    {video.name}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <Transition appear show={isOpen} as={Fragment}>
+              <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="fixed inset-0 bg-black/25" />
+                </Transition.Child>
+
+                <div className="fixed inset-0 overflow-y-auto">
+                  <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0 scale-95"
+                      enterTo="opacity-100 scale-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100 scale-100"
+                      leaveTo="opacity-0 scale-95"
+                    >
+                      <Dialog.Panel className="h-auto w-[342px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-[19px] font-bold text-[#525252]"
+                        >
+                          {selectedFile && selectedFile.name}
+                        </Dialog.Title>
+                        <div className="mt-5 flex items-center gap-7">
+                          <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
+                            HD
+                          </button>
+                          <div className="text-[15px] font-medium text-[#525252]">
+                            {selectedFile && selectedFile.duration} min
+                          </div>
+                        </div>
+                        <div className="mb-[27px] mt-[55px] flex items-center gap-1">
+                          <div className="text-[20px] font-bold text-[#525252]">
+                            Category:
+                          </div>
+                          <div className="text-[17px] font-medium text-[#525252]">
+                            {selectedFile && selectedFile.category}
+                          </div>
+                        </div>
+                        <div className="mt-2">
+                          <p className="text-[15px] text-[#525252]">
+                            {selectedFile && selectedFile.description}
+                          </p>
+                        </div>
+
+                        <div className="mt-9">
+                          <Link
+                            href={`/videos/${selectedFile && encodeURIComponent(selectedFile.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                            className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          >
+                            Watch Now
+                          </Link>
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
+                  </div>
+                </div>
+              </Dialog>
+            </Transition>
           </div>
         </Container>
 
