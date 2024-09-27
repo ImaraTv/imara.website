@@ -6,7 +6,8 @@ import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { Container } from '@/components/Container'
 import Image from 'next/image'
 import Link from 'next/link'
-import Yt from '@/images/yt.png'
+import Yt from '@/images/player.png'
+import Fallback from '@/images/video.png'
 import Address from '@/components/Address'
 import {
   CheckIcon,
@@ -165,27 +166,83 @@ const files = [
 interface File {
   id: number
   name: string
+  slug: string
+  release_date: string
+  duration: number | null
   category: string
-  duration: number
+  topics: string[]
   description: string
+  vimeo_link: string
+  call_to_action_btn: string | null
+  call_to_action_link: string | null
   image: string
-  rating: number | null
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: string
+  sponsor: {
+    name: string
+    about: string
+    website: string
+    logo: string
+  }
+  location: {
+    id: number | null
+    name: string | null
+  }
   stars: number
-  // Other properties
+  media: {
+    poster: string
+    trailer: string | null
+    trailer_vimeo: string | null
+    hd_film: string
+    hd_film_vimeo: string
+  }
 }
 
 interface Video {
   id: number
   name: string
-  duration: number
+  slug: string
+  release_date: string
+  duration: number | null
   category: string
+  topics: string[]
   description: string
   vimeo_link: string
-  call_to_action: string | null
+  call_to_action_btn: string | null
   call_to_action_link: string | null
   image: string
-  rating: number | null
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: string
+  sponsor: {
+    name: string
+    about: string
+    website: string
+    logo: string
+  }
+  location: {
+    id: number | null
+    name: string | null
+  }
   stars: number
+  media: {
+    poster: string
+    trailer: string | null
+    trailer_vimeo: string | null
+    hd_film: string
+    hd_film_vimeo: string
+  }
 }
 
 interface UserData {
@@ -198,32 +255,89 @@ export default function Saved() {
     {
       id: number
       name: string
-      duration: number
+      slug: string
+      release_date: string
+      duration: number | null
       category: string
+      topics: string[]
       description: string
       vimeo_link: string
-      call_to_action: string
-      call_to_action_link: string
+      call_to_action_btn: string | null
+      call_to_action_link: string | null
       image: string
-      rating: number
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
+      rating: string
+      sponsor: {
+        name: string
+        about: string
+        website: string
+        logo: string
+      }
+      location: {
+        id: number | null
+        name: string | null
+      }
       stars: number
+      media: {
+        poster: string
+        trailer: string | null
+        trailer_vimeo: string | null
+        hd_film: string
+        hd_film_vimeo: string
+      }
     }[]
   >([])
+
   const [recoms, setRecoms] = useState<
     {
       id: number
       name: string
-      duration: number
+      slug: string
+      release_date: string
+      duration: number | null
       category: string
+      topics: string[]
       description: string
       vimeo_link: string
-      call_to_action: string
-      call_to_action_link: string
+      call_to_action_btn: string | null
+      call_to_action_link: string | null
       image: string
-      rating: number
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
+      rating: string
+      sponsor: {
+        name: string
+        about: string
+        website: string
+        logo: string
+      }
+      location: {
+        id: number | null
+        name: string | null
+      }
       stars: number
+      media: {
+        poster: string
+        trailer: string | null
+        trailer_vimeo: string | null
+        hd_film: string
+        hd_film_vimeo: string
+      }
     }[]
   >([])
+  const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
+  const [locations, setLocations] = useState<{ id: number; name: string }[]>([])
   const [bookmarks, setBookmarks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState<UserData | null>(null)
@@ -234,6 +348,15 @@ export default function Saved() {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  const [selectedGenre, setSelectedGenre] = useState<{
+    id: number
+    name: string
+  } | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<{
+    id: number
+    name: string
+  } | null>(null)
+
   const openModal = (file: File) => {
     setSelectedFile(file)
     setIsOpen(true)
@@ -293,18 +416,118 @@ export default function Saved() {
   }, [])
 
   useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`,
+        )
+        const data = await response.json()
+        setGenres(data.data)
+      } catch (error) {
+        console.error('Error fetching genres:', error)
+      }
+    }
+
+    fetchGenres()
+  }, [])
+
+  useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`)
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended`,
+          {
+            method: 'GET', // Specify the request method if not GET by default
+            headers: {
+              'Content-Type': 'application/json', // Ensure the content type is correct
+              'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
+              // Include any other headers required by the server, like authentication tokens
+            },
+          },
+        )
         const data = await response.json()
-        setVideos(data.data)
+        const placeholderImage = Fallback
+
+        const processedVideos = await Promise.all(
+          data.data.map(async (video: any) => {
+            // Check if image is null or empty
+            if (!video.image) {
+              video.image = placeholderImage
+            } else {
+              try {
+                // Attempt to fetch the image using the HEAD method
+                const imageResponse = await fetch(video.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  // If the image doesn't exist, use the placeholder
+                  video.image = placeholderImage
+                }
+              } catch (error) {
+                // If fetching the image fails (e.g., network error), use the placeholder
+                video.image = placeholderImage
+              }
+            }
+            return video
+          }),
+        )
+        setVideos(processedVideos)
+        // setVideos(data.data);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching videos:', error)
+        setIsLoading(false)
+      }
+    }
+
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`,
+        )
+        const data = await response.json()
+        setLocations(data.data)
+      } catch (error) {
+        console.error('Error fetching locations:', error)
+      }
+    }
+
+    const fetchFilteredVideos = async () => {
+      setIsLoading(true)
+      try {
+        // const query = selectedCategory ? `?category=${selectedCategory}` : ''
+        // Initialize query parameters
+        let query = ''
+
+        // Add genre to query if selected
+        if (selectedGenre) {
+          query += query
+            ? `&genre=${selectedGenre.id}`
+            : `?genre=${selectedGenre.id}`
+        }
+
+        // Add location to query if selected
+        if (selectedLocation) {
+          query += query
+            ? `&location=${selectedLocation.id}`
+            : `?location=${selectedLocation.id}`
+        }
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest${query}`,
+        )
+        const data = await response.json()
+        setVideos(data.data)
+        setIsLoading(false)
+      } catch (error) {
+        console.error('Error fetching videos:', error)
+        setIsLoading(false)
       }
     }
 
     fetchVideos()
-  }, [])
+    fetchLocations()
+    fetchFilteredVideos()
+  }, [selectedGenre, selectedLocation])
 
   //profile
   useEffect(() => {
