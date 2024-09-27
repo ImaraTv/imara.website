@@ -304,7 +304,7 @@ export function Header() {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="absolute left-1/3 z-10 mt-3 h-auto w-[220px] -translate-x-1/2 transform px-4 sm:px-0">
+                        <Popover.Panel className="absolute -left-20 z-10 mt-3 h-auto w-[220px] -translate-x-1/2 transform px-4 sm:px-0">
                           <div
                             className="overflow-hidden rounded-lg ring-1 ring-black/5"
                             style={cardStyle}
