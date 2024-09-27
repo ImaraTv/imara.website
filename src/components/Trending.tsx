@@ -9,6 +9,7 @@ import Image from 'next/image'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+import { FreeMode } from "swiper/modules";
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Container } from '@/components/Container'
 
@@ -238,6 +239,7 @@ export function Trending() {
           slidesPerView={1}
           spaceBetween={0}
           loop={true}
+          freeMode={true}
           className="mb-[105px]"
           breakpoints={{
             481: {
@@ -257,6 +259,7 @@ export function Trending() {
               spaceBetween: 20,
             },
           }}
+          modules={[FreeMode]}
         >
           {trending.map((item) => (
             <SwiperSlide key={item.id}>

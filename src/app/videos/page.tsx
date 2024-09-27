@@ -408,7 +408,7 @@ export default function Videos() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                      <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                         {genres.map((genre, genreIdx) => (
                           <Listbox.Option
                             key={genreIdx}
@@ -514,7 +514,7 @@ export default function Videos() {
             </div>
           </div>
 
-          <div className="mt-[90px] flex flex-col justify-between md:flex-row">
+          <div className="mt-[90px] flex flex-col gap-32 justify-between md:flex-row">
             {isLoading ? (
               <div className="flex gap-4">
                 {Array.from({ length: numCards }, (_, index) => (
@@ -559,7 +559,7 @@ export default function Videos() {
                 ))}
               </div>
             ) : (
-              <div>
+              <div className='md:w-3/4'>
                 <ul
                   role="list"
                   className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-3 xl:gap-x-8"
@@ -646,7 +646,7 @@ export default function Videos() {
                 </div>
               </div>
             )}
-            <div>
+            <div className='md:w-1/4'>
               <ul
                 role="list"
                 className="mt-10 space-y-12 md:-mt-12 xl:col-span-3"
