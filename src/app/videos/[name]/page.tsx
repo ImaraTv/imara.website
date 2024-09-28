@@ -278,7 +278,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
 
             {videoDetails && <SaveButton videoId={videoDetails.id} />}
 
-            {videoDetails && <ShareButton videoId={videoDetails.id} />}
+            {videoDetails && <ShareButton videoName={videoDetails.name} videoId={videoDetails.id} />}
           </div>
         </Container>
 
