@@ -56,13 +56,42 @@ export function CarouselHome(props: any) {
     {
       id: number
       name: string
-      duration: number
+      slug: string
+      release_date: string
+      duration: number | null
       category: string
+      topics: string[]
       description: string
       vimeo_link: string
-      call_to_action: string
-      call_to_action_link: string
+      call_to_action_btn: string | null
+      call_to_action_link: string | null
       image: string
+      creator: {
+        id: number
+        name: string
+        stage_name: string | null
+        about: string | null
+        skills: string
+      }
+      rating: string
+      sponsor: {
+        name: string
+        about: string
+        website: string
+        logo: string
+      }
+      location: {
+        id: number | null
+        name: string | null
+      }
+      stars: number
+      media: {
+        poster: string
+        trailer: string | null
+        trailer_vimeo: string | null
+        hd_film: string
+        hd_film_vimeo: string
+      }
     }[]
   >([])
 
@@ -157,7 +186,7 @@ export function CarouselHome(props: any) {
 
                   <div className="mt-[43px] flex gap-10">
                     <Link
-                      href={`/videos/${encodeURIComponent(item.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                      href={`/videos/${item.slug}`}
                       className="group inline-flex items-center justify-center rounded-lg bg-[#007BFF] px-2 py-2 text-[12px] font-medium text-white focus:outline-none md:px-10 md:text-[17px]"
                     >
                       Watch Now
