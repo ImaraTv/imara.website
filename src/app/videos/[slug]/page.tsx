@@ -142,7 +142,6 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
         setVideos(data.data)
         setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching videos:', error)
         setIsLoading(false)
       }
     }
@@ -150,41 +149,62 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
     fetchVideos()
   }, [])
 
+  // useEffect(() => {
+  //   const fetchVideoDetails = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`
+  //       );
+  //       const data = await response.json();
+
+  //       const videos = data.data;
+
+  //       const video = videos.find((v: Video) => v.slug === slug);
+
+  //       const vimeoVideoId = video.vimeo_link?.split('/').pop();
+  //       setVideoUrl(
+  //         `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=${process.env.VIMEO_APP_ID}`
+  //       );
+
+  //       setVideoDetails({ ...video });
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchVideoDetails();
+  // }, [slug]);
+
   useEffect(() => {
     const fetchVideoDetails = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`,
-        );
-        const data = await response.json();
-        console.log('API Response:', data); // Log the entire response
-  
-        const videos = data.data;
-        console.log('Videos:', videos); // Log the videos array
-  
-        // Find the video by slug
-        const video = videos.find((v: Video) => v.slug === slug);
-        console.log(video);
-  
-        if (video) {
-          const vimeoVideoId = video.vimeo_link?.split('/').pop();
-          setVideoUrl(
-            `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=58479`,
-          );
-  
-          setVideoDetails({ ...video });
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/slug/${slug}`,
+        )
+        if (!response.ok) {
+          throw new Error(`Error fetching video: ${response.statusText}`)
         }
-  
-        setIsLoading(false);
+
+        const result = await response.json()
+
+        const video = result.data?.[0]
+
+        const vimeoVideoId = video.vimeo_link?.split('/').pop()
+        setVideoUrl(
+          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=${process.env.VIMEO_APP_ID}`,
+        )
+
+        setVideoDetails({ ...video })
+        setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching video details:', error);
-        setIsLoading(false);
+        console.error('Error fetching video details:', error)
+        setIsLoading(false)
       }
-    };
-  
-    fetchVideoDetails();
-  }, [slug]); // Make sure to use 'slug' as the dependency
-  
+    }
+
+    fetchVideoDetails()
+  }, [slug])
 
   const openModal = (file: File) => {
     setSelectedFile(file)
@@ -204,8 +224,7 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
   }, [])
 
   useEffect(() => {
-    console.log('videoDetails:', videoDetails)
-    console.log('isLoading:', isLoading)
+
   }, [videoDetails, isLoading])
 
   return (
@@ -279,7 +298,12 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
 
             {videoDetails && <SaveButton videoId={videoDetails.id} />}
 
-            {videoDetails && <ShareButton videoName={videoDetails.name} videoId={videoDetails.id} />}
+            {videoDetails && (
+              <ShareButton
+                videoName={videoDetails.name}
+                videoId={videoDetails.id}
+              />
+            )}
 
             <PayPalButton />
           </div>
@@ -398,7 +422,7 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
                             Director:
                           </span>
                           <span className="text-[18px] text-white md:text-[#525252]">
-                            {videoDetails.creator.name}
+                            {/* {videoDetails.creator.name} */}
                           </span>
                         </div>
                         <div className="flex gap-2">
@@ -497,9 +521,7 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
               >
                 {videos.map((video) => (
                   <li key={video.name} className="relative">
-                    <Link
-                      href={`/videos/${video.slug}`}
-                    >
+                    <Link href={`/videos/${video.slug}`}>
                       <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                         <Image
                           src={video.image || Fallback}
@@ -509,7 +531,7 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
                           className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                         />
                         <Image
-                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:object-cover md:h-auto md:w-[61px]"
+                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:h-auto md:w-[61px] md:object-cover"
                           width={50}
                           height={43}
                           src={Yt}

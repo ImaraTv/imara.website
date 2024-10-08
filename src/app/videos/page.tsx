@@ -218,6 +218,8 @@ export default function Videos() {
           return video
         }),
       )
+      console.log(processedVideos);
+      
       setVideos(processedVideos)
       setTotalPages(data.meta.last_page)
       setIsLoading(false)
