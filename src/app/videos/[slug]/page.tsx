@@ -23,6 +23,7 @@ import ReactPlayer from 'react-player'
 import { useParams, useSearchParams } from 'next/navigation'
 import SaveButton from '@/components/SaveButton'
 import ShareButton from '@/components/ShareButton'
+import PayPalButton from '@/components/PayPalButton'
 import { FC } from 'react'
 
 const cardStyle = {
@@ -277,6 +278,8 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
             {videoDetails && <SaveButton videoId={videoDetails.id} />}
 
             {videoDetails && <ShareButton videoName={videoDetails.name} videoId={videoDetails.id} />}
+
+            <PayPalButton />
           </div>
         </Container>
 
