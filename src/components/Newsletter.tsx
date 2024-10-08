@@ -58,17 +58,29 @@ export function Newsletter({}: Props) {
                   }),
                 })
                 const datas = await response.json()
-                if (datas.status >= 400) {
-                  setStatus(datas.status)
-                  setMessage(
-                    'Error joining the newsletter.',
-                  )
+
+                if (response.status === 409) {
+                  // Email already exists
+                  setStatus(409);
+                  setMessage('This email is already subscribed to the newsletter.');
                   setTimeout(() => {
-                    setMessage('')
-                    setButtonDisabled(false)
-                  }, 2000)
-                  return
+                    setMessage('');
+                    setButtonDisabled(false);
+                  }, 2000);
+                  return;
                 }
+                
+                // if (datas.status >= 400) {
+                //   setStatus(datas.status)
+                //   setMessage(
+                //     'Error joining the newsletter.',
+                //   )
+                //   setTimeout(() => {
+                //     setMessage('')
+                //     setButtonDisabled(false)
+                //   }, 2000)
+                //   return
+                // }
 
                 setStatus(201)
                 setMessage('Thank you for subscribing to our newsletter 👻.')
