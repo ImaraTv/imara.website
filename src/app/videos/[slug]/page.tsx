@@ -155,34 +155,36 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`,
-        )
-        const data = await response.json()
-        console.log('API Response:', data) // Log the entire response
-
-        const videos = data.data
-        console.log('Videos:', videos) // Log the videos array
-
-        const video = videos.find(
-          (v: Video) =>
-            v.slug,
-        )
-        console.log(video)
-
-        const vimeoVideoId = video.vimeo_link?.split('/').pop()
-        setVideoUrl(
-          `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=58479`,
-        )
-
-        setVideoDetails({ ...video })
-        setIsLoading(false)
+        );
+        const data = await response.json();
+        console.log('API Response:', data); // Log the entire response
+  
+        const videos = data.data;
+        console.log('Videos:', videos); // Log the videos array
+  
+        // Find the video by slug
+        const video = videos.find((v: Video) => v.slug === slug);
+        console.log(video);
+  
+        if (video) {
+          const vimeoVideoId = video.vimeo_link?.split('/').pop();
+          setVideoUrl(
+            `https://player.vimeo.com/video/${vimeoVideoId}?badge=0&autoplay=1&title=0&player_id=0&app_id=58479`,
+          );
+  
+          setVideoDetails({ ...video });
+        }
+  
+        setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching video details:', error)
-        setIsLoading(false)
+        console.error('Error fetching video details:', error);
+        setIsLoading(false);
       }
-    }
-
-    fetchVideoDetails()
-  }, [slug])
+    };
+  
+    fetchVideoDetails();
+  }, [slug]); // Make sure to use 'slug' as the dependency
+  
 
   const openModal = (file: File) => {
     setSelectedFile(file)

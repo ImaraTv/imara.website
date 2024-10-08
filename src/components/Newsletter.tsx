@@ -70,17 +70,17 @@ export function Newsletter({}: Props) {
                   return;
                 }
                 
-                // if (datas.status >= 400) {
-                //   setStatus(datas.status)
-                //   setMessage(
-                //     'Error joining the newsletter.',
-                //   )
-                //   setTimeout(() => {
-                //     setMessage('')
-                //     setButtonDisabled(false)
-                //   }, 2000)
-                //   return
-                // }
+                if (datas.status >= 400) {
+                  setStatus(datas.status)
+                  setMessage(
+                    'Error joining the newsletter.',
+                  )
+                  setTimeout(() => {
+                    setMessage('')
+                    setButtonDisabled(false)
+                  }, 2000)
+                  return
+                }
 
                 setStatus(201)
                 setMessage('Thank you for subscribing to our newsletter 👻.')
