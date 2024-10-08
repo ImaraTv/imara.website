@@ -70,7 +70,7 @@ const items = [
   },
   {
     name: 'Create on Imara',
-    href: `${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`,
+    href: `${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`,
     icon: IconFive,
   },
 ]
@@ -138,7 +138,7 @@ function MobileNavigation() {
               <hr className="m-2 border-slate-300/40" />
               <div className="flex gap-2">
                 <MobileNavLink
-                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
                 >
                   Create on Imara
                 </MobileNavLink>
@@ -269,7 +269,7 @@ export function Header() {
               </div>
             </div>
             <Button
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/register?r=creator`}
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
               color="blue"
               className="hidden md:flex"
             >
