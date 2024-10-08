@@ -118,8 +118,8 @@ interface Video {
   }
 }
 
-const VideoDetails = ({ params }: { params: { name: string } }) => {
-  const { name } = params
+const VideoDetails = ({ params }: { params: { slug: string } }) => {
+  const { slug } = params
   const { videoName } = useParams<{ videoName: string }>() // Get videoName from URL params
   const [videoDetails, setVideoDetails] = useState<Video | null>(null)
   const { id } = useParams()
@@ -161,11 +161,9 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
         const videos = data.data
         console.log('Videos:', videos) // Log the videos array
 
-        const decodedName = decodeURIComponent(name)
-
         const video = videos.find(
           (v: Video) =>
-            v.name.toLowerCase().replace(/\s+/g, '-') === decodedName,
+            v.slug,
         )
         console.log(video)
 
@@ -183,7 +181,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
     }
 
     fetchVideoDetails()
-  }, [name])
+  }, [slug])
 
   const openModal = (file: File) => {
     setSelectedFile(file)
@@ -495,9 +493,7 @@ const VideoDetails = ({ params }: { params: { name: string } }) => {
                 {videos.map((video) => (
                   <li key={video.name} className="relative">
                     <Link
-                      href={`/videos/${encodeURIComponent(
-                        video.name.toLowerCase().replace(/\s+/g, '-'),
-                      )}`}
+                      href={`/videos/${video.slug}`}
                     >
                       <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                         <Image

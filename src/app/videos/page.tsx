@@ -551,9 +551,7 @@ export default function Videos() {
                       {videos.map((video) => (
                         <li key={video.name} className="relative">
                           <Link
-                            href={`/videos/${encodeURIComponent(
-                              video.name.toLowerCase().replace(/\s+/g, '-'),
-                            )}-${video.id}`}
+                            href={`/videos/${video.slug}`}
                           >
                             <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                               <img
@@ -664,9 +662,7 @@ export default function Videos() {
                 {videos.map((video) => (
                   <li key={video.name}>
                     <Link
-                      href={`/videos/${encodeURIComponent(
-                        video.name.toLowerCase().replace(/\s+/g, '-'),
-                      )}-${video.id}`}
+                      href={`/videos/${video.slug}`}
                     >
                       <div className="flex flex-row items-center gap-10 pt-12 sm:flex-row md:flex-col">
                         <img

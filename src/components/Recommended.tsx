@@ -655,7 +655,7 @@ export function Recommended() {
                 {videos.map((video) => (
                   <li key={video.id} className="relative">
                     <Link
-                      href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                      href={`/videos/${video.slug}`}
                     >
                       <div
                         onClick={() => openModal(video)}
@@ -743,7 +743,7 @@ export function Recommended() {
                   {latest.map((video) => (
                     <li key={video.id}>
                       <Link
-                        href={`/videos/${encodeURIComponent(video.name.toLowerCase().replace(/\s+/g, '-'))}`}
+                        href={`/videos/${video.slug}`}
                         className="group"
                       >
                         <div className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10">

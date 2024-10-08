@@ -285,7 +285,7 @@ export function Trending() {
                 />
 
                 <h3 className="mt-3 text-[18px] font-semibold text-white md:text-[26px]">
-                  <a href={`/videos/${encodeURIComponent(item.name.toLowerCase().replace(/\s+/g, '-'))}`}>
+                  <a href={`/videos/${item.slug}`}>
                     <span className="absolute inset-0" />
                     {item.name}
                   </a>
