@@ -300,7 +300,7 @@ const VideoDetails = ({ params }: { params: { slug: string } }) => {
 
             {videoDetails && (
               <ShareButton
-                slug={videoDetails.slug}
+              videoName={videoDetails.slug}
                 videoId={videoDetails.id}
               />
             )}
