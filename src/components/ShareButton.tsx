@@ -22,7 +22,7 @@ interface ShareButtonProps {
   slug: string
 }
 
-const ShareButton: React.FC<ShareButtonProps> = ({ videoName, slug }) => {
+const ShareButton: React.FC<ShareButtonProps> = ({ slug }) => {
   const shareUrl = '/video'
   let [isOpen, setIsOpen] = useState(false)
 
