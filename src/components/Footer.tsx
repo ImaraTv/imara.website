@@ -47,7 +47,7 @@ const navigation = {
 
     {
       name: 'LinkedIn',
-      href: 'https://www.linkedin.com/company/imaratv/',
+      href: 'https://www.linkedin.com/in/imara-digital-media-foundation-51328932b/',
       icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
         <svg
           className="h-6 w-6"
