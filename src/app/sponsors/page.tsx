@@ -19,6 +19,8 @@ import logo5 from '@/images/partners/unfpa.png'
 import logo6 from '@/images/partners/unhabitat.png'
 import logo7 from '@/images/partners/actionaid.png'
 import logo8 from '@/images/partners/crowdsourseafrica.jpg'
+import logo9 from '@/images/partners/dsw.jpeg'
+import logo10 from '@/images/partners/competa.jpeg'
 import logo from '@/images/logos/logo.png'
 
 
@@ -86,6 +88,16 @@ const partners = [
     image: logo8,
     url: 'https://www.facebook.com/crowdsourceafrica/',
   },
+  {
+    id: 9,
+    image: logo9,
+    url: 'https://dswkenya.org/',
+  },
+  {
+    id: 10,
+    image: logo10,
+    url: 'https://competamillman.co.ke/',
+  },
 ]
 
 const cardStyle = {
@@ -134,7 +146,7 @@ export default function About() {
                 </p>
                 <div className="mt-10 flex items-center gap-x-6">
                   <a
-                    href="/sign-up"
+                    href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
                     className="rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                   >
                     Sponsor a Film
@@ -304,7 +316,7 @@ export default function About() {
                     Our Sponsors
                   </h2>
 
-                  <Button href={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/register?r=sponsor`} color="blue" className="hidden md:flex">
+                  <Button href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`} color="blue" className="hidden md:flex">
               <span>
                 Become a Sponsor
               </span>

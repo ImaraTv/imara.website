@@ -19,9 +19,10 @@ import { ShareIcon } from '@heroicons/react/24/solid'
 interface ShareButtonProps {
   videoId: number
   videoName: string
+  slug: string
 }
 
-const ShareButton: React.FC<ShareButtonProps> = ({ videoName }) => {
+const ShareButton: React.FC<ShareButtonProps> = ({ videoName, slug }) => {
   const shareUrl = '/video'
   let [isOpen, setIsOpen] = useState(false)
 
@@ -81,39 +82,39 @@ const ShareButton: React.FC<ShareButtonProps> = ({ videoName }) => {
                   </Dialog.Title>
                   <div className="mt-2 flex gap-2">
                     <FacebookShareButton
-                      url={`https://imara.tv/videos/${videoName}`}
+                      url={`https://imara.tv/videos/${slug}`}
                       quote={'ImaraTV videos are fun.'}
                       hashtag={'#imaratv'}
                     >
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
                     <TwitterShareButton
-                      url={`https://imara.tv/videos/${videoName}`}
+                      url={`https://imara.tv/videos/${slug}`}
                       title={'ImaraTV videos are fun.'}
                     >
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
                     <WhatsappShareButton
-                      url={`https://imara.tv/videos/${videoName}`}
+                      url={`https://imara.tv/videos/${slug}`}
                       title={'ImaraTV videos are fun.'}
                       separator=":: "
                     >
                       <WhatsappIcon size={32} round />
                     </WhatsappShareButton>
                     <LinkedinShareButton
-                      url={`https://imara.tv/videos/${videoName}`}
+                      url={`https://imara.tv/videos/${slug}`}
                       title={'ImaraTV videos are fun.'}
                     >
                       <LinkedinIcon size={32} round />
                     </LinkedinShareButton>
                     <TelegramShareButton
-                      url={`https://imara.tv/videos/${videoName}`}
+                      url={`https://imara.tv/videos/${slug}`}
                       title={'ImaraTV videos are fun.'}
                     >
                       <TelegramIcon size={32} round />
                     </TelegramShareButton>
                     <EmailShareButton
-                      url={`https://imara.tv/videos/${videoName}`}
+                      url={`https://imara.tv/videos/${slug}`}
                       subject={'ImaraTV videos are fun.'}
                       body="body"
                     >

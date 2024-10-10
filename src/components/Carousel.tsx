@@ -102,6 +102,7 @@ export function CarouselHome(props: any) {
           cache: 'force-cache',
         })
         const data = await response.json()
+        
         setVideos(data.data)
         setIsLoading(false)
       } catch (error) {
