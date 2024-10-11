@@ -150,6 +150,13 @@ const RegisterForm = ({ setProgress }: { setProgress: (progress: number) => void
             )}
           </div>
         </div>
+
+        {/* Hidden URL Field */}
+        <input
+          type="hidden"
+          value={`${process.env.BASE_URL}/verify`} // Assign the hidden value
+          {...register('url')}
+        />
       </div>
 
       {/* ReCAPTCHA */}
