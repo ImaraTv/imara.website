@@ -51,6 +51,7 @@ const RegisterForm = ({
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
 
   const onSubmit = async (data: FormData) => {
+    console.log('Form submitted', data)
     if (!recaptchaToken) {
       Swal.fire({
         title: 'reCAPTCHA not verified',
@@ -119,12 +120,20 @@ const RegisterForm = ({
     <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
       <div className="grid grid-cols-1 gap-y-4">
         {/* Hidden Name Field */}
-        <input
-          type="hidden"
-          value="ImaraUser" 
-          {...register('name')}
-        />
-        
+        <div>
+          <div className="mt-2.5">
+            <input
+              type="text"
+              placeholder="Name"
+              className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              {...register('name')}
+            />
+            {errors.name && (
+              <span className="text-red-500">{errors.name.message}</span>
+            )}
+          </div>
+        </div>
+
         {/* Email Field */}
         <div>
           <div className="mt-2.5">
