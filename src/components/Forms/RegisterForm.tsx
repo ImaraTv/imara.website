@@ -1,5 +1,4 @@
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -8,14 +7,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-type FormData = {
-  name: string
-  email: string
-  password: string
-  password_confirmation: string
-  url: string
-}
-
+// Form validation schema using Yup
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
   email: yup
@@ -39,19 +31,10 @@ const RegisterForm = ({
   setProgress: (progress: number) => void
 }) => {
   const router = useRouter()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(schema),
-    mode: 'onChange',
-  })
-
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
 
-  const onSubmit = async (data: FormData) => {
-    console.log('Form submitted', data)
+  const onSubmit = async (values: any) => {
+    console.log('Form submitted', values)
     if (!recaptchaToken) {
       Swal.fire({
         title: 'reCAPTCHA not verified',
@@ -66,13 +49,15 @@ const RegisterForm = ({
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,
         {
-          ...data,
+          ...values,
           recaptchaToken,
           url: 'https://imara.tv/email-verified',
+        },
+        {
           headers: {
             'Content-Type': 'application/json',
           },
-        },
+        }
       )
       setProgress(100) // Update progress to 100% upon successful request
 
@@ -117,115 +102,118 @@ const RegisterForm = ({
   }, [setProgress])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-16 sm:mt-20">
-      <div className="grid grid-cols-1 gap-y-4">
-        {/* Hidden Name Field */}
-        <div>
-          <div className="mt-2.5">
-            <input
-              type="text"
-              placeholder="Name"
-              className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              {...register('name')}
-            />
-            {errors.name && (
-              <span className="text-red-500">{errors.name.message}</span>
-            )}
+    <Formik
+      initialValues={{
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/verify`,
+      }}
+      validationSchema={schema}
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting }) => (
+        <Form className="mt-16 sm:mt-20">
+          <div className="grid grid-cols-1 gap-y-4">
+            {/* Name Field */}
+            <div>
+              <Field
+                type="text"
+                name="name"
+                placeholder="Name"
+                className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className="text-red-500"
+              />
+            </div>
+
+            {/* Email Field */}
+            <div>
+              <Field
+                type="text"
+                name="email"
+                placeholder="Email"
+                className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className="text-red-500"
+              />
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <Field
+                type="password"
+                name="password"
+                placeholder="Set password"
+                className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <ErrorMessage
+                name="password"
+                component="span"
+                className="text-red-500"
+              />
+            </div>
+
+            {/* Password Confirmation Field */}
+            <div>
+              <Field
+                type="password"
+                name="password_confirmation"
+                placeholder="Repeat password"
+                className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <ErrorMessage
+                name="password_confirmation"
+                component="span"
+                className="text-red-500"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Email Field */}
-        <div>
-          <div className="mt-2.5">
-            <input
-              type="text"
-              placeholder="Email"
-              autoComplete="email"
-              className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              {...register('email')}
+          {/* ReCAPTCHA */}
+          <div>
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+              onChange={(token) => setRecaptchaToken(token)}
+              className="mt-4"
             />
-            {errors.email && (
-              <span className="text-red-500">{errors.email.message}</span>
-            )}
           </div>
-        </div>
 
-        {/* Password Field */}
-        <div>
-          <div className="mt-2.5">
-            <input
-              type="password"
-              placeholder="Set password"
-              autoComplete="new-password"
-              className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              {...register('password')}
-            />
-            {errors.password && (
-              <span className="text-red-500">{errors.password.message}</span>
-            )}
+          {/* Terms and Conditions */}
+          <div className="mt-4">
+            <Field type="checkbox" name="terms" className="mr-2" />
+            <label htmlFor="terms" className="text-gray-700">
+              I have read and accept the{' '}
+              <Link
+                href="https://imara.tv/terms-of-use"
+                target="_blank"
+                className="text-blue-500 underline"
+              >
+                terms and conditions
+              </Link>
+            </label>
           </div>
-        </div>
 
-        {/* Password Confirmation Field */}
-        <div>
-          <div className="mt-2.5">
-            <input
-              type="password"
-              placeholder="Repeat password"
-              autoComplete="new-password"
-              className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              {...register('password_confirmation')}
-            />
-            {errors.password_confirmation && (
-              <span className="text-red-500">
-                {errors.password_confirmation.message}
-              </span>
-            )}
+          {/* Submit Button */}
+          <div className="mt-10 flex justify-end">
+            <button
+              type="submit"
+              className="rounded-md bg-[#007BFF] px-10 py-2.5 text-center text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Submitting...' : 'Sign Up'}
+            </button>
           </div>
-        </div>
-
-        {/* Hidden URL Field */}
-        <input
-          type="hidden"
-          value={`${process.env.BASE_URL}/verify`} // Assign the hidden value
-          {...register('url')}
-        />
-      </div>
-
-      {/* ReCAPTCHA */}
-      <div>
-        <ReCAPTCHA
-          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-          onChange={(token) => setRecaptchaToken(token)}
-          className="mt-4"
-        />
-      </div>
-
-      {/* Terms and Conditions */}
-      <div className="mt-4">
-        <input type="checkbox" id="terms" name="terms" className="mr-2" />
-        <label htmlFor="terms" className="text-gray-700">
-          I have read and accept the{' '}
-          <Link
-            href="https://imara.tv/terms-of-use"
-            target="_blank"
-            className="text-blue-500 underline"
-          >
-            terms and conditions
-          </Link>
-        </label>
-      </div>
-
-      {/* Submit Button */}
-      <div className="mt-10 flex justify-end">
-        <button
-          type="submit"
-          className="rounded-md bg-[#007BFF] px-10 py-2.5 text-center text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
-        >
-          Sign Up
-        </button>
-      </div>
-    </form>
+        </Form>
+      )}
+    </Formik>
   )
 }
 
