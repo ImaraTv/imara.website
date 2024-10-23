@@ -315,7 +315,7 @@ export default function ContinueWatching() {
       <Header />
       <main>
         <Container>
-          <div className="mt-14 text-lg md:text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-14 text-lg font-bold text-[#2B2B2B] md:text-[40px]">
             {userData ? (
               <div>
                 <p>Welcome {userData.name}</p>
@@ -326,12 +326,12 @@ export default function ContinueWatching() {
             )}
           </div>
 
-          <div className="-ml-4 mb-10 md:mb-[70px] mt-[33px] grid grid-cols-2 md:grid-cols-5 px-4 gap-y-2">
+          <div className="-ml-4 mb-10 mt-[33px] grid grid-cols-2 gap-y-2 px-4 md:mb-[70px] md:grid-cols-5">
             {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
-                className={`mr-2 flex items-center justify-center gap-1 md:gap-2 rounded-md px-2 md:px-6 py-2 text-xs md:text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
+                className={`mr-2 flex items-center justify-center gap-1 rounded-md px-2 py-2 text-xs font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 hover:text-white md:gap-2 md:px-6 md:text-[20px] ${
                   category.name === 'Continue Watching'
                     ? 'bg-blue-500 text-white'
                     : 'bg-white'
@@ -343,51 +343,51 @@ export default function ContinueWatching() {
           </div>
         </Container>
 
-        <div className="mb-10 md:mb-[105px] flex flex-col space-y-[20px] md:space-y-[60px] bg-[#F3F3F3] p-4 md:p-[60px]">
-          <div className="text-lg md:text-[24px] font-medium text-[#767676]">
+        <div className="mb-10 flex flex-col space-y-[20px] bg-[#F3F3F3] p-4 md:mb-[105px] md:space-y-[60px] md:p-[60px]">
+          <div className="text-lg font-medium text-[#767676] md:text-[24px]">
             Continue watching from where you left on your favorite films
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {videos.map((post) => (
               <article
                 key={post.id}
-                className="relative isolate flex flex-col justify-end overflow-hidden rounded-[5px] bg-gray-900 px-8 pb-8 pt-10 md:pt-80 sm:pt-48 lg:pt-80"
+                className="relative isolate flex flex-col justify-end overflow-hidden rounded-[5px] bg-gray-900 px-8 pb-8 pt-10 sm:pt-48 md:pt-80 lg:pt-80"
                 style={cardStyle}
               >
-                <img
-                  src={post.image}
-                  alt=""
-                  className="absolute inset-0 -z-10 h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
-                <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
+                <Link href={`/videos/${post.slug}`}>
+                  <img
+                    src={post.image}
+                    alt=""
+                    className="absolute inset-0 -z-10 h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
+                  <div className="absolute inset-0 -z-10 rounded-[5px] ring-1 ring-inset ring-gray-900/10" />
 
-                <div className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-                  <div className="mr-8">{post.duration} min</div>
-                  <div className="-ml-4 flex items-center gap-x-4">
-                    <svg
-                      viewBox="0 0 2 2"
-                      className="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50"
-                    >
-                      <circle cx={1} cy={1} r={1} />
-                    </svg>
-                    <div className="flex gap-x-2.5">
-                      <img
-                        src={post.image}
-                        alt=""
-                        className="h-6 w-6 flex-none rounded-full bg-white/10"
-                      />
-                      {post.name}
+                  <div className="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
+                    <div className="mr-8">{post.duration} min</div>
+                    <div className="-ml-4 flex items-center gap-x-4">
+                      <svg
+                        viewBox="0 0 2 2"
+                        className="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50"
+                      >
+                        <circle cx={1} cy={1} r={1} />
+                      </svg>
+                      <div className="flex gap-x-2.5">
+                        <img
+                          src={post.image}
+                          alt=""
+                          className="h-6 w-6 flex-none rounded-full bg-white/10"
+                        />
+                        {post.name}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-                  <a href={`/videos/${post.slug}`}>
-                    <span className="absolute inset-0" />
-                    {post.name}
-                  </a>
-                </h3>
+                  <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
+                      <span className="absolute inset-0" />
+                      {post.name}
+                  </h3>
+                </Link>
               </article>
             ))}
           </div>
@@ -395,7 +395,7 @@ export default function ContinueWatching() {
 
         {/* Related Films */}
         <Container>
-          <div className="mt-2 md:mt-14 text-2xl md:text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-2 text-2xl font-bold text-[#2B2B2B] md:mt-14 md:text-[40px]">
             Other related films
           </div>
 
@@ -406,117 +406,48 @@ export default function ContinueWatching() {
             >
               {videos.map((video) => (
                 <li key={video.name} className="relative">
-                  <div
-                    onClick={() => openModal(video)}
-                    className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                  >
-                    <img
-                      src={video.image}
-                      alt=""
-                      className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                    />
-                    <Image
-                      className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
-                      width={150}
-                      height={150}
-                      src={Yt}
-                      alt={'ÿt'}
-                    />
-                  </div>
-                  <div className="mt-[18px] flex gap-3 md:mt-5">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
-                    >
-                      {video.duration} min
-                    </button>
-                    <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                      {video.category}
-                    </p>
-                  </div>
-                  <div className="mt-2 flex items-center gap-3">
-                    <Rating
-                      videoId={video.id}
-                      initialRating={video.stars || 0}
-                    />
-                    <div className="text-sm italic text-gray-500">
-                      {video.creator.name}
+                  <Link href={`/videos/${video.slug}`}>
+                    <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                      <img
+                        src={video.image}
+                        alt=""
+                        className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
+                      />
+                      <Image
+                        className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                        width={150}
+                        height={150}
+                        src={Yt}
+                        alt={'ÿt'}
+                      />
                     </div>
-                  </div>
-                  <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                    {video.name}
-                  </p>
+                    <div className="mt-[18px] flex gap-3 md:mt-5">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                      >
+                        {video.duration} min
+                      </button>
+                      <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
+                        {video.category}
+                      </p>
+                    </div>
+                    <div className="mt-2 flex items-center gap-3">
+                      <Rating
+                        videoId={video.id}
+                        initialRating={video.stars || 0}
+                      />
+                      <div className="text-sm italic text-gray-500">
+                        {video.creator.name}
+                      </div>
+                    </div>
+                    <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                      {video.name}
+                    </p>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <Transition appear show={isOpen} as={Fragment}>
-              <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <div className="fixed inset-0 bg-black/25" />
-                </Transition.Child>
-
-                <div className="fixed inset-0 overflow-y-auto">
-                  <div className="flex min-h-full items-center justify-center p-4 text-center">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="ease-out duration-300"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="ease-in duration-200"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
-                      <Dialog.Panel className="h-auto w-[342px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-[19px] font-bold text-[#525252]"
-                        >
-                          {selectedFile && selectedFile.name}
-                        </Dialog.Title>
-                        <div className="mt-5 flex items-center gap-7">
-                          <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
-                            HD
-                          </button>
-                          <div className="text-[15px] font-medium text-[#525252]">
-                            {selectedFile && selectedFile.duration} min
-                          </div>
-                        </div>
-                        <div className="mb-[27px] mt-[55px] flex items-center gap-1">
-                          <div className="text-[20px] font-bold text-[#525252]">
-                            Category:
-                          </div>
-                          <div className="text-[17px] font-medium text-[#525252]">
-                            {selectedFile && selectedFile.category}
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <p className="text-[15px] text-[#525252]">
-                            {selectedFile && selectedFile.description}
-                          </p>
-                        </div>
-
-                        <div className="mt-9">
-                          <Link
-                            href={`/videos/${selectedFile && selectedFile.slug}`}
-                            className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          >
-                            Watch Now
-                          </Link>
-                        </div>
-                      </Dialog.Panel>
-                    </Transition.Child>
-                  </div>
-                </div>
-              </Dialog>
-            </Transition>
           </div>
         </Container>
 

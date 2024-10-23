@@ -591,7 +591,7 @@ export default function Saved() {
       <Header />
       <main>
         <Container>
-          <div className="mt-14 text-lg md:text-[40px] font-bold text-[#2B2B2B]">
+          <div className="mt-14 text-lg font-bold text-[#2B2B2B] md:text-[40px]">
             {userData ? (
               <div>
                 <p>Welcome {userData.name}</p>
@@ -602,12 +602,12 @@ export default function Saved() {
             )}
           </div>
 
-          <div className="-ml-4 mb-10 md:mb-[70px] mt-[33px] grid grid-cols-2 md:grid-cols-5 px-4 gap-y-2">
+          <div className="-ml-4 mb-10 mt-[33px] grid grid-cols-2 gap-y-2 px-4 md:mb-[70px] md:grid-cols-5">
             {categories.map((category) => (
               <Link
                 href={category.url}
                 key={category.id}
-                className={`mr-2 flex items-center justify-center gap-1 md:gap-2 rounded-md px-2 md:px-6 py-2 text-xs md:text-[20px] font-bold text-[#525252] hover:text-white shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 ${
+                className={`mr-2 flex items-center justify-center gap-1 rounded-md px-2 py-2 text-xs font-bold text-[#525252] shadow-sm ring-2 ring-inset ring-[#007BFF] hover:bg-blue-500 hover:text-white md:gap-2 md:px-6 md:text-[20px] ${
                   category.name === 'Saved Films'
                     ? 'bg-blue-500 text-white'
                     : 'bg-white'
@@ -619,146 +619,149 @@ export default function Saved() {
           </div>
         </Container>
 
-        <div className="mb-10 md:mb-[105px] flex flex-col space-y-[20px] md:space-y-[60px] bg-[#F3F3F3] p-10 md:p-[60px]">
-          <div className="text-lg md:text-[24px] font-medium text-[#767676]">
+        <div className="mb-10 flex flex-col space-y-[20px] bg-[#F3F3F3] p-10 md:mb-[105px] md:space-y-[60px] md:p-[60px]">
+          <div className="text-lg font-medium text-[#767676] md:text-[24px]">
             You love a show? we allow you come back to it later.
           </div>
 
           <div className="mt-[53px] md:flex md:justify-between">
-            <div className="grid grid-cols-2 md:grid-cols-4 px-0 md:px-6 gap-2 md:gap-0">
+            <div className="grid grid-cols-2 gap-2 px-0 md:grid-cols-4 md:gap-0 md:px-6">
               {filters.map((filter) => (
                 <button
                   type="button"
                   key={filter.id}
-                  className="mr-2 inline-flex items-center justify-center gap-1 md:gap-2 rounded-md bg-white px-2 md:px-6 py-2 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50"
+                  className="mr-2 inline-flex items-center justify-center gap-1 rounded-md bg-white px-2 py-2 text-[17px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:gap-2 md:px-6"
                 >
                   {filter.name}
                 </button>
               ))}
             </div>
             <div className="hidden w-2/5 justify-end px-6 md:flex">
-            <div className="">
-              <Listbox value={selectedGenre} onChange={setSelectedGenre}>
-                <div className="relative mt-1">
-                  <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
-                    <span className="block truncate pr-1">
-                      {selectedGenre ? selectedGenre.name : 'Select a genre'}
-                    </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-                  <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                      {genres.map((quality, qualityIdx) => (
-                        <Listbox.Option
-                          key={qualityIdx}
-                          className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                              active
-                                ? 'bg-amber-100 text-amber-900'
-                                : 'text-gray-900'
-                            }`
-                          }
-                          value={quality}
-                        >
-                          {({ selected }) => (
-                            <>
-                              <span
-                                className={`block truncate ${
-                                  selected ? 'font-medium' : 'font-normal'
-                                }`}
-                                onClick={() => handleGenreClick(quality.name)}
-                              >
-                                {quality.name}
-                              </span>
-                              {selected ? (
-                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                  <CheckIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
+              <div className="">
+                <Listbox value={selectedGenre} onChange={setSelectedGenre}>
+                  <div className="relative mt-1">
+                    <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
+                      <span className="block truncate pr-1">
+                        {selectedGenre ? selectedGenre.name : 'Select a genre'}
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                        <ChevronDownIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                        {genres.map((quality, qualityIdx) => (
+                          <Listbox.Option
+                            key={qualityIdx}
+                            className={({ active }) =>
+                              `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                active
+                                  ? 'bg-amber-100 text-amber-900'
+                                  : 'text-gray-900'
+                              }`
+                            }
+                            value={quality}
+                          >
+                            {({ selected }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    selected ? 'font-medium' : 'font-normal'
+                                  }`}
+                                  onClick={() => handleGenreClick(quality.name)}
+                                >
+                                  {quality.name}
                                 </span>
-                              ) : null}
-                            </>
-                          )}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </Listbox>
-            </div>
-            <div className="">
-              <Listbox value={selectedLocation} onChange={setSelectedLocation}>
-                <div className="relative mt-1">
-                  <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
-                    <span className="block truncate pr-1">
-                      {selectedLocation
-                        ? selectedLocation.name
-                        : 'Select a location'}
-                    </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-                  <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                      {locations.map((date, dateIdx) => (
-                        <Listbox.Option
-                          key={dateIdx}
-                          className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                              active
-                                ? 'bg-amber-100 text-amber-900'
-                                : 'text-gray-900'
-                            }`
-                          }
-                          value={date}
-                        >
-                          {({ active }) => (
-                            <>
-                              <span
-                                className={`block truncate ${
-                                  active ? 'font-medium' : 'font-normal'
-                                }`}
-                                onClick={() => handleLocationClick(date.name)}
-                              >
-                                {date.name}
-                              </span>
-                              {active ? (
-                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                  <CheckIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
+                                {selected ? (
+                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </Listbox>
+              </div>
+              <div className="">
+                <Listbox
+                  value={selectedLocation}
+                  onChange={setSelectedLocation}
+                >
+                  <div className="relative mt-1">
+                    <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
+                      <span className="block truncate pr-1">
+                        {selectedLocation
+                          ? selectedLocation.name
+                          : 'Select a location'}
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                        <ChevronDownIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                        {locations.map((date, dateIdx) => (
+                          <Listbox.Option
+                            key={dateIdx}
+                            className={({ active }) =>
+                              `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                active
+                                  ? 'bg-amber-100 text-amber-900'
+                                  : 'text-gray-900'
+                              }`
+                            }
+                            value={date}
+                          >
+                            {({ active }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    active ? 'font-medium' : 'font-normal'
+                                  }`}
+                                  onClick={() => handleLocationClick(date.name)}
+                                >
+                                  {date.name}
                                 </span>
-                              ) : null}
-                            </>
-                          )}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </Listbox>
-            </div>
+                                {active ? (
+                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                    <CheckIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </Listbox>
+              </div>
             </div>
           </div>
 
@@ -770,10 +773,70 @@ export default function Saved() {
               {bookmarks.length > 0 ? (
                 bookmarks.map((video: Video) => (
                   <li key={video.id} className="relative">
-                    <div
-                      onClick={() => openModal(video)}
-                      className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                    >
+                    <Link href={`/videos/${video.slug}`}>
+                      <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                        <Image
+                          src={video.image}
+                          alt=""
+                          width={168}
+                          height={97}
+                          className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
+                        />
+                        <Image
+                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
+                          width={50}
+                          height={43}
+                          src={Yt}
+                          alt={'ÿt'}
+                        />
+                      </div>
+                      <div className="mt-[18px] flex gap-3 md:mt-5">
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
+                        >
+                          {video.duration} min
+                        </button>
+                        <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
+                          {video.category}
+                        </p>
+                      </div>
+
+                      <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
+                        {video.name}
+                      </p>
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <button
+                  type="button"
+                  className="relative block w-48 rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:w-full"
+                >
+                  <QuestionMarkCircleIcon className="mx-auto h-12 w-12 text-gray-500" />
+                  <span className="mt-2 block text-sm font-semibold text-gray-900">
+                    No bookmarks found
+                  </span>
+                </button>
+              )}
+            </ul>
+          </div>
+        </div>
+
+        <Container>
+          <div className="mt-2 text-2xl font-bold text-[#2B2B2B] md:mt-14 md:text-[40px]">
+            Other recommended films
+          </div>
+
+          <div className="mb-[160px] mt-[38px]">
+            <ul
+              role="list"
+              className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+            >
+              {videos.map((video) => (
+                <li key={video.id} className="relative">
+                  <Link href={`/videos/${video.slug}`}>
+                    <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                       <Image
                         src={video.image}
                         alt=""
@@ -804,208 +867,10 @@ export default function Saved() {
                     <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
                       {video.name}
                     </p>
-                  </li>
-                ))
-              ) : (
-                <button
-                  type="button"
-                  className="relative block w-48 md:w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <QuestionMarkCircleIcon className="mx-auto h-12 w-12 text-gray-500" />
-                  <span className="mt-2 block text-sm font-semibold text-gray-900">
-                    No bookmarks found
-                  </span>
-                </button>
-              )}
-            </ul>
-            <Transition appear show={isOpen} as={Fragment}>
-              <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <div className="fixed inset-0 bg-black/25" />
-                </Transition.Child>
-
-                <div className="fixed inset-0 overflow-y-auto">
-                  <div className="flex min-h-full items-center justify-center p-4 text-center">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="ease-out duration-300"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="ease-in duration-200"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
-                      <Dialog.Panel className="h-auto w-[342px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-[19px] font-bold text-[#525252]"
-                        >
-                          {selectedFile && selectedFile.name}
-                        </Dialog.Title>
-                        <div className="mt-5 flex items-center gap-7">
-                          <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
-                            HD
-                          </button>
-                          <div className="text-[15px] font-medium text-[#525252]">
-                            {selectedFile && selectedFile.duration} min
-                          </div>
-                        </div>
-                        <div className="mb-[27px] mt-[55px] flex items-center gap-1">
-                          <div className="text-[20px] font-bold text-[#525252]">
-                            Category:
-                          </div>
-                          <div className="text-[17px] font-medium text-[#525252]">
-                            {selectedFile && selectedFile.category}
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <p className="text-[15px] text-[#525252]">
-                            {selectedFile && selectedFile.description}
-                          </p>
-                        </div>
-
-                        <div className="mt-9">
-                          <Link
-                            href={`/videos/${selectedFile && selectedFile.slug}`}
-                            className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          >
-                            Watch Now
-                          </Link>
-                        </div>
-                      </Dialog.Panel>
-                    </Transition.Child>
-                  </div>
-                </div>
-              </Dialog>
-            </Transition>
-          </div>
-        </div>
-
-        <Container>
-          <div className="mt-2 md:mt-14 text-2xl md:text-[40px] font-bold text-[#2B2B2B]">
-            Other recommended films
-          </div>
-
-          <div className="mb-[160px] mt-[38px]">
-            <ul
-              role="list"
-              className="grid grid-cols-2 gap-x-4 gap-y-[100px] sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
-            >
-              {videos.map((video) => (
-                <li key={video.id} className="relative">
-                  <div
-                    onClick={() => openModal2(video)}
-                    className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                  >
-                    <Image
-                      src={video.image}
-                      alt=""
-                      width={168}
-                      height={97}
-                      className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
-                    />
-                    <Image
-                      className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-cover md:h-auto md:w-[61px]"
-                      width={50}
-                      height={43}
-                      src={Yt}
-                      alt={'ÿt'}
-                    />
-                  </div>
-                  <div className="mt-[18px] flex gap-3 md:mt-5">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
-                    >
-                      {video.duration} min
-                    </button>
-                    <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                      {video.category}
-                    </p>
-                  </div>
-
-                  <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                    {video.name}
-                  </p>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <Transition appear show={isOpen2} as={Fragment}>
-              <Dialog as="div" className="relative z-10" onClose={closeModal2}>
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <div className="fixed inset-0 bg-black/25" />
-                </Transition.Child>
-
-                <div className="fixed inset-0 overflow-y-auto">
-                  <div className="flex min-h-full items-center justify-center p-4 text-center">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="ease-out duration-300"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="ease-in duration-200"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
-                      <Dialog.Panel className="h-auto w-[342px] max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-[19px] font-bold text-[#525252]"
-                        >
-                          {selectedVideo && selectedVideo.name}
-                        </Dialog.Title>
-                        <div className="mt-5 flex items-center gap-7">
-                          <button className="rounded-lg bg-[#F2970F] px-2 py-1 text-[18px] font-bold text-white">
-                            HD
-                          </button>
-                          <div className="text-[15px] font-medium text-[#525252]">
-                            {selectedVideo && selectedVideo.duration} min
-                          </div>
-                        </div>
-                        <div className="mb-[27px] mt-[55px] flex items-center gap-1">
-                          <div className="text-[20px] font-bold text-[#525252]">
-                            Category:
-                          </div>
-                          <div className="text-[17px] font-medium text-[#525252]">
-                            {selectedVideo && selectedVideo.category}
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <p className="text-[15px] text-[#525252]">
-                            {selectedVideo && selectedVideo.description}
-                          </p>
-                        </div>
-
-                        <div className="mt-9">
-                          <Link
-                            href={`/videos/${selectedFile && selectedFile.slug}`}
-                            className="inline-flex justify-center rounded-md border border-transparent bg-[#007BFF] px-4 py-2 text-[17px] font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          >
-                            Watch Now
-                          </Link>
-                        </div>
-                      </Dialog.Panel>
-                    </Transition.Child>
-                  </div>
-                </div>
-              </Dialog>
-            </Transition>
           </div>
         </Container>
 
