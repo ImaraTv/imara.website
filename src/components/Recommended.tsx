@@ -370,7 +370,7 @@ export function Recommended() {
 
         // Add category to query if selected
         if (selectedCategory) {
-          query += `?category=${selectedCategory}`
+          query += `?topic=${selectedCategory}`
         }
 
         // Add genre to query if selected
