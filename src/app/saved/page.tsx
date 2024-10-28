@@ -388,6 +388,8 @@ export default function Saved() {
     const fetchBookmarks = async () => {
       try {
         const accessToken = getAccessToken()
+        console.log(accessToken);
+        
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookmarks`,
           {
