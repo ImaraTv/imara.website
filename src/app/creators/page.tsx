@@ -1,5 +1,5 @@
-"use client"
-import React, { Fragment, useEffect, useState } from "react";
+'use client'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Footer } from '@/components/Footer'
 import { Header2 } from '@/components/Header2'
 import { Listbox, Dialog, Transition } from '@headlessui/react'
@@ -17,8 +17,8 @@ import defaultImage from '@/images/default.jpg'
 
 import Image from 'next/image'
 import { Newsletter } from '@/components/Newsletter'
-import ReCAPTCHA from "react-google-recaptcha";
-import Link from "next/link";
+import ReCAPTCHA from 'react-google-recaptcha'
+import Link from 'next/link'
 
 interface File {
   name: string
@@ -52,12 +52,14 @@ const cardStyle = {
 
 export default function Actors() {
   let [isOpen, setIsOpen] = useState(false)
-  const [creators, setCreators] = useState<{ id: number; name: string; image: string; stage_name: string }[]>([]);
+  const [creators, setCreators] = useState<
+    { id: number; name: string; image: string; stage_name: string }[]
+  >([])
 
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
   const openModal = (file: File) => {
     setSelectedFile(file)
     setIsOpen(true)
@@ -71,16 +73,18 @@ export default function Actors() {
   useEffect(() => {
     const fetchCreators = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/creators`);
-        const data = await response.json();
-        setCreators(data.data);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/creators`,
+        )
+        const data = await response.json()
+        setCreators(data.data)
       } catch (error) {
-        console.error('Error fetching creators:', error);
+        console.error('Error fetching creators:', error)
       }
-    };
+    }
 
-    fetchCreators();
-  }, []);
+    fetchCreators()
+  }, [])
 
   useEffect(() => {
     return () => {
@@ -89,30 +93,30 @@ export default function Actors() {
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  if (!recaptchaToken) {
-    alert("Please complete the reCAPTCHA challenge.");
-    return;
-  }
-    if (!acceptedTerms) {  
-      alert("Please accept the terms and conditions to proceed.");
-      return;
+    e.preventDefault()
+    if (!recaptchaToken) {
+      alert('Please complete the reCAPTCHA challenge.')
+      return
+    }
+    if (!acceptedTerms) {
+      alert('Please accept the terms and conditions to proceed.')
+      return
     }
 
-  const formData = new FormData(e.currentTarget);
-  formData.append('recaptchaToken', recaptchaToken);
-  fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/creators`, {
-    method: 'POST',
-    body: formData,
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Form submission successful:', data);
-  })
-  .catch(error => {
-    console.error('Error submitting form:', error);
-  });
-};
+    const formData = new FormData(e.currentTarget)
+    formData.append('recaptchaToken', recaptchaToken)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/creators`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Form submission successful:', data)
+      })
+      .catch((error) => {
+        console.error('Error submitting form:', error)
+      })
+  }
 
   return (
     <>
@@ -149,7 +153,7 @@ export default function Actors() {
                     Watch our videos
                   </a>
                   <a
-                    href="/sign-up"
+                    href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
                     className="rounded-md px-3.5 py-1 text-xs font-semibold leading-6 text-gray-900 ring-2 ring-[#007BFF] md:text-sm"
                   >
                     Get Started
@@ -191,13 +195,13 @@ export default function Actors() {
                     style={cardStyle}
                   >
                     <Image
-                        className="aspect-[2/2] w-full object-cover rounded-t-[5px] shadow-xl"
-                        src={creator.image || defaultImage}
-                        alt=""
-                        width={192}
-                        height={192}
-                      />
-                    
+                      className="aspect-[2/2] w-full rounded-t-[5px] object-cover shadow-xl"
+                      src={creator.image || defaultImage}
+                      alt=""
+                      width={192}
+                      height={192}
+                    />
+
                     <h3 className="mt-6 px-8 text-xl font-bold tracking-tight text-[#474747] md:text-2xl">
                       {creator.name}
                     </h3>
@@ -213,7 +217,6 @@ export default function Actors() {
                   </li>
                 ))}
               </ul>
-              
             </div>
 
             <div className="mt-10 flex items-center justify-end text-sm font-bold text-[#F2970F] md:mt-20 md:text-[24px]">
@@ -240,165 +243,28 @@ export default function Actors() {
           </div>
         </Container>
 
-        <div className="isolate mt-20 bg-[#F3F3F3] px-6 py-12 md:mt-[110px] lg:px-8">
+        <div className="isolate mt-20 bg-[#F3F3F3] px-6 md:mt-[110px] lg:px-8">
           <Container>
-            <div className="flex justify-center">
-              <h2 className="text-xl font-semibold text-gray-900 sm:text-4xl md:text-[40px]">
-                Join our community of creatives today
-              </h2>
+            <div className="">
+              <div className="px-6 py-6 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-2xl text-center">
+                  <h2 className="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+                  Join our community of creatives today.
+                  </h2>
+                  <p className="mx-auto mt-6 max-w-xl text-pretty text-lg/8 text-gray-600">
+                  Become part of a community and grow your network. Sign up today as a creator and start your career journey in the film industry
+                  </p>
+                  <div className="mt-10 flex items-center justify-center gap-x-6">
+                    <a
+                      href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
+                      className="rounded-md bg-[#007BFF] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#007BFF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Get started
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
-            <form action="#" method="POST" className="mt-4 md:mt-20">
-              <div className="grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2 md:gap-y-6">
-                <div>
-                  <div className="mt-[20px] md:mt-[52px]">
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="Full Name"
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="mt-[20px] md:mt-[52px]">
-                    <input
-                      type="text"
-                      name="last-name"
-                      id="last-name"
-                      placeholder="Phone number or Email"
-                      autoComplete="family-name"
-                      className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2 md:gap-y-6">
-                <div>
-                  <div className="mt-[20px] md:mt-[52px]">
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="Country of origin"
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="mt-[20px] md:mt-[52px]">
-                    <input
-                      type="text"
-                      name="last-name"
-                      id="last-name"
-                      placeholder="What else can you do?"
-                      autoComplete="family-name"
-                      className="block w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2 md:gap-y-6">
-                <div>
-                  <div className="mt-[20px] md:mt-[52px]">
-                    <div className="relative mt-2 rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="account-number"
-                        id="account-number"
-                        className="block w-full rounded-md border-0 bg-transparent py-1.5 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Upload your picture"
-                      />
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                        <svg
-                          className="h-5 w-5 text-[#F2970F]"
-                          data-slot="icon"
-                          fill="none"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="mt-[20px] md:mt-[52px]">
-                    <div className="relative mt-2 rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="account-number"
-                        id="account-number"
-                        className="block w-full rounded-md border-0 bg-transparent py-1.5 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Upload some of your work"
-                      />
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                        <svg
-                          className="h-5 w-5 text-[#F2970F]"
-                          data-slot="icon"
-                          fill="none"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4">
-              <input
-                type="checkbox"
-                id="terms"
-                name="terms"
-                className="mr-2"
-                required 
-              />
-              <label htmlFor="terms" className="text-gray-700">
-                I have read and accept the{' '}
-                <Link
-                  href="https://imara.tv/terms-of-use"
-                  target="_blank"
-                  className="text-blue-500 underline"
-                >
-                  terms and conditions
-                </Link>
-              </label>
-            </div>
-
-              <div className="mt-6">
-          <ReCAPTCHA
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-            onChange={(token) => setRecaptchaToken(token)}
-          />
-        </div>
-              <div className="mt-10 flex justify-center md:justify-end">
-                <button
-                  type="submit"
-                  className="rounded-md bg-[#007BFF] px-20 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
           </Container>
         </div>
 
