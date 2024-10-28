@@ -71,14 +71,15 @@ const RegisterForm = ({
       })
     } catch (error: any) {
       setProgress(0) // Reset progress upon error
+      const fieldErrors = error.response.data.errors // Assuming error response is structured like { errors: { fieldName: "Error message" } }
 
+      // Construct a formatted error message for display
+      const formattedErrors = Object.entries(fieldErrors)
+        .map(([field, message]) => `${field}: ${message}`)
+        .join('\n')
+        
       if (error.response && error.response.data && error.response.data.errors) {
-        const fieldErrors = error.response.data.errors // Assuming error response is structured like { errors: { fieldName: "Error message" } }
-
-        // Construct a formatted error message for display
-        const formattedErrors = Object.entries(fieldErrors)
-          .map(([field, message]) => `${field}: ${message}`)
-          .join('\n')
+        
 
         Swal.fire({
           title: 'Registration Failed',
@@ -89,7 +90,7 @@ const RegisterForm = ({
       } else {
         Swal.fire({
           title: 'Registration Failed',
-          text: 'An error occurred during registration. Please try again.',
+          text: `An error occurred during registration. Please try again. There were errors in the following fields:\n${formattedErrors}`,
           icon: 'error',
           confirmButtonText: 'OK',
         })
