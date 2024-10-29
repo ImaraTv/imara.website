@@ -245,6 +245,47 @@ interface Video {
   }
 }
 
+interface Bookmark {
+  id: number
+  name: string
+  slug: string
+  release_date: string
+  duration: number | null
+  category: string
+  topics: string[]
+  description: string
+  vimeo_link: string
+  call_to_action_btn: string | null
+  call_to_action_link: string | null
+  image: string
+  creator: {
+    id: number
+    name: string
+    stage_name: string | null
+    about: string | null
+    skills: string
+  }
+  rating: string
+  sponsor: {
+    name: string
+    about: string
+    website: string
+    logo: string
+  }
+  location: {
+    id: number | null
+    name: string | null
+  }
+  stars: number
+  media: {
+    poster: string
+    trailer: string | null
+    trailer_vimeo: string | null
+    hd_film: string
+    hd_film_vimeo: string
+  }
+}
+
 interface UserData {
   name: string
   email: string
@@ -294,51 +335,52 @@ export default function Saved() {
     }[]
   >([])
 
-  const [recoms, setRecoms] = useState<
-    {
+  const [bookmarks, setBookmarks] = useState<
+  {
+    id: number
+    name: string
+    slug: string
+    release_date: string
+    duration: number | null
+    category: string
+    topics: string[]
+    description: string
+    vimeo_link: string
+    call_to_action_btn: string | null
+    call_to_action_link: string | null
+    image: string
+    creator: {
       id: number
       name: string
-      slug: string
-      release_date: string
-      duration: number | null
-      category: string
-      topics: string[]
-      description: string
-      vimeo_link: string
-      call_to_action_btn: string | null
-      call_to_action_link: string | null
-      image: string
-      creator: {
-        id: number
-        name: string
-        stage_name: string | null
-        about: string | null
-        skills: string
-      }
-      rating: string
-      sponsor: {
-        name: string
-        about: string
-        website: string
-        logo: string
-      }
-      location: {
-        id: number | null
-        name: string | null
-      }
-      stars: number
-      media: {
-        poster: string
-        trailer: string | null
-        trailer_vimeo: string | null
-        hd_film: string
-        hd_film_vimeo: string
-      }
-    }[]
-  >([])
+      stage_name: string | null
+      about: string | null
+      skills: string
+    }
+    rating: string
+    sponsor: {
+      name: string
+      about: string
+      website: string
+      logo: string
+    }
+    location: {
+      id: number | null
+      name: string | null
+    }
+    stars: number
+    media: {
+      poster: string
+      trailer: string | null
+      trailer_vimeo: string | null
+      hd_film: string
+      hd_film_vimeo: string
+    }
+  }[]
+>([])
+
   const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
   const [locations, setLocations] = useState<{ id: number; name: string }[]>([])
-  const [bookmarks, setBookmarks] = useState([])
+  
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState<UserData | null>(null)
   let [isOpen, setIsOpen] = useState(false)
@@ -399,14 +441,42 @@ export default function Saved() {
           },
         )
         const data = await response.json()
-        if (data.data && Array.isArray(data.data)) {
-          setBookmarks(
-            data.data.flatMap((bookmark: any) => bookmark.videos.data),
-          )
-        } else {
-          setBookmarks([])
-          console.error('Unexpected API response format')
-        }
+        const placeholderImage = Fallback
+        // if (data.data && Array.isArray(data.data)) {
+        //   setBookmarks(
+        //     data.data.flatMap((bookmark: any) => bookmark.videos.data),
+        //   )
+        // } else {
+        //   setBookmarks([])
+        //   console.error('Unexpected API response format')
+        // }
+
+        const processedBookmarks = await Promise.all(
+          data.data.map(async (bookmark: any) => {
+            // Check if image is null or empty
+            if (!bookmark.image) {
+              bookmark.image = placeholderImage
+            } else {
+              try {
+                // Attempt to fetch the image using the HEAD method
+                const imageResponse = await fetch(bookmark.image, {
+                  method: 'HEAD',
+                })
+                if (!imageResponse.ok) {
+                  // If the image doesn't exist, use the placeholder
+                  bookmark.image = placeholderImage
+                }
+              } catch (error) {
+                // If fetching the image fails (e.g., network error), use the placeholder
+                bookmark.image = placeholderImage
+              }
+            }
+            return bookmark
+          }),
+        )
+        setBookmarks(processedBookmarks)
+        // setVideos(data.data);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching bookmarks:', error)
       } finally {
@@ -442,7 +512,7 @@ export default function Saved() {
             method: 'GET', // Specify the request method if not GET by default
             headers: {
               'Content-Type': 'application/json', // Ensure the content type is correct
-              'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
+              'Access-Control-Allow-Origin': 'https://imara.tv', // Only if you are controlling the server
               // Include any other headers required by the server, like authentication tokens
             },
           },
@@ -638,7 +708,7 @@ export default function Saved() {
                 </button>
               ))}
             </div>
-            <div className="hidden w-2/5 justify-end px-6 md:flex">
+            <div className="hidden w-2/5 justify-end px-6 md:flex z-20">
               <div className="">
                 <Listbox value={selectedGenre} onChange={setSelectedGenre}>
                   <div className="relative mt-1">
