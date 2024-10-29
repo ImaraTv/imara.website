@@ -98,7 +98,7 @@ export function CarouselHome(props: any) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/featured`, {
           cache: 'force-cache',
         })
         const data = await response.json()
