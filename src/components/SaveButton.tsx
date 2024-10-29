@@ -31,7 +31,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ videoId }) => {
         confirmButtonText: 'OK',
       }).then(() => {
         // Redirect to the profile page
-        router.push('/')
+        router.push('/saved')
       })
       console.log(response.data) // Handle the response as needed
     } catch (error) {
