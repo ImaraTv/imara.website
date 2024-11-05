@@ -219,7 +219,8 @@ export function Recommended() {
     }[]
   >([])
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
   const [selectedGenre, setSelectedGenre] = useState<{
     id: number
@@ -407,9 +408,14 @@ export function Recommended() {
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
     setIsLoading(true)
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`,
-    )
+
+    // Define the API endpoint based on the category
+    const url =
+      categoryName === 'All'
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended`
+        : `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`
+
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setVideos(data.data)
@@ -461,6 +467,17 @@ export function Recommended() {
         </div>
         <div className="mt-[20px] w-full justify-between md:flex">
           <div className="gap-4 md:flex md:flex-wrap">
+            <button
+              type="button"
+              onClick={() => handleCategoryClick('All')}
+              className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${
+                selectedCategory === 'All'
+                  ? 'bg-blue-500 text-white' // Active "All" styling
+                  : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive "All" styling
+              }`}
+            >
+              All
+            </button>
             {categories.map((category, index) => (
               <button
                 type="button"
@@ -654,9 +671,7 @@ export function Recommended() {
               >
                 {videos.map((video) => (
                   <li key={video.id} className="relative">
-                    <Link
-                      href={`/videos/${video.slug}`}
-                    >
+                    <Link href={`/videos/${video.slug}`}>
                       <div
                         onClick={() => openModal(video)}
                         className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
@@ -742,10 +757,7 @@ export function Recommended() {
                 >
                   {latest.map((video) => (
                     <li key={video.id}>
-                      <Link
-                        href={`/videos/${video.slug}`}
-                        className="group"
-                      >
+                      <Link href={`/videos/${video.slug}`} className="group">
                         <div className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10">
                           <Image
                             width={131}

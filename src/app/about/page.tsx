@@ -19,6 +19,9 @@ import Founder from '@/images/members/founder.jpg'
 import Fred from '@/images/members/fred.jpeg'
 import Mercy from '@/images/members/cfo.jpg'
 import Jerusha from '@/images/members/jerusha.jpeg'
+import Ruth from '@/images/members/ruth.jpeg'
+import Tony from '@/images/members/tony.JPEG'
+import Sammy from '@/images/members/sammymwangangi.jpg'
 
 import Image from 'next/image'
 import { StaticImageData } from 'next/image'
@@ -84,11 +87,43 @@ const files: File[] = [
     imageUrl: Mercy,
   },
   {
+    name: 'Olela Tonny',
+    role: 'Program Development',
+    description: `
+      Olela Tonny is a development professional with over 5 years of experience. He specializes in program development, partnership building, strategic communication, advocacy, and community projects, focusing on Gender mainstreaming, Child protection, Reproductive Health, and policy. His achievements include training innovators, leading impactful projects, and supporting marginalized groups. 
+  
+      Tonny is skilled in resource mobilization, public speaking, M&E, and design thinking, and has enhanced youth participation & policy development with UNFPA, UNICEF & UNESCO. He has successfully expanded meaningful engagement for youth, women, girls, and men while strengthening civil action, particularly in Gender mainstreaming, Child Protection, Sexual Reproductive Health Rights (SRHR), and policy development.
+  
+      Notably, he trained 30 young innovators for Kectil Community Kenya's "Innovation by Design Thinking for Sustainable Development" program, resulting in a team (EcoBana) winning $1 million USD in the 2022 Hult Prize Challenge. He also led a self-initiated 3-month project (Tree Seedling & Pad Drive), supporting over 8,522 marginalized girls, teen mothers, and persons with disabilities across several Kenyan counties.
+  
+      His work with UNFPA involved developing youth-led policies, coordinating advocacy strategies, and enhancing youth participation in national policies. At UNESCO Youth Kenya Forum, he organized SDG awareness campaigns and facilitated youth-led projects. He also served as a Regional Program Coordinator for Kectil Center for Youth Excellence, training young innovators and implementing capacity development strategies. His role at the Global Youth Consortium Against FGM, under the UNFPA-UNICEF Joint Program, involved developing administrative systems and advocacy programs for 58 countries.
+  
+      Contact: tonnyolela@gmail.com | Website: https://olelatonny.com
+    `,
+    imageUrl: Tony,
+  },
+  {
+    name: 'Sammy mwangangi',
+    role: 'Frontend Developer',
+    description: `
+      A skilled frontend developer dedicated to creating seamless and engaging user experiences. With expertise in modern web technologies, I focus on building responsive, user-centered interfaces that bring our project’s vision to life. Passionate about clean code and intuitive design, I ensure that each component functions flawlessly across all devices, enhancing both functionality and aesthetics for our users.
+    `,
+    imageUrl: Sammy,
+  },
+  {
     name: 'Jerusha Oketch',
     role: 'Film Production and Office Administrator',
     description: 'Jerusha Oketch is an enthusiastic Film Production and Office Administrator who has recently joined our team. With a solid background in film production and animation, she is deeply committed to the idea that media has the power to educate, inspire, and make a positive difference in society. Her proactive approach and organizational skills ensure that our projects run smoothly and effectively, helping to position Imara TV as a leading destination for meaningful and engaging content.',
     imageUrl: Jerusha,
   },
+  
+  {
+    name: 'Ruth Njoroge',
+    role: 'Digital Marketing and Social Media Manager',
+    description: `Ruth Njoroge is a creative expert specializing in digital marketing and social media management. Renowned for her distinctive approach, Ruth oversees Imara TV's social media platforms, where her innovative strategies and engaging content drive exceptional brand presence. Ruth thrives in creative environments, passionate about filling creative spaces, she excels in crafting dynamic digital experiences that resonate with audiences constantly pushing boundaries to deliver exceptional results and elevate brand presence.`,
+    imageUrl: Ruth,
+  },
+  
 ]
 
 const cardStyle = {
