@@ -20,7 +20,7 @@ import Fred from '@/images/members/fred.jpeg'
 import Mercy from '@/images/members/cfo.jpg'
 import Jerusha from '@/images/members/jerusha.jpeg'
 import Ruth from '@/images/members/ruth.jpeg'
-import Tony from '@/images/members/tony.jpeg'
+import Tony from '@/images/members/tony.png'
 import Sammy from '@/images/members/sammymwangangi.jpg'
 
 import Image from 'next/image'
