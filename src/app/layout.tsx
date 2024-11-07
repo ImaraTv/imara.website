@@ -1,5 +1,6 @@
 import { Roboto } from 'next/font/google'
 import { Ubuntu } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import clsx from 'clsx'
 import '@/styles/tailwind.css'
 import '@/styles/global.css'
@@ -24,6 +25,18 @@ const ubuntu = Ubuntu({
   subsets: ['latin'],
   display: 'swap',
 })
+const montserrat = Montserrat({
+  weight: ["300","400","500","600","700"],
+  subsets: ['latin'],
+  display: 'swap',
+})
+const roboto = Roboto({
+  weight: ["100","300","400","500","700","900"],
+    style: ["normal" ,"italic"],
+    subsets: ['latin'],
+    display: 'swap',
+})
+
 
 export default function RootLayout({
   children,
@@ -35,7 +48,7 @@ export default function RootLayout({
       lang="en"
       className={clsx(
         'h-full scroll-smooth bg-white antialiased',
-        ubuntu.className,
+        roboto.className,
       )}
     >
       <Head>
@@ -46,7 +59,11 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="ImaraTv" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <body className="flex h-full flex-col">
+      <body className={clsx(
+        'flex h-full flex-col',
+        roboto.className,
+      )}>
+      
         <Suspense fallback={<>Loading...</>}>{children}</Suspense>
         <CookieConsentComponent />
       </body>
