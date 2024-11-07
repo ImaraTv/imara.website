@@ -103,7 +103,7 @@ export default function Calendar() {
   const fetchUpcomingVideos = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_TEST_URL}/api/videos/upcoming`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/upcoming`,
         {
           method: 'GET',
           headers: {
