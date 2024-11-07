@@ -145,7 +145,7 @@ export default function Calendar() {
     return (
       <Dialog>
         <DialogTrigger asChild>
-          <div className="w-full h-full cursor-pointer" />
+          <div className="w-full h-10 cursor-pointer" />
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
