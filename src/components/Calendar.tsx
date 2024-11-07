@@ -10,6 +10,9 @@ import {
   isSameMonth,
   isSameDay,
   parseISO,
+  startOfMonth,
+  isAfter,
+  isBefore,
 } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
@@ -31,7 +34,7 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import Fallback from '@/images/video.png'
 import Yt from '@/images/player.png'
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
 // interface Creator {
 //   id: number
@@ -138,13 +141,42 @@ export default function Calendar() {
     }
   }
 
+  function EmptyCellDialog({ date }: { date: Date }) {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="w-full h-full cursor-pointer" />
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Schedule a Film</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-center mb-4">No film scheduled for {format(date, 'MMMM d, yyyy')}. Would you like to create one?</p>
+            <Button asChild className="w-full">
+              <a href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}>
+                Create a Film
+              </a>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    )
+  }
+
   const nextMonth = () => setCurrentDate(addMonths(currentDate, 1))
-  const prevMonth = () => setCurrentDate(subMonths(currentDate, 1))
+  // const prevMonth = () => setCurrentDate(subMonths(currentDate, 1))
+  const prevMonth = () => {
+    const previousMonth = subMonths(currentDate, 1)
+    if (!isBefore(startOfMonth(previousMonth), startOfMonth(new Date()))) {
+      setCurrentDate(previousMonth)
+    }
+  }
 
   const renderHeader = () => {
     return (
       <div className="mb-4 flex items-center justify-between">
-        <Button onClick={prevMonth} variant="outline" size="icon">
+        <Button onClick={prevMonth} variant="outline" size="icon" disabled={isBefore(startOfMonth(subMonths(currentDate, 1)), startOfMonth(new Date()))}>
           <ChevronLeft className="h-4 w-4" />
         </Button>
         <h2 className="text-xl font-bold">
@@ -181,29 +213,38 @@ export default function Calendar() {
     let formattedDate = ''
 
     for (let i = 0; i < 42; i++) {
-      formattedDate = format(day, "d")
+      formattedDate = format(day, 'd')
       const cloneDay = day
-      const dayFilms = films.filter(film => isSameDay(parseISO(film.release_date), cloneDay))
+      const dayFilms = films.filter((film) =>
+        isSameDay(parseISO(film.release_date), cloneDay),
+      )
       const isCurrentMonth = isSameMonth(day, currentDate)
-      
 
       days.push(
         <div
           key={day.toString()}
           className={cn(
-            "p-2 border rounded-lg transition-all duration-200 ease-in-out",
-            isCurrentMonth ? "bg-background hover:bg-muted" : "bg-muted/50",
-            dayFilms.length > 0 && isCurrentMonth && "ring-2 ring-primary"
+            'rounded-lg border p-2 transition-all duration-200 ease-in-out',
+            isCurrentMonth ? 'bg-background hover:bg-muted' : 'bg-muted/50',
+            dayFilms.length > 0 && isCurrentMonth && 'ring-primary ring-2',
           )}
         >
-          <span className={cn(
-            "text-sm font-medium",
-            !isCurrentMonth && "text-muted-foreground"
-          )}>{formattedDate}</span>
-          {dayFilms.length > 0 && isCurrentMonth && (
+          <span
+            className={cn(
+              'text-sm font-medium',
+              !isCurrentMonth && 'text-muted-foreground',
+            )}
+          >
+            {formattedDate}
+          </span>
+          {dayFilms.length > 0 && isCurrentMonth ? (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="sm" className="mt-1 w-full text-xs justify-start bg-[#f34229] hover:bg-[#007bff] text-white hover:text-white">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="mt-1 w-full justify-start bg-[#f34229] text-xs text-white hover:bg-[#007bff] hover:text-white"
+                >
                   {dayFilms.length === 1 ? (
                     <span className="truncate">{dayFilms[0].name}</span>
                   ) : (
@@ -213,14 +254,16 @@ export default function Calendar() {
               </PopoverTrigger>
               <PopoverContent className="w-80 p-2">
                 <div className="grid divide-y-2">
-                  {dayFilms.map(film => (
+                  {dayFilms.map((film) => (
                     <FilmDialog key={film.id} film={film} />
                   ))}
                 </div>
               </PopoverContent>
             </Popover>
+          ) : (
+            isCurrentMonth && <EmptyCellDialog date={cloneDay} />
           )}
-        </div>
+        </div>,
       )
 
       if ((i + 1) % 7 === 0) {
@@ -243,7 +286,7 @@ export default function Calendar() {
   }
 
   return (
-    <div className="w-full px-6 py-10 sm:px-6 sm:py-20 lg:px-8 bg-gray-800">
+    <div className="w-full bg-gray-800 px-6 py-10 sm:px-6 sm:py-20 lg:px-8">
       <div className="pb-5">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-4xl font-semibold tracking-tight text-gray-200 sm:text-5xl">
@@ -254,7 +297,7 @@ export default function Calendar() {
           </p>
         </div>
       </div>
-      <div className='mx-auto mb-4 max-w-[1000px] rounded-md bg-white p-4 shadow'>
+      <div className="mx-auto mb-4 max-w-[1000px] rounded-md bg-white p-4 shadow">
         {renderHeader()}
         {renderDays()}
         {renderCells()}
@@ -274,8 +317,7 @@ function FilmDialog({ film }: { film: Film }) {
     )
   }, [film.vimeo_link])
 
-  console.log("Creator Name:", film.creator.name);
-  
+  console.log('Creator Name:', film.creator.name)
 
   return (
     <Dialog>
@@ -284,20 +326,18 @@ function FilmDialog({ film }: { film: Film }) {
           variant="ghost"
           className="hover:bg-muted justify-start bg-[#1c64f2] p-4"
         >
-          <div className="flex flex-col items-start gap-1 max-w-56 truncate">
-            <span className="font-semibold text-white">
-              {film.name}
-            </span>
+          <div className="flex max-w-56 flex-col items-start gap-1 truncate">
+            <span className="font-semibold text-white">{film.name}</span>
             <span className="text-xs text-white">
               {format(parseISO(film.release_date), 'PPP')}
             </span>
           </div>
         </Button>
       </DialogTrigger>
-      <DialogContent className="px-0 pt-0 pb-10 sm:max-w-[600px]">
+      <DialogContent className="px-0 pb-10 pt-0 sm:max-w-[600px]">
         <div className="relative">
           <DialogHeader>
-            <div className="aspect-[551/240] relative w-full">
+            <div className="relative aspect-[551/240] w-full">
               {isPlaying ? (
                 <iframe
                   src={videoUrl}
@@ -313,13 +353,13 @@ function FilmDialog({ film }: { film: Film }) {
                     className="object-cover"
                   />
                   <Image
-                          className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] object-contain md:h-auto md:w-[61px] md:object-cover cursor-pointer"
-                          width={50}
-                          height={43}
-                          src={Yt}
-                          alt={'ÿt'}
-                          onClick={() => setIsPlaying(true)}
-                        />
+                    className="absolute inset-0 m-auto h-[23.13px] w-[32.81px] cursor-pointer object-contain md:h-auto md:w-[61px] md:object-cover"
+                    width={50}
+                    height={43}
+                    src={Yt}
+                    alt={'ÿt'}
+                    onClick={() => setIsPlaying(true)}
+                  />
                 </>
               )}
             </div>
@@ -393,19 +433,29 @@ function FilmDialog({ film }: { film: Film }) {
             </div>
 
             {/* Call to Action */}
-            {film.call_to_action_btn && film.call_to_action_link && (
-              <div className="pt-4">
-                <Button asChild className="w-full">
-                  <a
-                    href={film.call_to_action_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {film.call_to_action_btn}
-                  </a>
-                </Button>
+            <div className="flex items-center justify-around pt-4">
+              <div>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
+                  className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-xs font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-sm"
+                >
+                  Create Similar Film
+                </a>
               </div>
-            )}
+              {film.call_to_action_btn && film.call_to_action_link && (
+                <div className="">
+                  <Button asChild className="w-full">
+                    <a
+                      href={film.call_to_action_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {film.call_to_action_btn}
+                    </a>
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </DialogContent>
