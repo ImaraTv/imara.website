@@ -125,7 +125,7 @@ export function Trending() {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`, {
           method: 'GET', // Specify the request method if not GET by default
           headers: {
             'Content-Type': 'application/json', // Ensure the content type is correct
@@ -174,7 +174,7 @@ export function Trending() {
     <>
       <div className="mb-[47px] flex items-center justify-center gap-3">
         <span className="text-[20px] font-bold text-[#2B2B2B] md:text-[40px]">
-          Trending
+          Latest
         </span>
 
         <svg

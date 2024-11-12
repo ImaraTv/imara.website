@@ -290,7 +290,7 @@ export function Recommended() {
     const fetchLatestVideos = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending`,
         )
         const data = await response.json()
         console.log(data)
@@ -749,7 +749,7 @@ export function Recommended() {
             ) : (
               <div>
                 <div className="mb-[48px] text-[20px] font-bold text-[#2B2B2B] md:mb-[53px] md:text-[40px]">
-                  Latest
+                  Trending
                 </div>
                 <ul
                   role="list"
