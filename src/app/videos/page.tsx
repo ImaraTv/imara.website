@@ -2,7 +2,7 @@
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import React, { Fragment, useEffect, useState } from 'react'
-import { Listbox, Dialog, Transition } from '@headlessui/react'
+import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Container } from '@/components/Container'
 import Rating from '@/components/Rating'
@@ -11,45 +11,11 @@ import Link from 'next/link'
 
 import Yt from '@/images/player.png'
 import Fallback from '@/images/video.png'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Button } from '@/components/Button'
-import { url } from 'inspector'
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 
 const cardStyle = {
   boxShadow: '0px 4px 22px 3px #00000029',
 }
-
-const dates = [
-  {
-    id: 1,
-    name: 'Jan',
-  },
-  {
-    id: 2,
-    name: 'Feb',
-  },
-  {
-    id: 3,
-    name: 'Mar',
-  },
-  {
-    id: 4,
-    name: 'Apr',
-  },
-  {
-    id: 5,
-    name: 'May',
-  },
-]
-
-const qualities = [
-  { id: 1, name: '4D', unavailable: false },
-  { id: 2, name: 'HD', unavailable: false },
-  { id: 3, name: 'Medium', unavailable: false },
-  { id: 4, name: 'Standard', unavailable: true },
-  { id: 5, name: 'Low', unavailable: false },
-]
 
 interface File {
   id: number
@@ -93,8 +59,6 @@ interface File {
 }
 
 export default function Videos() {
-  const [selected, setSelected] = useState(qualities[0])
-  const [active, setActive] = useState(dates[0])
   const [isLoading, setIsLoading] = useState(true)
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     [],
@@ -102,60 +66,15 @@ export default function Videos() {
   const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
   const [locations, setLocations] = useState<{ id: number; name: string }[]>([])
 
-  const [videos, setVideos] = useState<
-    {
-      id: number
-      name: string
-      slug: string
-      release_date: string
-      duration: number | null
-      category: string
-      topics: string[]
-      description: string
-      vimeo_link: string
-      call_to_action_btn: string | null
-      call_to_action_link: string | null
-      image: string
-      creator: {
-        id: number
-        name: string
-        stage_name: string | null
-        about: string | null
-        skills: string
-      }
-      rating: string
-      sponsor: {
-        name: string
-        about: string
-        website: string
-        logo: string
-      }
-      location: {
-        id: number | null
-        name: string | null
-      }
-      stars: number
-      media: {
-        poster: string
-        trailer: string | null
-        trailer_vimeo: string | null
-        hd_film: string
-        hd_film_vimeo: string
-      }
-    }[]
-  >([])
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-
-  useEffect(() => {
-    fetchVideos(currentPage)
-  }, [currentPage])
-
+  const [videos, setVideos] = useState<File[]>([])
+  const [page, setPage] = useState(1)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  const videosPerPage = 16
+  
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<any[]>([])
   let [isOpen, setIsOpen] = useState(false)
-
   const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -167,18 +86,6 @@ export default function Videos() {
     id: number
     name: string
   } | null>(null)
-  const [page, setPage] = useState(1)
-  const [hasMore, setHasMore] = useState(true)
-
-  const openModal = (file: File) => {
-    setSelectedFile(file)
-    setIsOpen(true)
-  }
-
-  const closeModal = () => {
-    setIsOpen(false)
-    setSelectedFile(null)
-  }
 
   useEffect(() => {
     // Reset isOpen state when the component unmounts
@@ -187,10 +94,14 @@ export default function Videos() {
     }
   }, [])
 
-  const fetchVideos = async (page: any) => {
+  useEffect(() => {
+    fetchVideos(page)
+  }, [page])
+
+  const fetchVideos = async (pageNumber: number) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest?page=${page}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest?page=${pageNumber}&limit=${videosPerPage}`,
       )
       const data = await response.json()
       const placeholderImage = Fallback
@@ -218,19 +129,23 @@ export default function Videos() {
           return video
         }),
       )
-      console.log(processedVideos);
-      
-      setVideos(processedVideos)
-      setTotalPages(data.meta.last_page)
+      console.log(processedVideos)
+
+      setVideos((prevVideos) => [...prevVideos, ...processedVideos]) // Append new videos
+      setHasMore(data.meta.last_page > pageNumber) // Check if more pages exist
       setIsLoading(false)
+      setLoadingMore(false)
     } catch (error) {
       console.error('Error fetching videos:', error)
       setIsLoading(false)
     }
   }
 
-  const handlePageChange = (newPage: any) => {
-    setCurrentPage(newPage)
+  const loadMoreVideos = () => {
+    if (!loadingMore && hasMore) {
+      setLoadingMore(true)
+      setTimeout(() => setPage((prevPage) => prevPage + 1), 2000)
+    }
   }
 
   useEffect(() => {
@@ -279,33 +194,6 @@ export default function Videos() {
     }
     fetchLocations()
   }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        !hasMore
-      )
-        return
-      setPage((prevPage) => prevPage + 1)
-    }
-  })
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        !hasMore
-      )
-        return
-      setPage((prevPage) => prevPage + 1)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [hasMore])
 
   const handleCategoryClick = (categoryName: any) => {
     setSelectedCategory(categoryName)
@@ -543,18 +431,16 @@ export default function Videos() {
                 ))}
               </div>
             ) : (
-              <div className="md:w-3/4">
+              <div className="">
                 {videos && videos.length > 0 ? (
                   <>
                     <ul
                       role="list"
-                      className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-3 xl:gap-x-8"
+                      className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-4 xl:gap-x-8"
                     >
                       {videos.map((video) => (
                         <li key={video.name} className="relative">
-                          <Link
-                            href={`/videos/${video.slug}`}
-                          >
+                          <Link href={`/videos/${video.slug}`}>
                             <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                               <img
                                 src={video.image}
@@ -597,36 +483,14 @@ export default function Videos() {
                       ))}
                     </ul>
                     <div className="mb-4 mt-8 flex justify-center">
-                      <nav
-                        className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-                        aria-label="Pagination"
-                      >
+                      {hasMore && (
                         <button
-                          onClick={() => handlePageChange(currentPage - 1)}
-                          disabled={currentPage === 1}
-                          className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === 1 ? 'cursor-not-allowed' : ''}`}
+                          onClick={loadMoreVideos}
+                          className="mx-auto mt-8 block rounded-lg bg-blue-600 px-6 py-3 text-[14px] font-semibold text-white hover:bg-blue-500 focus:ring-4 focus:ring-blue-200"
                         >
-                          <span className="sr-only">Previous</span>
-                          &larr;
+                          {loadingMore ? 'Loading...' : 'Load More'}
                         </button>
-                        {[...Array(totalPages).keys()].map((page) => (
-                          <button
-                            key={page + 1}
-                            onClick={() => handlePageChange(page + 1)}
-                            className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === page + 1 ? 'bg-indigo-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'}`}
-                          >
-                            {page + 1}
-                          </button>
-                        ))}
-                        <button
-                          onClick={() => handlePageChange(currentPage + 1)}
-                          disabled={currentPage === totalPages}
-                          className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${currentPage === totalPages ? 'cursor-not-allowed' : ''}`}
-                        >
-                          <span className="sr-only">Next</span>
-                          &rarr;
-                        </button>
-                      </nav>
+                      )}
                     </div>
                   </>
                 ) : (
@@ -645,8 +509,9 @@ export default function Videos() {
                           </h3>
                           <div className="mt-2 text-sm text-yellow-700">
                             <p>
-                              We couldn&apos;t find any videos at the moment. Please
-                              search another topic or try refreshing the page.
+                              We couldn&apos;t find any videos at the moment.
+                              Please search another topic or try refreshing the
+                              page.
                             </p>
                           </div>
                         </div>
@@ -656,39 +521,7 @@ export default function Videos() {
                 )}
               </div>
             )}
-            <div className="md:w-1/4">
-              <ul
-                role="list"
-                className="mt-10 space-y-12 md:-mt-12 xl:col-span-3"
-              >
-                {videos.map((video) => (
-                  <li key={video.name}>
-                    <Link
-                      href={`/videos/${video.slug}`}
-                    >
-                      <div className="flex flex-row items-center gap-10 pt-12 sm:flex-row md:flex-col">
-                        <img
-                          className="aspect-[4/5] w-[131px] flex-none rounded-l-2xl object-cover"
-                          src={video.image}
-                          alt=""
-                        />
-                        <div className="max-w-xl flex-col space-y-[26px]">
-                          <p className="text-[17px] font-medium text-[#525252]">
-                            {video.category}
-                          </p>
-                          <h3 className="text-[19px] font-bold text-[#525252]">
-                            {video.name}
-                          </h3>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
-
-          {/* Pagination Controls */}
         </Container>
       </main>
       <Footer />
