@@ -62,7 +62,7 @@ export function ActorsHero() {
               <span>All creators</span>
             </Button>
             <Link
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/admin/register?=creator`}
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
               className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-[12px] font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-lg"
             >
               Become a creator
