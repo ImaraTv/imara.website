@@ -75,8 +75,10 @@ const cardStyle = {
   boxShadow: '0px 4px 28px 3px #0000001A',
 }
 
+const Fallback = 'https://via.placeholder.com/524x273'; // Define the fallback image URL
+
 export function Trending() {
-  const [trending, setTrending] = useState<
+  const [videos, setVideos] = useState<
     {
       id: number
       name: string
@@ -125,15 +127,9 @@ export function Trending() {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending`, {
-          method: 'GET', // Specify the request method if not GET by default
-          headers: {
-            'Content-Type': 'application/json', // Ensure the content type is correct
-            'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
-            // Include any other headers required by the server, like authentication tokens
-          },
-        })
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`)
         const data = await response.json()
+        
         const placeholderImage = Trend1
 
         const processedVideos = await Promise.all(
@@ -159,11 +155,10 @@ export function Trending() {
             return video
           }),
         )
-        setTrending(processedVideos)
-        // setTrending(data.data)
+        setVideos(processedVideos)
         setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching trending videos:', error)
+        console.error('Error fetching latest videos:', error)
         setIsLoading(false)
       }
     }
@@ -173,9 +168,9 @@ export function Trending() {
   return (
     <>
       <div className="mb-[47px] flex items-center justify-center gap-3">
-        <span className="text-[20px] font-bold text-[#2B2B2B] md:text-[40px]">
-          Trending
-        </span>
+        <div className="text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
+          Latest
+        </div>
 
         <svg
           className=""
@@ -261,7 +256,7 @@ export function Trending() {
           }}
           modules={[FreeMode]}
         >
-          {trending.map((item) => (
+          {videos.map((item) => (
             <SwiperSlide key={item.id}>
               <article
                 className="relative isolate ml-[16px] flex flex-col justify-end overflow-hidden rounded-[5px] bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 md:ml-[47px] lg:pt-80"

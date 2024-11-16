@@ -18,70 +18,6 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { ArrowDownIcon } from '@heroicons/react/24/outline'
 import Rating from '@/components/Rating'
 
-const dates = [
-  {
-    id: 1,
-    name: 'Jan',
-  },
-  {
-    id: 2,
-    name: 'Feb',
-  },
-  {
-    id: 3,
-    name: 'Mar',
-  },
-  {
-    id: 4,
-    name: 'Apr',
-  },
-  {
-    id: 5,
-    name: 'May',
-  },
-]
-
-const qualities = [
-  { id: 1, name: 'Medium', unavailable: false },
-  { id: 2, name: '4D', unavailable: false },
-  { id: 3, name: 'HD', unavailable: false },
-  { id: 4, name: 'Standard', unavailable: true },
-  { id: 5, name: 'Low', unavailable: false },
-]
-
-const suggestions = [
-  {
-    id: 1,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl: Recent,
-  },
-  {
-    id: 2,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl: Recent,
-  },
-  {
-    id: 3,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl: Recent,
-  },
-  {
-    id: 4,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl: Recent,
-  },
-  {
-    id: 5,
-    name: 'The bad choice',
-    series: 'series/ ss2 / Eps 3',
-    imageUrl: Recent,
-  },
-]
-
 interface File {
   id: number
   name: string
@@ -123,119 +59,41 @@ interface File {
   }
 }
 
+interface FilterState {
+  topic: string | null
+  category: string | null
+  location: { id: number; name: string } | null
+}
+
+interface FilterData {
+  topics: Array<{ id: number; name: string }>
+  categories: Array<{ id: number; name: string }>
+  locations: Array<{ id: number; name: string }>
+}
+
 export function Recommended() {
-  const [selected, setSelected] = useState()
-  const [active, setActive] = useState()
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-    [],
-  )
-  const [topics, setTopics] = useState<{ id: number; name: string }[]>([])
-  const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
-  const [locations, setLocations] = useState<{ id: number; name: string }[]>([])
+  const [filters, setFilters] = useState<FilterState>({
+    topic: 'all',
+    category: null,
+    location: null,
+  })
+
+  const [filterData, setFilterData] = useState<FilterData>({
+    topics: [],
+    categories: [],
+    locations: [],
+  })
+
+  const [recommendedVideos, setRecommendedVideos] = useState<File[]>([])
+  const [trendingVideos, setTrendingVideos] = useState<File[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [videos, setVideos] = useState<
-    {
-      id: number
-      name: string
-      slug: string
-      release_date: string
-      duration: number | null
-      category: string
-      topics: string[]
-      description: string
-      vimeo_link: string
-      call_to_action_btn: string | null
-      call_to_action_link: string | null
-      image: string
-      creator: {
-        id: number
-        name: string
-        stage_name: string | null
-        about: string | null
-        skills: string
-      }
-      rating: string
-      sponsor: {
-        name: string
-        about: string
-        website: string
-        logo: string
-      }
-      location: {
-        id: number | null
-        name: string | null
-      }
-      stars: number
-      media: {
-        poster: string
-        trailer: string | null
-        trailer_vimeo: string | null
-        hd_film: string
-        hd_film_vimeo: string
-      }
-    }[]
-  >([])
-
-  const [latest, setLatest] = useState<
-    {
-      id: number
-      name: string
-      slug: string
-      release_date: string
-      duration: number | null
-      category: string
-      topics: string[]
-      description: string
-      vimeo_link: string
-      call_to_action_btn: string | null
-      call_to_action_link: string | null
-      image: string
-      creator: {
-        id: number
-        name: string
-        stage_name: string | null
-        about: string | null
-        skills: string
-      }
-      rating: string
-      sponsor: {
-        name: string
-        about: string
-        website: string
-        logo: string
-      }
-      location: {
-        id: number | null
-        name: string | null
-      }
-      stars: number
-      media: {
-        poster: string
-        trailer: string | null
-        trailer_vimeo: string | null
-        hd_film: string
-        hd_film_vimeo: string
-      }
-    }[]
-  >([])
-
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedTopic, setSelectedTopic] = useState<number | null>(null)
-  const [selectedGenre, setSelectedGenre] = useState<{
-    id: number
-    name: string
-  } | null>(null)
-  const [selectedLocation, setSelectedLocation] = useState<{
-    id: number
-    name: string
-  } | null>(null)
+  const [error, setError] = useState<Record<string, string>>({})
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const numCards = 4
   const numCards2 = 3
-  let [isOpen, setIsOpen] = useState(false)
 
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const openModal = (file: File) => {
     setSelectedFile(file)
     setIsOpen(true)
@@ -246,212 +104,115 @@ export function Recommended() {
     setSelectedFile(null)
   }
 
+  const fetchFilterData = async () => {
+    try {
+      const [topicsRes, categoriesRes, locationsRes] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`),
+      ])
+
+      const [topics, categories, locations] = await Promise.all([
+        topicsRes.json(),
+        categoriesRes.json(),
+        locationsRes.json(),
+      ])
+
+      setFilterData({
+        topics: topics.data?.length ? topics.data : [],
+        categories: categories.data?.length ? categories.data : [],
+        locations: locations.data?.length ? locations.data : [],
+      })
+
+      setError({
+        topics: !topics.data?.length ? 'No topics available' : '',
+        categories: !categories.data?.length ? 'No categories available' : '',
+        locations: !locations.data?.length ? 'No locations available' : '',
+      })
+    } catch (error) {
+      console.error('Error fetching filter data:', error)
+      setError({
+        topics: 'Failed to load topics',
+        categories: 'Failed to load categories',
+        locations: 'Failed to load locations',
+      })
+    }
+  }
+
+  const generateQueryParams = () => {
+    const queryParams = new URLSearchParams();
+    if (filters.topic && filters.topic !== 'all') {
+      queryParams.append('topic', filters.topic);
+    }
+    if (filters.category) {
+      queryParams.append('category', filters.category);
+    }
+    if (filters.location) {
+      queryParams.append('location', filters.location.id.toString());
+    }
+    return queryParams.toString() ? `?${queryParams.toString()}` : '';
+  }
+
+  const fetchFilteredVideos = async () => {
+    setIsLoading(true)
+    setError({ videos: '' })
+
+    try {
+      const queryParams = generateQueryParams()
+
+      const [recommendedResponse, trendingResponse] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended${queryParams}`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/trending${queryParams}`)
+      ])
+
+      const recommendedData = await recommendedResponse.json()
+      const trendingData = await trendingResponse.json()
+
+      // Extract the data array from the response
+      const recommendedVideos = recommendedData.data || []
+      const trendingVideos = trendingData.data || []
+
+      if (recommendedVideos.length === 0 && trendingVideos.length === 0) {
+        setError({ videos: 'No videos found for selected filters' })
+      }
+
+      setRecommendedVideos(recommendedVideos)
+      setTrendingVideos(trendingVideos)
+    } catch (err) {
+      setError({ videos: 'Error fetching videos. Please try again.' })
+      setRecommendedVideos([])
+      setTrendingVideos([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleFilterChange = async (type: keyof FilterState, value: any) => {
+    if (value === 'all') {
+      // Reset all filters when "All" is selected
+      setFilters({
+        topic: 'all',
+        category: null,
+        location: null,
+      })
+    } else {
+      setFilters((prev) => ({ ...prev, [type]: value }))
+    }
+  }
+
   useEffect(() => {
-    // Reset isOpen state when the component unmounts
+    fetchFilterData()
+  }, [])
+
+  useEffect(() => {
+    fetchFilteredVideos()
+  }, [filters])
+
+  useEffect(() => {
     return () => {
       setIsOpen(false)
     }
   }, [])
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`,
-        )
-        const data = await response.json()
-        setCategories(data.data)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
-    }
-
-    fetchCategories()
-  }, [])
-
-  useEffect(() => {
-    const fetchGenres = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`,
-        )
-        const data = await response.json()
-        setGenres(data.data)
-      } catch (error) {
-        console.error('Error fetching genres:', error)
-      }
-    }
-
-    fetchGenres()
-  }, [])
-
-  useEffect(() => {
-    const fetchLatestVideos = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest`,
-        )
-        const data = await response.json()
-        console.log(data)
-        setLatest(data.data)
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Error fetching latest videos:', error)
-        setIsLoading(false)
-      }
-    }
-
-    const fetchLocations = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`,
-        )
-        const data = await response.json()
-        setLocations(data.data)
-      } catch (error) {
-        console.error('Error fetching locations:', error)
-      }
-    }
-
-    const fetchAllVideos = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/recommended`,
-          {
-            method: 'GET', // Specify the request method if not GET by default
-            headers: {
-              'Content-Type': 'application/json', // Ensure the content type is correct
-              'Access-Control-Allow-Origin': 'https://test.imara.tv', // Only if you are controlling the server
-              // Include any other headers required by the server, like authentication tokens
-            },
-          },
-        )
-        const data = await response.json()
-        const placeholderImage = Fallback
-
-        const processedVideos = await Promise.all(
-          data.data.map(async (video: any) => {
-            // Check if image is null or empty
-            if (!video.image) {
-              video.image = placeholderImage
-            } else {
-              try {
-                // Attempt to fetch the image using the HEAD method
-                const imageResponse = await fetch(video.image, {
-                  method: 'HEAD',
-                })
-                if (!imageResponse.ok) {
-                  // If the image doesn't exist, use the placeholder
-                  video.image = placeholderImage
-                }
-              } catch (error) {
-                // If fetching the image fails (e.g., network error), use the placeholder
-                video.image = placeholderImage
-              }
-            }
-            return video
-          }),
-        )
-        setVideos(processedVideos)
-        // setVideos(data.data);
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      }
-    }
-
-    const fetchFilteredVideos = async () => {
-      setIsLoading(true)
-      try {
-        // const query = selectedCategory ? `?category=${selectedCategory}` : ''
-        // Initialize query parameters
-        let query = ''
-
-        // Add category to query if selected
-        if (selectedCategory) {
-          query += `?topic=${selectedCategory}`
-        }
-
-        // Add genre to query if selected
-        if (selectedGenre) {
-          query += query
-            ? `&genre=${selectedGenre.id}`
-            : `?genre=${selectedGenre.id}`
-        }
-
-        // Add location to query if selected
-        if (selectedLocation) {
-          query += query
-            ? `&location=${selectedLocation.id}`
-            : `?location=${selectedLocation.id}`
-        }
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest${query}`,
-        )
-        const data = await response.json()
-        setVideos(data.data)
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      }
-    }
-
-    fetchLatestVideos()
-    fetchLocations()
-    fetchAllVideos()
-    fetchFilteredVideos()
-  }, [selectedCategory, selectedGenre, selectedLocation])
-
-  const handleCategoryClick = (categoryName: any) => {
-    setSelectedCategory(categoryName)
-    setIsLoading(true)
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setVideos(data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      })
-  }
-
-  const handleGenreClick = (genreName: any) => {
-    setSelectedGenre(genreName)
-    setIsLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?genre=${genreName}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setVideos(data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      })
-  }
-
-  const handleLocationClick = (locationName: any) => {
-    setSelectedLocation(locationName)
-    setIsLoading(true)
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?location=${locationName}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setVideos(data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      })
-  }
 
   return (
     <>
@@ -461,35 +222,45 @@ export function Recommended() {
         </div>
         <div className="mt-[20px] w-full justify-between md:flex">
           <div className="gap-4 md:flex md:flex-wrap">
-            {categories.map((category, index) => (
+            {error.topics && <p className="text-sm text-red-500 mb-2">{error.topics}</p>}
+            <button
+              type="button"
+              onClick={() => handleFilterChange('topic', 'all')}
+              className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${
+                filters.topic === 'all'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-[#525252] hover:bg-gray-50'
+              }`}
+            >
+              All
+            </button>
+            {filterData.topics.map((topic) => (
               <button
                 type="button"
-                key={category.id}
-                onClick={() => handleCategoryClick(category.name)}
+                key={topic.id}
+                onClick={() => handleFilterChange('topic', topic.name)}
                 className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${
-                  selectedCategory === category.name
-                    ? 'bg-blue-500 text-white' // Active category styling
-                    : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
+                  filters.topic === topic.name
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-[#525252] hover:bg-gray-50'
                 }`}
               >
-                {category.name}
+                {topic.name}
               </button>
             ))}
           </div>
           <div className="hidden w-2/5 justify-end px-6 md:flex">
-            <div className="">
-              <Listbox value={selectedGenre} onChange={setSelectedGenre}>
+            <div className="mr-2">
+              <Listbox
+                value={filters.category}
+                onChange={(value) => handleFilterChange('category', value)}
+              >
                 <div className="relative mt-1">
-                  <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
+                  <Listbox.Button className="relative inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
                     <span className="block truncate pr-1">
-                      {selectedGenre ? selectedGenre.name : 'Select a genre'}
+                      {filters.category || 'Select genre'}
                     </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
+                    <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </Listbox.Button>
                   <Transition
                     as={Fragment}
@@ -498,36 +269,31 @@ export function Recommended() {
                     leaveTo="opacity-0"
                   >
                     <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                      {genres.map((quality, qualityIdx) => (
+                      {error.categories && (
+                        <div className="py-2 px-4 text-sm text-red-500">
+                          {error.categories}
+                        </div>
+                      )}
+                      {filterData.categories.map((category) => (
                         <Listbox.Option
-                          key={qualityIdx}
+                          key={category.id}
                           className={({ active }) =>
                             `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                              active
-                                ? 'bg-amber-100 text-amber-900'
-                                : 'text-gray-900'
+                              active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                             }`
                           }
-                          value={quality}
+                          value={category.name}
                         >
                           {({ selected }) => (
                             <>
-                              <span
-                                className={`block truncate ${
-                                  selected ? 'font-medium' : 'font-normal'
-                                }`}
-                                onClick={() => handleGenreClick(quality.name)}
-                              >
-                                {quality.name}
+                              <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
+                                {category.name}
                               </span>
-                              {selected ? (
+                              {selected && (
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                  <CheckIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
+                                  <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                 </span>
-                              ) : null}
+                              )}
                             </>
                           )}
                         </Listbox.Option>
@@ -537,21 +303,17 @@ export function Recommended() {
                 </div>
               </Listbox>
             </div>
-            <div className="">
-              <Listbox value={selectedLocation} onChange={setSelectedLocation}>
+            <div>
+              <Listbox
+                value={filters.location}
+                onChange={(value) => handleFilterChange('location', value)}
+              >
                 <div className="relative mt-1">
-                  <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
+                  <Listbox.Button className="relative inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
                     <span className="block truncate pr-1">
-                      {selectedLocation
-                        ? selectedLocation.name
-                        : 'Select a location'}
+                      {filters.location ? filters.location.name : 'Select a location'}
                     </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
+                    <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </Listbox.Button>
                   <Transition
                     as={Fragment}
@@ -560,36 +322,31 @@ export function Recommended() {
                     leaveTo="opacity-0"
                   >
                     <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                      {locations.map((date, dateIdx) => (
+                      {error.locations && (
+                        <div className="py-2 px-4 text-sm text-red-500">
+                          {error.locations}
+                        </div>
+                      )}
+                      {filterData.locations.map((location) => (
                         <Listbox.Option
-                          key={dateIdx}
+                          key={location.id}
                           className={({ active }) =>
                             `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                              active
-                                ? 'bg-amber-100 text-amber-900'
-                                : 'text-gray-900'
+                              active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                             }`
                           }
-                          value={date}
+                          value={location}
                         >
-                          {({ active }) => (
+                          {({ selected }) => (
                             <>
-                              <span
-                                className={`block truncate ${
-                                  active ? 'font-medium' : 'font-normal'
-                                }`}
-                                onClick={() => handleLocationClick(date.name)}
-                              >
-                                {date.name}
+                              <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
+                                {location.name}
                               </span>
-                              {active ? (
+                              {selected && (
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                  <CheckIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
+                                  <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                 </span>
-                              ) : null}
+                              )}
                             </>
                           )}
                         </Listbox.Option>
@@ -611,7 +368,7 @@ export function Recommended() {
                   role="status"
                   className="max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
                 >
-                  <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
+                  <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700 sm:w-96">
                     <svg
                       className="h-10 w-10 text-gray-200 dark:text-gray-600"
                       aria-hidden="true"
@@ -652,11 +409,9 @@ export function Recommended() {
                 role="list"
                 className="grid grid-cols-2 gap-x-4 gap-y-[12px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[50px] lg:grid-cols-3 xl:gap-x-8"
               >
-                {videos.map((video) => (
+                {recommendedVideos.map((video) => (
                   <li key={video.id} className="relative">
-                    <Link
-                      href={`/videos/${video.slug}`}
-                    >
+                    <Link href={`/videos/${video.slug}`}>
                       <div
                         onClick={() => openModal(video)}
                         className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
@@ -673,7 +428,7 @@ export function Recommended() {
                           width={50}
                           height={43}
                           src={Yt}
-                          alt={'ÿt'}
+                          alt={'yt'}
                         />
                       </div>
                       <div className="mt-[18px] flex gap-3 md:mt-5">
@@ -718,7 +473,8 @@ export function Recommended() {
                     fill="currentColor"
                     viewBox="0 0 20 18"
                   >
-                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
+                    <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
                   </svg>
                 </div>
                 <div className="w-full">
@@ -733,19 +489,16 @@ export function Recommended() {
               </div>
             ) : (
               <div>
-                <div className="mb-[48px] text-[20px] font-bold text-[#2B2B2B] md:mb-[53px] md:text-[40px]">
-                  Latest
+                <div className="mb-[48px] text-[20px] font-bold text-[#2B2B2B] md:mb-[53px] md:text-[24px]">
+                  Trending
                 </div>
                 <ul
                   role="list"
                   className="-mt-12 space-y-[26px] md:space-y-12 xl:col-span-3"
                 >
-                  {latest.map((video) => (
+                  {trendingVideos.map((video) => (
                     <li key={video.id}>
-                      <Link
-                        href={`/videos/${video.slug}`}
-                        className="group"
-                      >
+                      <Link href={`/videos/${video.slug}`} className="group">
                         <div className="flex items-center justify-center gap-[26px] sm:flex-row md:gap-10">
                           <Image
                             width={131}
@@ -774,6 +527,31 @@ export function Recommended() {
       </Container>
       <div className="mb-[44px] mt-[44px] hidden w-full border-t-[1px] border-[#D9D9D9] md:block" />
 
+      {error.videos && (
+        <div className="mb-8 rounded-md bg-yellow-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg
+                className="h-5 w-5 text-yellow-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-yellow-800">
+                {error.videos}
+              </h3>
+            </div>
+          </div>
+        </div>
+      )}
       <Container>
         <Link href="/videos">
           <div className="mb-[60px] hidden items-center justify-end space-x-[34px] text-[#F2970F] md:flex">
