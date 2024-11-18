@@ -115,7 +115,7 @@ const RegisterForm = ({
         email: '',
         password: '',
         password_confirmation: '',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/verify`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/verify`,
       }}
       validationSchema={schema}
       onSubmit={onSubmit}
@@ -199,7 +199,7 @@ const RegisterForm = ({
             <label htmlFor="terms" className="text-gray-700">
               I have read and accept the{' '}
               <Link
-                href="https://imara.tv/terms-of-use"
+                href="/terms-of-use"
                 target="_blank"
                 className="text-blue-500 underline"
               >

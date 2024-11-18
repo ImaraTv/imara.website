@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import Swal from 'sweetalert2'
 
 type Props = {}
 
@@ -46,96 +47,79 @@ export function Newsletter({}: Props) {
             }}
             validationSchema={requiredSchema}
             onSubmit={async (values, { resetForm }) => {
-              setButtonDisabled(true)
+              setSubmitting(true)
               try {
-                const response = await fetch('/api/newsletter', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
+                const response = await fetch(
+                  `${process.env.NEXT_PUBLIC_BASE_URL}/api/newsletter/subscribe`,
+                  {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      email: values.email,
+                    }),
                   },
-                  body: JSON.stringify({
-                    email: values?.email,
-                  }),
-                })
-                const datas = await response.json()
-
-                if (response.status === 409) {
-                  // Email already exists
-                  setStatus(409);
-                  setMessage('This email is already subscribed to the newsletter.');
-                  setTimeout(() => {
-                    setMessage('');
-                    setButtonDisabled(false);
-                  }, 2000);
-                  return;
-                }
-                
-                if (datas.status >= 400) {
-                  setStatus(datas.status)
-                  setMessage(
-                    'Error joining the newsletter.',
-                  )
-                  setTimeout(() => {
-                    setMessage('')
-                    setButtonDisabled(false)
-                  }, 2000)
-                  return
-                }
-
-                setStatus(201)
-                setMessage('Thank you for subscribing to our newsletter 👻.')
-                setRun(true)
-                setTimeout(() => {
-                  setTotalCounts(0)
-                  setMessage('')
-                  resetForm()
-                  setButtonDisabled(false)
-                }, 4000)
-                setTotalCounts(400)
-              } catch (error) {
-                setStatus(500)
-                setMessage(
-                  'Error joining the newsletter.',
                 )
-                setTimeout(() => {
-                  setMessage('')
-                  setButtonDisabled(false)
-                }, 2000)
+
+                const data = await response.json()
+
+                if (data.status === 'subscribed') {
+                  Swal.fire({
+                    title: 'Success!',
+                    text: 'Thank you for subscribing to our newsletter!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                  })
+                  resetForm()
+                } else {
+                  Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter a correct email address.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                  })
+                }
+              } catch (error) {
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'An error occurred while subscribing. Please try again later.',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                })
+              } finally {
+                setSubmitting(false)
               }
             }}
           >
-            <Form className="mx-auto mt-10 flex flex-col max-w-md gap-y-4">
-              <div className="flex gap-x-4">
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <Field
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-[#3F4C5373] focus:ring-2 focus:ring-inset focus:ring-[#3F4C5373] sm:text-sm sm:leading-6"
-                  placeholder="Email"
-                />
+            {({ errors, touched }) => (
+              <Form className="mx-auto mt-10 flex max-w-md gap-x-4">
+                <div className="flex flex-col gap-y-2">
+                  <label htmlFor="email" className="sr-only">
+                    Email address
+                  </label>
+                  <Field
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="min-w-0 flex-auto rounded-md border-0 bg-white px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    placeholder="Enter your email"
+                  />
+                  {errors.email && touched.email ? (
+                    <div className="text-sm text-red-500">{errors.email}</div>
+                  ) : null}
+                </div>
                 <button
                   type="submit"
-                  disabled={buttonDisabled}
-                  className="flex-none rounded-md bg-[#007BFF] px-3.5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={submitting}
+                  className="flex-none rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {submitting ? 'Submitting...' : 'Subscribe Now'}
+                  {submitting ? 'Subscribing...' : 'Subscribe Now'}
                 </button>
-              </div>
-              {message && (
-                <p
-                  className={`${
-                    status !== 201 ? "text-red-500" : "text-green-500"
-                  } text-center font-bold`}
-                >
-                  {message}
-                </p>
-              )}
-            </Form>
+              </Form>
+            )}
           </Formik>
         </div>
       </div>

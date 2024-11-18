@@ -5,6 +5,7 @@ import { Trending } from '@/components/Trending'
 import {Recommended} from "@/components/Recommended";
 import {ActorsHero} from "@/components/ActorsHero";
 import {Newsletter} from "@/components/Newsletter";
+import Calendar from '@/components/Calendar';
 
 
 export default function Home() {
@@ -16,9 +17,11 @@ export default function Home() {
           <Trending /> 
           <Recommended />
 
+          <Calendar />
           <ActorsHero />
 
           <Newsletter />
+
 
 
 
