@@ -58,221 +58,204 @@ interface File {
   }
 }
 
+interface FilterState {
+  topic: string | null
+  category: string | null
+  location: { id: number; name: string } | null
+}
+
+interface FilterData {
+  topics: Array<{ id: number; name: string }>
+  categories: Array<{ id: number; name: string }>
+  locations: Array<{ id: number; name: string }>
+}
+
 export default function Videos() {
   const [isLoading, setIsLoading] = useState(true)
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-    [],
-  )
-  const [genres, setGenres] = useState<{ id: number; name: string }[]>([])
-  const [locations, setLocations] = useState<{ id: number; name: string }[]>([])
+  const [filters, setFilters] = useState<FilterState>({
+    topic: 'all',
+    category: null,
+    location: null,
+  })
 
+  const [filterData, setFilterData] = useState<FilterData>({
+    topics: [],
+    categories: [],
+    locations: [],
+  })
   const [videos, setVideos] = useState<File[]>([])
   const [page, setPage] = useState(1)
   const [loadingMore, setLoadingMore] = useState(false)
   const [hasMore, setHasMore] = useState(true)
+  const [error, setError] = useState<Record<string, string>>({})
   const videosPerPage = 12
-  
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<any[]>([])
-  let [isOpen, setIsOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedGenre, setSelectedGenre] = useState<{
-    id: number
-    name: string
-  } | null>(null)
-  const [selectedLocation, setSelectedLocation] = useState<{
-    id: number
-    name: string
-  } | null>(null)
 
   useEffect(() => {
-    // Reset isOpen state when the component unmounts
-    return () => {
-      setIsOpen(false)
-    }
+    fetchFilterData()
   }, [])
 
   useEffect(() => {
-    fetchVideos(page)
-  }, [page])
+    fetchVideos(1, true) // Reset and fetch with new filters
+  }, [filters])
 
-  const fetchVideos = async (pageNumber: number) => {
+  const fetchFilterData = async () => {
     try {
+      const [topicsRes, categoriesRes, locationsRes] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`),
+      ])
+
+      const [topics, categories, locations] = await Promise.all([
+        topicsRes.json(),
+        categoriesRes.json(),
+        locationsRes.json(),
+      ])
+
+      setFilterData({
+        topics: topics.data?.length ? topics.data : [],
+        categories: categories.data?.length ? categories.data : [],
+        locations: locations.data?.length ? locations.data : [],
+      })
+
+      setError({
+        topics: !topics.data?.length ? 'No topics available' : '',
+        categories: !categories.data?.length ? 'No categories available' : '',
+        locations: !locations.data?.length ? 'No locations available' : '',
+      })
+    } catch (error) {
+      console.error('Error fetching filter data:', error)
+      setError({
+        topics: 'Failed to load topics',
+        categories: 'Failed to load categories',
+        locations: 'Failed to load locations',
+      })
+    }
+  }
+
+  const generateQueryParams = (pageNumber: number) => {
+    const queryParams = new URLSearchParams()
+    queryParams.append('page', pageNumber.toString())
+    queryParams.append('limit', videosPerPage.toString())
+
+    if (filters.topic && filters.topic !== 'all') {
+      queryParams.append('topic', filters.topic)
+    }
+    if (filters.category) {
+      queryParams.append('genre', filters.category)
+    }
+    if (filters.location) {
+      queryParams.append('location_id', filters.location.id.toString())
+    }
+    return queryParams.toString()
+  }
+
+  const fetchVideos = async (pageNumber: number, reset: boolean = false) => {
+    setIsLoading(true)
+    try {
+      const queryParams = generateQueryParams(pageNumber)
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest?page=${pageNumber}&limit=${videosPerPage}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos/latest?${queryParams}`,
       )
       const data = await response.json()
       const placeholderImage = Fallback
 
       const processedVideos = await Promise.all(
         data.data.map(async (video: any) => {
-          // Check if image is null or empty
           if (!video.image) {
             video.image = placeholderImage
           } else {
             try {
-              // Attempt to fetch the image using the HEAD method
-              const imageResponse = await fetch(video.image, {
-                method: 'HEAD',
-              })
+              const imageResponse = await fetch(video.image, { method: 'HEAD' })
               if (!imageResponse.ok) {
-                // If the image doesn't exist, use the placeholder
                 video.image = placeholderImage
               }
             } catch (error) {
-              // If fetching the image fails (e.g., network error), use the placeholder
               video.image = placeholderImage
             }
           }
           return video
         }),
       )
-      console.log(processedVideos)
 
-      setVideos((prevVideos) => [...prevVideos, ...processedVideos]) // Append new videos
-      setHasMore(data.meta.last_page > pageNumber) // Check if more pages exist
-      setIsLoading(false)
-      setLoadingMore(false)
+      setVideos(videos => reset ? processedVideos : [...videos, ...processedVideos])
+      setHasMore(data.meta.last_page > pageNumber)
+      setPage(pageNumber)
     } catch (error) {
       console.error('Error fetching videos:', error)
+      setError({ videos: 'Error fetching videos. Please try again.' })
+    } finally {
       setIsLoading(false)
+      setLoadingMore(false)
+    }
+  }
+
+  const handleFilterChange = (type: string, value: any) => {
+    if (value === 'all') {
+      setFilters({
+        topic: 'all',
+        category: null,
+        location: null,
+      })
+    } else {
+      setFilters(prev => ({ ...prev, [type]: value }))
     }
   }
 
   const loadMoreVideos = () => {
     if (!loadingMore && hasMore) {
       setLoadingMore(true)
-      setTimeout(() => setPage((prevPage) => prevPage + 1), 2000)
+      fetchVideos(page + 1)
     }
   }
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`,
-        )
-        const data = await response.json()
-        setCategories(data.data)
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
-    }
-
-    fetchCategories()
-  }, [])
-
-  useEffect(() => {
-    const fetchGenres = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`,
-        )
-        const data = await response.json()
-        setGenres(data.data)
-      } catch (error) {
-        console.error('Error fetching genres:', error)
-      }
-    }
-
-    fetchGenres()
-  }, [])
-
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`,
-        )
-        const data = await response.json()
-        setLocations(data.data)
-      } catch (error) {
-        console.error('Error fetching locations:', error)
-      }
-    }
-    fetchLocations()
-  }, [])
-
-  const handleCategoryClick = (categoryName: any) => {
-    setSelectedCategory(categoryName)
-    setIsLoading(true)
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?topic=${categoryName}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setVideos(data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error('Error fetching videos:', error)
-        setIsLoading(false)
-      })
-  }
-
-  const fetchSearchResults = async (query: string) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/videos?search=${query}`,
-      )
-      const data = await response.json()
-      setSearchResults(data.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    if (searchQuery.length > 2) {
-      fetchSearchResults(searchQuery)
-    } else {
-      setSearchResults([])
-    }
-  }, [searchQuery])
-  const numCards = 3
 
   return (
     <>
       <Header />
       <main>
-        <Container>
-          <div className="mt-5 text-[20px] font-bold text-[#2B2B2B] md:mt-14 md:text-[40px]">
-            All our videos
+        <Container className="mt-16 sm:mt-20">
+          <div className="mr-[43px] text-center text-[20px] font-bold text-[#2B2B2B] md:text-left md:text-[40px]">
+            Videos
           </div>
-
-          <div className="mt-[20px] justify-between md:flex">
+          <div className="mt-[20px] w-full justify-between md:flex">
             <div className="gap-4 md:flex md:flex-wrap">
-              {categories.map((category, index) => (
+              {error.topics && <p className="text-sm text-red-500 mb-2">{error.topics}</p>}
+              <button
+                type="button"
+                onClick={() => handleFilterChange('topic', 'all')}
+                className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${filters.topic === 'all'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-[#525252] hover:bg-gray-50'
+                  }`}
+              >
+                All
+              </button>
+              {filterData.topics.map((topic) => (
                 <button
                   type="button"
-                  key={category.id}
-                  onClick={() => handleCategoryClick(category.name)}
-                  className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${
-                    selectedCategory === category.name
-                      ? 'bg-blue-500 text-white' // Active category styling
-                      : 'bg-white text-[#525252] hover:bg-gray-50' // Inactive category styling
-                  }`}
+                  key={topic.id}
+                  onClick={() => handleFilterChange('topic', topic.name)}
+                  className={`inline-flex items-center rounded-md px-[13px] py-2 text-[12px] font-medium shadow md:text-[14px] ${filters.topic === topic.name
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-[#525252] hover:bg-gray-50'
+                    }`}
                 >
-                  {category.name}
+                  {topic.name}
                 </button>
               ))}
             </div>
-            <div className="w-2/5 justify-end px-6 md:flex">
-              <div className="">
-                <Listbox value={selectedGenre} onChange={setSelectedGenre}>
+            <div className="hidden w-2/5 justify-end px-6 md:flex">
+              <div className="mr-2">
+                <Listbox
+                  value={filters.category}
+                  onChange={(value) => handleFilterChange('category', value)}
+                >
                   <div className="relative mt-1">
-                    <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:text-[14px]">
+                    <Listbox.Button className="relative inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
                       <span className="block truncate pr-1">
-                        {selectedGenre ? selectedGenre.name : 'Select a genre'}
+                        {filters.category || 'Select genre'}
                       </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                        <ChevronDownIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </span>
+                      <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     </Listbox.Button>
                     <Transition
                       as={Fragment}
@@ -280,36 +263,31 @@ export default function Videos() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                        {genres.map((genre, genreIdx) => (
+                      <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                        {error.categories && (
+                          <div className="py-2 px-4 text-sm text-red-500">
+                            {error.categories}
+                          </div>
+                        )}
+                        {filterData.categories.map((category) => (
                           <Listbox.Option
-                            key={genreIdx}
+                            key={category.id}
                             className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                active
-                                  ? 'bg-amber-100 text-amber-900'
-                                  : 'text-gray-900'
+                              `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                               }`
                             }
-                            value={genre}
+                            value={category.name}
                           >
                             {({ selected }) => (
                               <>
-                                <span
-                                  className={`block truncate ${
-                                    selected ? 'font-medium' : 'font-normal'
-                                  }`}
-                                >
-                                  {genre.name}
+                                <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
+                                  {category.name}
                                 </span>
-                                {selected ? (
+                                {selected && (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                    <CheckIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
+                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                   </span>
-                                ) : null}
+                                )}
                               </>
                             )}
                           </Listbox.Option>
@@ -319,24 +297,17 @@ export default function Videos() {
                   </div>
                 </Listbox>
               </div>
-              <div className="">
+              <div>
                 <Listbox
-                  value={selectedLocation}
-                  onChange={setSelectedLocation}
+                  value={filters.location}
+                  onChange={(value) => handleFilterChange('location', value)}
                 >
                   <div className="relative mt-1">
-                    <Listbox.Button className="relative mr-2 inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-xs font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50 md:text-[14px]">
+                    <Listbox.Button className="relative inline-flex items-center gap-x-2 rounded-md bg-white px-6 py-2 text-[14px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#525252] hover:bg-gray-50">
                       <span className="block truncate pr-1">
-                        {selectedLocation
-                          ? selectedLocation.name
-                          : 'Select a location'}
+                        {filters.location ? filters.location.name : 'Select a location'}
                       </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                        <ChevronDownIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </span>
+                      <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     </Listbox.Button>
                     <Transition
                       as={Fragment}
@@ -344,36 +315,31 @@ export default function Videos() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-xs shadow-lg ring-1 ring-black/5 focus:outline-none md:text-base">
-                        {locations.map((location, locationIdx) => (
+                      <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-48 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                        {error.locations && (
+                          <div className="py-2 px-4 text-sm text-red-500">
+                            {error.locations}
+                          </div>
+                        )}
+                        {filterData.locations.map((location) => (
                           <Listbox.Option
-                            key={locationIdx}
+                            key={location.id}
                             className={({ active }) =>
-                              `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                active
-                                  ? 'bg-amber-100 text-amber-900'
-                                  : 'text-gray-900'
+                              `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                               }`
                             }
                             value={location}
                           >
-                            {({ active }) => (
+                            {({ selected }) => (
                               <>
-                                <span
-                                  className={`block truncate ${
-                                    active ? 'font-sm' : 'font-xs'
-                                  }`}
-                                >
+                                <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
                                   {location.name}
                                 </span>
-                                {active ? (
+                                {selected && (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                    <CheckIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
+                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                   </span>
-                                ) : null}
+                                )}
                               </>
                             )}
                           </Listbox.Option>
@@ -386,10 +352,23 @@ export default function Videos() {
             </div>
           </div>
 
+          {error.videos && (
+            <div className="mt-4 rounded-md bg-yellow-50 p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-yellow-800">{error.videos}</h3>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="mt-[90px] flex flex-col justify-between gap-32 md:flex-row">
             {isLoading ? (
               <div className="flex gap-4">
-                {Array.from({ length: numCards }, (_, index) => (
+                {Array.from({ length: 3 }, (_, index) => (
                   <div
                     key={index}
                     role="status"
@@ -436,14 +415,15 @@ export default function Videos() {
                   <>
                     <ul
                       role="list"
-                      className="grid grid-cols-2 gap-x-4 gap-y-[25px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[100px] lg:grid-cols-4 xl:gap-x-8"
+                      className="grid grid-cols-2 gap-x-4 gap-y-[12px] sm:grid-cols-3 sm:gap-x-6 md:gap-y-[50px] lg:grid-cols-4 xl:gap-x-8"
                     >
-                      {videos.map((video) => (
-                        <li key={video.name} className="relative">
-                          <Link href={`/videos/${video.slug}`}>
+
+                      {videos.map((file) => (
+                        <li key={file.id} className="relative">
+                          <Link href={`/videos/${file.slug}`}>
                             <div className="group aspect-h-7 aspect-w-10 relative block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                               <img
-                                src={video.image}
+                                src={file.image}
                                 alt=""
                                 className="pointer-events-none h-full w-full object-cover group-hover:opacity-75"
                               />
@@ -452,7 +432,7 @@ export default function Videos() {
                                 width={150}
                                 height={150}
                                 src={Yt}
-                                alt={'ÿt'}
+                                alt={'yt'}
                               />
                             </div>
                             <div className="mt-[18px] flex gap-3 md:mt-5">
@@ -460,23 +440,23 @@ export default function Videos() {
                                 type="button"
                                 className="inline-flex items-center gap-x-2 rounded-md bg-white px-2 py-1.5 text-[12px] font-medium text-[#525252] shadow-sm ring-1 ring-inset ring-[#007BFF] hover:bg-gray-50 md:px-6 md:text-[17px]"
                               >
-                                {video.duration} min
+                                {file.duration} min
                               </button>
                               <p className="pointer-events-none mt-2 block truncate text-[12px] font-medium text-[#525252] md:text-[16px]">
-                                {video.category}
+                                {file.category}
                               </p>
                             </div>
                             <div className="mt-2 flex items-center gap-3">
                               <Rating
-                                videoId={video.id}
-                                initialRating={video.stars || 0}
+                                videoId={file.id}
+                                initialRating={file.stars || 0}
                               />
                               <div className="text-sm italic text-gray-500">
-                                {video.creator.name}
+                                {file.creator.name}
                               </div>
                             </div>
                             <p className="pointer-events-none mt-4 block text-[15px] font-bold text-[#525252] md:mt-9 md:text-[19px]">
-                              {video.name}
+                              {file.name}
                             </p>
                           </Link>
                         </li>
@@ -505,7 +485,7 @@ export default function Videos() {
                         </div>
                         <div className="ml-3">
                           <h3 className="text-sm font-medium text-yellow-800">
-                            No Videos Available
+                          No videos found for selected filters
                           </h3>
                           <div className="mt-2 text-sm text-yellow-700">
                             <p>
