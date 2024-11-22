@@ -442,6 +442,14 @@ function FilmDialog({ film }: { film: Film }) {
                   Create Similar Film
                 </a>
               </div>
+              <div>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/onboard-sponsor`}
+                  className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-xs font-medium text-white bg-[#007BFF] focus:outline-none md:text-sm"
+                >
+                  Sponsor Film
+                </a>
+              </div>
               {film.call_to_action_btn && film.call_to_action_link && (
                 <div className="">
                   <Button asChild className="w-full">

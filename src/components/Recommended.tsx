@@ -108,7 +108,7 @@ export function Recommended() {
     try {
       const [topicsRes, categoriesRes, locationsRes] = await Promise.all([
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`),
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`),
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`),
       ])
 
@@ -145,10 +145,10 @@ export function Recommended() {
       queryParams.append('topic', filters.topic);
     }
     if (filters.category) {
-      queryParams.append('category', filters.category);
+      queryParams.append('genre', filters.category);
     }
     if (filters.location) {
-      queryParams.append('location', filters.location.id.toString());
+      queryParams.append('location_id', filters.location.id.toString());
     }
     return queryParams.toString() ? `?${queryParams.toString()}` : '';
   }
