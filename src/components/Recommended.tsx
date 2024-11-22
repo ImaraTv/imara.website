@@ -108,7 +108,7 @@ export function Recommended() {
     try {
       const [topicsRes, categoriesRes, locationsRes] = await Promise.all([
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`),
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/genres`),
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`),
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`),
       ])
 
