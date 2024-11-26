@@ -4,6 +4,12 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === "development",
+  buildExcludes: [/chunks\/.*$/],
+  reloadOnOnline: true,
+  cacheOnFrontEndNav: true,
+  workboxOptions: {
+    disableDevLogs: true,
+  },
 });
 
 /** @type {import('next').NextConfig} */
