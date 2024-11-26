@@ -208,7 +208,7 @@ export default function Actors() {
                     <p className="mb-7 px-8 text-sm font-medium text-[#474747] md:text-lg">
                       {creator.stage_name}
                     </p>
-                    <div className='flex items-center justify-between'>
+                    <div className='flex flex-col lg:flex-row items-center justify-stretch gap-2 lg:gap-0'>
 
                       <Link
                         href={`/creators/${creator.id}`}
@@ -218,7 +218,7 @@ export default function Actors() {
                       </Link>
                       <Link
                         href={`${process.env.NEXT_PUBLIC_BASE_URL}/onboard-sponsor?creator_id=${creator.id}`}
-                        className="mx-8 rounded-md bg-[#007BFF] px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
+                        className="flex items-centermx-8 rounded-md bg-[#007BFF] px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 md:text-sm"
                       >
                         Sponsor my films
                       </Link>
