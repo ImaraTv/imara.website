@@ -16,8 +16,29 @@ export const metadata: Metadata = {
     template: '%s - ImaraTv',
     default: 'ImaraTv - Bridging Entertainment & Education',
   },
-  description:
-    'Bridging Entertainment & Education.',
+  description: 'Bridging Entertainment & Education.',
+  manifest: '/manifest.json',
+  icons: {
+    apple: [
+      { url: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'ImaraTv',
+  },
+  applicationName: 'ImaraTv',
+  formatDetection: {
+    telephone: false,
+  },
+  themeColor: '#000000',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
 }
 
 const ubuntu = Ubuntu({
