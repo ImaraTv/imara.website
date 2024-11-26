@@ -94,7 +94,7 @@ const EmailVerifiedContent = () => {
                     Email verification failed
                   </h1>
                   <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-                    We couldn't verify your email. The verification link might be expired or
+                    We couldn&apos;t verify your email. The verification link might be expired or
                     invalid.
                   </p>
                 </>
