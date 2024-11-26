@@ -437,15 +437,15 @@ function FilmDialog({ film }: { film: Film }) {
               <div>
                 <a
                   href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}
-                  className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-xs font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-sm"
+                  className="group inline-flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-sm"
                 >
                   Create Similar Film
                 </a>
               </div>
               <div>
                 <a
-                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/onboard-sponsor`}
-                  className="group inline-flex items-center justify-center rounded-lg px-10 py-2 text-xs font-medium text-white bg-[#007BFF] focus:outline-none md:text-sm"
+                  href={`${process.env.NEXT_PUBLIC_BASE_URL}/onboard-sponsor?creator_id=${film.creator.id}`}
+                  className="group inline-flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium text-white bg-[#007BFF] focus:outline-none md:text-sm"
                 >
                   Sponsor Film
                 </a>
