@@ -1,7 +1,11 @@
 const withMDX = require('@next/mdx')();
-// const withPWA = require("@ducanh2912/next-pwa").default({
-//   dest: "public",
-// });
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Configure `pageExtensions` to include MDX files
@@ -23,5 +27,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withMDX(nextConfig);
-
+module.exports = withPWA(withMDX(nextConfig));
