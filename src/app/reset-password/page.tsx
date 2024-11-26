@@ -4,7 +4,7 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { Container } from '@/components/Container'
 import { Newsletter } from '@/components/Newsletter'
 import Banner from '@/images/signup.png'
@@ -12,8 +12,8 @@ import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 
-export default function ResetPassword() {
-    const router =  useRouter();
+const ResetPasswordContent = () => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const email = searchParams.get('email')
@@ -45,15 +45,15 @@ export default function ResetPassword() {
       )
 
       if (response.ok) {
-          Swal.fire({
-            title: 'Your password has been reset successfully!',
-            text: 'Contiune to login page.',
-            icon: 'success',
-            confirmButtonText: 'OK',
-          }).then(() => {
-            // Redirect to the login page
-            router.push('/sign-in') // Assuming you have a /login page
-          })
+        Swal.fire({
+          title: 'Your password has been reset successfully!',
+          text: 'Contiune to login page.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          // Redirect to the login page
+          router.push('/sign-in') // Assuming you have a /login page
+        })
         setIsPasswordReset(true)
       } else {
         setIsPasswordReset(false)
@@ -70,10 +70,32 @@ export default function ResetPassword() {
     }
   }
 
+  useEffect(() => {
+    if (!token || !email) {
+      router.push('/forgot-password')
+    } else {
+      setIsLoading(false)
+    }
+  }, [token, email, router])
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1">
+          <Container>
+            <div className="text-center">Loading...</div>
+          </Container>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main>
+      <main className="flex-1">
         {/* Hero card */}
         <div className="">
           <div className="relative h-[546px] sm:overflow-hidden">
@@ -206,6 +228,26 @@ export default function ResetPassword() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
+  )
+}
+
+export default function ResetPassword() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">
+            <Container>
+              <div className="text-center">Loading...</div>
+            </Container>
+          </main>
+          <Footer />
+        </div>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   )
 }
