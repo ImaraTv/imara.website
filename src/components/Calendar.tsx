@@ -205,11 +205,11 @@ export default function Calendar() {
   }
 
   const renderCells = () => {
-    const monthStart = startOfWeek(currentDate)
+    const monthStart = startOfMonth(currentDate)
+    const startDate = startOfWeek(monthStart)
     const rows = []
-
     let days = []
-    let day = monthStart
+    let day = startDate
     let formattedDate = ''
 
     for (let i = 0; i < 42; i++) {
@@ -224,7 +224,7 @@ export default function Calendar() {
         <div
           key={day.toString()}
           className={cn(
-            'rounded-lg border p-2 transition-all duration-200 ease-in-out',
+            'min-h-[100px] rounded-lg border p-2 transition-all duration-200 ease-in-out',
             isCurrentMonth ? 'bg-background hover:bg-muted' : 'bg-muted/50',
             dayFilms.length > 0 && isCurrentMonth && 'ring-primary ring-2',
           )}
