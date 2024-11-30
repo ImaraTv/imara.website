@@ -329,7 +329,7 @@ function FilmDialog({ film }: { film: Film }) {
           <div className="flex max-w-56 flex-col items-start gap-1 truncate">
             <span className="font-semibold text-white">{film.name}</span>
             <span className="text-xs text-white">
-              {format(parseISO(film.release_date), 'PPP')}
+              {format(parseISO(film.release_date), 'PPP')} {format(parseISO(film.release_date), 'HHmm')}HRS
             </span>
           </div>
         </Button>
