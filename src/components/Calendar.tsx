@@ -91,13 +91,29 @@ interface Film {
   media: Media
 }
 
+interface Event {
+  id: number
+  status: string
+  title: string
+  description: string
+  link: string
+  start_date: string
+  end_date: string
+  poster: string
+  cta_text: string | null
+  cta_link: string | null
+  sponsor: Sponsor
+}
+
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [films, setFilms] = useState<Film[]>([])
+  const [events, setEvents] = useState<Event[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetchUpcomingVideos()
+    fetchEvents()
   }, [])
 
   const fetchUpcomingVideos = async () => {
@@ -141,9 +157,39 @@ export default function Calendar() {
     }
   }
 
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://teststudio.imara.tv',
+          },
+        },
+      )
+      const data = await response.json()
+      setEvents(data.data)
+    } catch (error) {
+      console.error('Error fetching events:', error)
+    }
+  }
+
   function EmptyCellDialog({ date }: { date: Date }) {
-    return (
-      <Dialog>
+    const dayFilms = films.filter((film) =>
+      isSameDay(parseISO(film.release_date), date)
+    )
+    const dayEvents = events.filter(
+      (event) =>
+        isSameDay(parseISO(event.start_date), date) ||
+        (isAfter(date, parseISO(event.start_date)) &&
+          isBefore(date, parseISO(event.end_date)))
+    )
+
+    if (dayFilms.length === 0 && dayEvents.length === 0) {
+      return (
+        <Dialog>
         <DialogTrigger asChild>
           <div className="w-full h-10 cursor-pointer" />
         </DialogTrigger>
@@ -158,6 +204,47 @@ export default function Calendar() {
                 Create a Film
               </a>
             </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+      )
+    }
+
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="w-full cursor-pointer">
+            <div className="flex flex-col gap-1">
+              {dayFilms.map((film) => (
+                <div
+                  key={film.id}
+                  className="bg-primary/10 text-primary text-xs p-1 rounded truncate"
+                >
+                  {film.name}
+                </div>
+              ))}
+              {dayEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className="bg-orange-500/10 text-orange-500 text-xs p-1 rounded truncate"
+                >
+                  {event.title}
+                </div>
+              ))}
+            </div>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{format(date, 'EEEE, MMMM do')}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4">
+            {dayFilms.map((film) => (
+              <FilmDialog key={film.id} film={film} />
+            ))}
+            {dayEvents.map((event) => (
+              <EventDialog key={event.id} event={event} />
+            ))}
           </div>
         </DialogContent>
       </Dialog>
@@ -218,6 +305,12 @@ export default function Calendar() {
       const dayFilms = films.filter((film) =>
         isSameDay(parseISO(film.release_date), cloneDay),
       )
+      const dayEvents = events.filter(
+        (event) =>
+          isSameDay(parseISO(event.start_date), cloneDay) ||
+          (isAfter(cloneDay, parseISO(event.start_date)) &&
+            isBefore(cloneDay, parseISO(event.end_date))),
+      )
       const isCurrentMonth = isSameMonth(day, currentDate)
 
       days.push(
@@ -226,7 +319,7 @@ export default function Calendar() {
           className={cn(
             'min-h-[100px] rounded-lg border p-2 transition-all duration-200 ease-in-out',
             isCurrentMonth ? 'bg-background hover:bg-muted' : 'bg-muted/50',
-            dayFilms.length > 0 && isCurrentMonth && 'ring-primary ring-2',
+            (dayFilms.length > 0 || dayEvents.length > 0) && isCurrentMonth && 'ring-primary ring-2',
           )}
         >
           <span
@@ -237,25 +330,37 @@ export default function Calendar() {
           >
             {formattedDate}
           </span>
-          {dayFilms.length > 0 && isCurrentMonth ? (
+          {(dayFilms.length > 0 || dayEvents.length > 0) && isCurrentMonth ? (
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="mt-1 w-full justify-start bg-[#f34229] text-xs text-white hover:bg-[#007bff] hover:text-white"
-                >
-                  {dayFilms.length === 1 ? (
-                    <span className="truncate">{dayFilms[0].name}</span>
-                  ) : (
-                    <span>{dayFilms.length} films</span>
+                  className={cn(
+                    "mt-1 w-full justify-start text-xs text-white hover:text-white",
+                    dayFilms.length > 0 && dayEvents.length === 0
+                      ? "bg-[#1c64f2] hover:bg-[#007bff]"
+                      : "bg-orange-500 hover:bg-orange-600"
                   )}
+                >
+                  <div className="w-full truncate">
+                    {(dayFilms.length > 0 && dayEvents.length > 0) ? (
+                      <span>Multiple Events</span>
+                    ) : dayFilms.length > 0 ? (
+                      <span className="block truncate">{dayFilms.length === 1 ? dayFilms[0].name : `${dayFilms.length} films`}</span>
+                    ) : (
+                      <span className="block truncate">{dayEvents.length === 1 ? dayEvents[0].title : `${dayEvents.length} events`}</span>
+                    )}
+                  </div>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-80 p-2">
                 <div className="grid divide-y-2">
                   {dayFilms.map((film) => (
                     <FilmDialog key={film.id} film={film} />
+                  ))}
+                  {dayEvents.map((event) => (
+                    <EventDialog key={event.id} event={event} />
                   ))}
                 </div>
               </PopoverContent>
@@ -459,6 +564,102 @@ function FilmDialog({ film }: { film: Film }) {
                       rel="noopener noreferrer"
                     >
                       {film.call_to_action_btn}
+                    </a>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function EventDialog({ event }: { event: Event }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant="ghost"
+          className="hover:bg-muted justify-start bg-[#1c64f2] p-4"
+        >
+          <div className="flex max-w-56 flex-col items-start gap-1 truncate">
+            <span className="font-semibold text-white">{event.title}</span>
+            <span className="text-xs text-white">
+              {format(parseISO(event.start_date), 'PPP')} {format(parseISO(event.start_date), 'HHmm')}HRS
+            </span>
+          </div>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="px-0 pb-10 pt-0 sm:max-w-[600px]">
+        <div className="relative">
+          <DialogHeader>
+            <div className="relative aspect-[551/240] w-full">
+              <Image
+                src={event.poster || Fallback.src}
+                alt={event.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <DialogTitle className="p-4 text-lg">{event.title}</DialogTitle>
+          </DialogHeader>
+
+          {/* Sponsor Info */}
+          {event.sponsor && event.sponsor.name && (
+            <div className="text-muted-foreground flex items-center justify-between px-4 text-sm">
+              <div className="flex items-center gap-2">
+                <span>Sponsored By: </span>
+                {event.sponsor.logo ? (
+                  <Image
+                    src={event.sponsor.logo}
+                    alt={event.sponsor.name}
+                    width={80}
+                    height={20}
+                    className="object-contain"
+                  />
+                ) : (
+                  <span>{event.sponsor.name}</span>
+                )}
+              </div>
+            </div>
+          )}
+
+          <Separator className="my-4" />
+
+          {/* Meta Information */}
+          <div className="grid gap-4 px-4">
+            <div className="space-y-2">
+              <h3 className="text-sm font-medium">Event Description</h3>
+              <p className="text-muted-foreground text-sm">
+                {event.description}
+              </p>
+            </div>
+
+            {/* Call to Action */}
+            <div className="flex items-center justify-around pt-4">
+              {event.link && (
+                <div>
+                  <a
+                    href={event.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium text-[#525252] ring-2 ring-[#007BFF] focus:outline-none md:text-sm"
+                  >
+                    Learn More
+                  </a>
+                </div>
+              )}
+              {event.cta_text && event.cta_link && (
+                <div>
+                  <Button asChild className="w-full">
+                    <a
+                      href={event.cta_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {event.cta_text}
                     </a>
                   </Button>
                 </div>
