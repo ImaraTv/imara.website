@@ -19,7 +19,7 @@ import Founder from '@/images/members/founder.jpg'
 import Fred from '@/images/members/fred.jpeg'
 import Mercy from '@/images/members/cfo.jpg'
 import Jerusha from '@/images/members/jerusha.jpeg'
-import Ruth from '@/images/members/ruth.jpeg'
+
 import Tony from '@/images/members/tony.png'
 import Sammy from '@/images/members/sammymwangangi.jpg'
 
@@ -115,13 +115,6 @@ const files: File[] = [
     role: 'Film Production and Office Administrator',
     description: 'Jerusha Oketch is an enthusiastic Film Production and Office Administrator who has recently joined our team. With a solid background in film production and animation, she is deeply committed to the idea that media has the power to educate, inspire, and make a positive difference in society. Her proactive approach and organizational skills ensure that our projects run smoothly and effectively, helping to position Imara TV as a leading destination for meaningful and engaging content.',
     imageUrl: Jerusha,
-  },
-  
-  {
-    name: 'Ruth Njoroge',
-    role: 'Digital Marketing and Social Media Manager',
-    description: `Ruth Njoroge is a creative expert specializing in digital marketing and social media management. Renowned for her distinctive approach, Ruth oversees Imara TV's social media platforms, where her innovative strategies and engaging content drive exceptional brand presence. Ruth thrives in creative environments, passionate about filling creative spaces, she excels in crafting dynamic digital experiences that resonate with audiences constantly pushing boundaries to deliver exceptional results and elevate brand presence.`,
-    imageUrl: Ruth,
   },
   
 ]

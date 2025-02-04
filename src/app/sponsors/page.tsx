@@ -22,6 +22,7 @@ import logo8 from '@/images/partners/crowdsourseafrica.jpg'
 import logo9 from '@/images/partners/dsw.jpeg'
 import logo10 from '@/images/partners/competa.jpeg'
 import logo from '@/images/logos/logo.png'
+import unesco from '@/images/partners/unesco.jpg'
 
 
 
@@ -97,6 +98,11 @@ const partners = [
     id: 10,
     image: logo10,
     url: 'https://competamillman.co.ke/',
+  },
+  {
+    id: 11,
+    image: unesco,
+    url: 'https://www.unesco.org/en/',
   },
 ]
 
