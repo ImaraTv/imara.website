@@ -124,7 +124,7 @@ export default function Calendar() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://teststudio.imara.tv',
+            'Access-Control-Allow-Origin': 'https://studio.imara.tv',
           },
         },
       )
@@ -165,7 +165,7 @@ export default function Calendar() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://teststudio.imara.tv',
+            'Access-Control-Allow-Origin': 'https://studio.imara.tv',
           },
         },
       )
