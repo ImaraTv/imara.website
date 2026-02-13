@@ -113,7 +113,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*', // Match any request starting with /api
-        destination: 'https://teststudio.imara.tv/api/:path*', // Proxy to the external API
+        destination: 'https://studio.imara.tv/api/:path*', // Proxy to the external API
       },
     ];
   },

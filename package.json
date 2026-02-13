@@ -51,7 +51,7 @@
     "lucide-react": "^0.341.0",
     "marked": "^12.0.1",
     "md5": "^2.3.0",
-    "next": "^14.2.13",
+    "next": "14.2.35",
     "next-share": "^0.27.0",
     "nodemailer": "^6.9.13",
     "nodemailer-sendgrid-transport": "^0.2.0",
