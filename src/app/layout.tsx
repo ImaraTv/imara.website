@@ -5,6 +5,7 @@ import '@/styles/global.css'
 import { type Metadata, type Viewport } from 'next'
 import React from "react";
 import { Suspense } from 'react'
+import Script from 'next/script'
 import CookieConsentComponent from '@/components/CookieConsent';
 import { GoogleAnalytics } from '@next/third-parties/google'
 
@@ -82,6 +83,14 @@ export default function RootLayout({
         roboto.className,
       )}
     >
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1013423300752683"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={clsx(
         'flex h-full flex-col',
         roboto.className,
