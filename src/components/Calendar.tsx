@@ -200,7 +200,7 @@ export default function Calendar() {
           <div className="py-4">
             <p className="text-center mb-4">No film scheduled for {format(date, 'MMMM d, yyyy')}. Would you like to create one?</p>
             <Button asChild className="w-full">
-              <a href={`${process.env.NEXT_PUBLIC_BASE_URL}/create-film-project`}>
+              <a href="https://niko.imara.tv">
                 Create a Film
               </a>
             </Button>
